@@ -37,6 +37,18 @@ function displayLibrary() {
 }
 displayLibrary()
 
+const modal = document.querySelector('.modal');
+const button = document.querySelector('.add-book')
+const library = document.querySelector('.library-container')
+
+button.addEventListener('click', (e) => {
+    modal.classList.add("show")
+    library.classList.add("hide")
+})
+
+// Form options:
+// Author, title, # of pages, Read: Boolean
+
 const form = document.getElementById("add-book-form");
 form.addEventListener('submit', (e) => {
     e.preventDefault();
