@@ -1,20 +1,41 @@
-const myLibrary = [];
+const myLibrary = [new Book("The Odyssey"), new Book("Before They are Hanged")];
 
 function Book(title) {
     this.title = title
 }
 
 function addBookToLibrary(book) {
-    myLibrary.push(book)
+    myLibrary.push(book);
+
+    const tableBody = document.querySelector("tbody");
+    const tr = document.createElement("tr");
+    tableBody.appendChild(tr);
+
+    for (let property of Object.keys(book)) {
+        let td = document.createElement("td");
+        let tdText = document.createTextNode(book[property])
+        
+        td.appendChild(tdText);
+        tr.appendChild(td);
+    }
 }
 
 function displayLibrary() {
-    // Create table header
-
+    const tableBody = document.querySelector("tbody");
     for (let book of myLibrary) {
-        // Add rows of books here
+        const tr = document.createElement("tr");
+        tableBody.appendChild(tr);
+        
+        for (let property of Object.keys(book)) {
+            let td = document.createElement("td");
+            let tdText = document.createTextNode(book[property]);
+            
+            td.appendChild(tdText);
+            tr.appendChild(td);
+        }
     }
 }
+displayLibrary()
 
 const form = document.getElementById("add-book-form");
 form.addEventListener('submit', (e) => {
@@ -30,4 +51,3 @@ form.addEventListener('submit', (e) => {
     };
 });
 
-displayLibrary(myLibrary);
