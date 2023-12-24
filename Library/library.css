@@ -58,9 +58,14 @@
 
 /* Library Table */
 
-table,
 td {
     border: 1px solid #333;
+}
+
+tr > td:last-child {
+    border: none;
+    color: red;
+    cursor: pointer;
 }
 
 td,

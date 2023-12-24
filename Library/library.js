@@ -21,10 +21,26 @@ function addBookToLibrary(book) {
         td.appendChild(tdText);
         tr.appendChild(td);
     }
+
+    let td = document.createElement("td");
+    td.classList.add("remove-book")
+    td.id = myLibrary.length-1;
+    let tdText = document.createTextNode("X");
+    td.appendChild(tdText);
+    tr.appendChild(td);
+}
+
+function removeBookFromLibrary() {
+
 }
 
 function displayLibrary() {
     const tableBody = document.querySelector("tbody");
+    while (tableBody.firstChild) {
+        tableBody.removeChild(tableBody.firstChild)
+    }
+    
+    let bookNumber = 0;
     for (let book of myLibrary) {
         const tr = document.createElement("tr");
         tableBody.appendChild(tr);
@@ -36,6 +52,14 @@ function displayLibrary() {
             td.appendChild(tdText);
             tr.appendChild(td);
         }
+
+        let td = document.createElement("td");
+        td.classList.add("remove-book")
+        td.id = bookNumber;
+        let tdText = document.createTextNode("X");
+        td.appendChild(tdText);
+        tr.appendChild(td);
+        bookNumber++;
     }
 }
 displayLibrary()
