@@ -22,16 +22,22 @@ function addBookToLibrary(book) {
         tr.appendChild(td);
     }
 
-    let td = document.createElement("td");
-    td.classList.add("remove-book")
-    td.id = myLibrary.length-1;
-    let tdText = document.createTextNode("X");
-    td.appendChild(tdText);
-    tr.appendChild(td);
+    displayLibrary();
 }
 
-function removeBookFromLibrary() {
+function removeBookFromLibrary(index) {
+    myLibrary.splice(index, 1);
+    displayLibrary();
+}
 
+function addBookRemoval(tr, bookNumber) {
+    let td = document.createElement("td");
+    td.id = bookNumber;
+    td.appendChild(document.createTextNode("X"));
+    td.addEventListener('click', (e) => {
+        removeBookFromLibrary(e.target.id)
+    })
+    tr.appendChild(td);
 }
 
 function displayLibrary() {
@@ -53,12 +59,7 @@ function displayLibrary() {
             tr.appendChild(td);
         }
 
-        let td = document.createElement("td");
-        td.classList.add("remove-book")
-        td.id = bookNumber;
-        let tdText = document.createTextNode("X");
-        td.appendChild(tdText);
-        tr.appendChild(td);
+        addBookRemoval(tr, bookNumber)
         bookNumber++;
     }
 }
