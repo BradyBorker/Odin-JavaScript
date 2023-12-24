@@ -1,7 +1,10 @@
-const myLibrary = [new Book("The Odyssey"), new Book("Before They are Hanged")];
+const myLibrary = [new Book("Joe Abercrombie", "Before They are Hanged", 400, "No")];
 
-function Book(title) {
-    this.title = title
+function Book(author, title, pageCount, read) {
+    this.author = author;
+    this.title = title;
+    this.pageCount = pageCount;
+    this.read = (read === 'read') ? 'Yes' : 'No'
 }
 
 function addBookToLibrary(book) {
@@ -37,29 +40,44 @@ function displayLibrary() {
 }
 displayLibrary()
 
+function allInputsFilled(author, title, pageCount) {
+    if (author === '' || title === '' || pageCount === '') {
+        alert("All inputs need to be filled")
+        return false;
+    }
+    return true;
+}
+
+function dropModal(author, title, pageCount, modal, library) {
+    author.value = '';
+    title.value = '';
+    pageCount.value = '';
+    modal.classList.remove("show");
+    library.classList.remove("hide");
+}
+
 const modal = document.querySelector('.modal');
 const button = document.querySelector('.add-book')
 const library = document.querySelector('.library-container')
 
 button.addEventListener('click', (e) => {
-    modal.classList.add("show")
-    library.classList.add("hide")
+    modal.classList.add("show");
+    library.classList.add("hide");
 })
-
-// Form options:
-// Author, title, # of pages, Read: Boolean
 
 const form = document.getElementById("add-book-form");
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    let bookInput = document.getElementById("book-input");
+    let author = document.querySelector("#author");
+    let title = document.querySelector("#title");
+    let pageCount = document.querySelector("#page-count");
+    let read = document.querySelector("input[name=has-read]:checked");
     
-    if (bookInput.value === '') {
-        alert("Input cannot be blank")
-    } else {
-        let book = new Book(bookInput.value);
-        addBookToLibrary(book);
-        bookInput.value = '';
-    };
+    if (e.submitter.id === 'add' && allInputsFilled(author.value, title.value, pageCount.value)) {
+        addBookToLibrary(new Book(author.value, title.value, pageCount.value, read.id));
+        dropModal(author, title, pageCount, modal, library);
+    } else if (e.submitter.id === 'discard') {
+        dropModal(author, title, pageCount, modal, library);
+    }
 });
 
