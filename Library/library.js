@@ -9,35 +9,12 @@ function Book(author, title, pageCount, read) {
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
-
-    const tableBody = document.querySelector("tbody");
-    const tr = document.createElement("tr");
-    tableBody.appendChild(tr);
-
-    for (let property of Object.keys(book)) {
-        let td = document.createElement("td");
-        let tdText = document.createTextNode(book[property])
-        
-        td.appendChild(tdText);
-        tr.appendChild(td);
-    }
-
     displayLibrary();
 }
 
 function removeBookFromLibrary(index) {
     myLibrary.splice(index, 1);
     displayLibrary();
-}
-
-function addBookRemoval(tr, bookNumber) {
-    let td = document.createElement("td");
-    td.id = bookNumber;
-    td.appendChild(document.createTextNode("X"));
-    td.addEventListener('click', (e) => {
-        removeBookFromLibrary(e.target.id)
-    })
-    tr.appendChild(td);
 }
 
 function displayLibrary() {
@@ -54,16 +31,43 @@ function displayLibrary() {
         for (let property of Object.keys(book)) {
             let td = document.createElement("td");
             let tdText = document.createTextNode(book[property]);
-            
+
             td.appendChild(tdText);
             tr.appendChild(td);
+
+            addEditReadStatusListener(property, book, td)
         }
 
-        addBookRemoval(tr, bookNumber)
+        addBookRemovalListener(tr, bookNumber)
         bookNumber++;
     }
 }
 displayLibrary()
+
+function addEditReadStatusListener(property, book, td) {
+    if (property === 'read') {
+        td.addEventListener('click', (e) => {
+            if (book.read === 'No') {
+                book[property] = 'Yes';
+                td.textContent = 'Yes';
+
+            } else if (book.read === 'Yes') {
+                book[property] = 'No';
+                td.textContent = 'No';
+            }
+        })
+    }
+}
+
+function addBookRemovalListener(tr, bookNumber) {
+    let td = document.createElement("td");
+    td.id = bookNumber;
+    td.appendChild(document.createTextNode("X"));
+    td.addEventListener('click', (e) => {
+        removeBookFromLibrary(e.target.id)
+    })
+    tr.appendChild(td);
+}
 
 function allInputsFilled(author, title, pageCount) {
     if (author === '' || title === '' || pageCount === '') {
