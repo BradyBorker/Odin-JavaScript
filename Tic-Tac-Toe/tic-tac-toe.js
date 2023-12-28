@@ -107,12 +107,41 @@ tttGame = (function(player1, player2) {
             return (winCounter === 3) ? true : false;
         }
 
-        diagonal = () => {
+        pos_diagonal = () => {
+            // row-- && col++
+            // row++ && col--
+            let winCounter = 0;
+            while (gameBoard.in_range(rowIndex, colIndex)) {
+                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                    winCounter++;
+                }
+                rowIndex--;
+                colIndex++;
+            }
+
+            rowIndex = startingRow + 1;
+            colIndex = startingCol - 1;
+            while (gameBoard.in_range(rowIndex, colIndex)) {
+                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                    winCounter++
+                }
+                rowIndex++;
+                colIndex--;
+            }
+
+            rowIndex = startingRow;
+            colIndex = startingCol;
+            return (winCounter === 3) ? true : false;
+        }
+
+        neg_diagonal = () => {
+            // row++ && col++
+            // row-- && col--
             let winCounter = 0;
             return false;
         }
 
-        return (horizontal() || vertical() || diagonal()) ? true : false;
+        return (horizontal() || vertical() || pos_diagonal() || neg_diagonal()) ? true : false;
     }
 
     reset_game = function() {
