@@ -40,54 +40,64 @@ gameBoard = (function() {
         return (board[rowIndex][colIndex] === marker) ? true : false;
     }
 
-    return { reset_board, place_marker, display_board, board_includes, has_marker }
+    return { reset_board, place_marker, display_board, has_marker, in_range }
 })();
 
 tttGame = (function(player1, player2) {
-    start_game = function() {
-        while (!check_win()) {
-            let current_player = (player1.my_turn) ? player1 : player2;
+    play_game = function() {
+        let current_player = (player1.my_turn) ? player1 : player2;
 
-            gameBoard.display_board();
-            rowIndex = prompt("Index 1: needs to be 0-2");
-            colIndex = prompt("Index 2: Needs to be 0-2");
-            gameBoard.place_marker(current_player, rowIndex, colIndex);
-            if (check_win(current_player, rowIndex, colIndex)) {
-                console.log("WIN")
-                break;
-            }
-            break;
+        gameBoard.display_board();
+        rowIndex = Number(prompt("Index 1: needs to be 0-2"));
+        colIndex = Number(prompt("Index 2: Needs to be 0-2"));
+        gameBoard.place_marker(current_player, rowIndex, colIndex);
+        if (check_win(current_player, rowIndex, colIndex)) {
+            console.log("WIN")
+            return;
+        } else {
+            this.play_game()
         }
     }
 
     check_win = function(player, rowIndex, colIndex) {
         // Check horizontal, vertical, diagonal
-        let winCounter = 1;
+        let winCounter = 0;
 
         horizontal = () => {
-            let starting_col = colIndex;
+            let startingCol = colIndex;
             while (gameBoard.in_range(rowIndex, colIndex)) {
-                colIndex += 1;
                 if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
-
+                    winCounter += 1;
                 }
+                colIndex += 1;
             }
+            colIndex = startingCol - 1;
+            while (gameBoard.in_range(rowIndex, colIndex)) {
+                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                    winCounter += 1;
+                }
+                colIndex -= 1;
+            }
+
+            return (winCounter === 3) ? true : false
         }
 
         vertical = () => {
-
+            return false;
         }
 
         diagonal = () => {
-
+            return false;
         }
+
+        return (horizontal() || vertical() || diagonal()) ? true : false;
     }
 
     reset_game = function() {
 
     }
 
-    return { start_game }
+    return { play_game }
 })(player('X', true), player('O'));
 
-tttGame.start_game()
+tttGame.play_game()
