@@ -18,12 +18,9 @@ gameBoard = (function() {
         }
     }
 
-    place_marker = function(player) {
+    place_marker = function(player, rowIndex, colIndex) {
         // Getting input from the player, where to place marker needs to be index
-        index1 = prompt("Index 1: needs to be 0-2");
-        index2 = prompt("Index 2: Needs to be 0-2");
-        
-        board[index1][index2] = player.marker()
+        board[rowIndex][colIndex] = player.marker()
         gameBoard.display_board();
     }
 
@@ -33,7 +30,17 @@ gameBoard = (function() {
         }
     }
 
-    return { reset_board, place_marker, display_board }
+    in_range = function(rowIndex, colIndex) {
+        if (rowIndex >= 0 && rowIndex <= 2 && colIndex >= 0 && colIndex <= 2) {
+            return true;
+        }
+    }
+
+    has_marker = function(marker, rowIndex, colIndex) {
+        return (board[rowIndex][colIndex] === marker) ? true : false;
+    }
+
+    return { reset_board, place_marker, display_board, board_includes, has_marker }
 })();
 
 tttGame = (function(player1, player2) {
@@ -42,13 +49,38 @@ tttGame = (function(player1, player2) {
             let current_player = (player1.my_turn) ? player1 : player2;
 
             gameBoard.display_board();
-            gameBoard.place_marker(current_player);
+            rowIndex = prompt("Index 1: needs to be 0-2");
+            colIndex = prompt("Index 2: Needs to be 0-2");
+            gameBoard.place_marker(current_player, rowIndex, colIndex);
+            if (check_win(current_player, rowIndex, colIndex)) {
+                console.log("WIN")
+                break;
+            }
             break;
         }
     }
 
-    check_win = function() {
+    check_win = function(player, rowIndex, colIndex) {
+        // Check horizontal, vertical, diagonal
+        let winCounter = 1;
 
+        horizontal = () => {
+            let starting_col = colIndex;
+            while (gameBoard.in_range(rowIndex, colIndex)) {
+                colIndex += 1;
+                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+
+                }
+            }
+        }
+
+        vertical = () => {
+
+        }
+
+        diagonal = () => {
+
+        }
     }
 
     reset_game = function() {
