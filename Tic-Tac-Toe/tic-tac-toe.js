@@ -1,7 +1,9 @@
-function player(m, my_turn=false) {
+function player(m, turn=false) {
     marker = () => m;
+    my_turn = () => turn;
+
     switch_turn = function() {
-        this.my_turn = this.my_turn ? false : true
+        turn = turn ? false : true
     }
 
     return { marker, my_turn, switch_turn }
@@ -45,7 +47,7 @@ gameBoard = (function() {
 
 tttGame = (function(player1, player2) {
     play_game = function() {
-        let current_player = (player1.my_turn) ? player1 : player2;
+        let current_player = (player1.my_turn()) ? player1 : player2;
 
         gameBoard.display_board();
         rowIndex = Number(prompt("Index 1: needs to be 0-2"));
@@ -108,8 +110,6 @@ tttGame = (function(player1, player2) {
         }
 
         pos_diagonal = () => {
-            // row-- && col++
-            // row++ && col--
             let winCounter = 0;
             while (gameBoard.in_range(rowIndex, colIndex)) {
                 if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
