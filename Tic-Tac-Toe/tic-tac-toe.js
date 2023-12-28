@@ -57,7 +57,9 @@ tttGame = (function(player1, player2) {
             console.log("WIN")
             return;
         } else {
-            this.play_game()
+            player1.switch_turn();
+            player2.switch_turn();
+            this.play_game();
         }
     }
 
