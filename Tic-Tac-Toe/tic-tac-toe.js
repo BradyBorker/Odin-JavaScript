@@ -135,10 +135,26 @@ tttGame = (function(player1, player2) {
         }
 
         neg_diagonal = () => {
-            // row++ && col++
-            // row-- && col--
             let winCounter = 0;
-            return false;
+            while (gameBoard.in_range(rowIndex, colIndex)) {
+                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                    winCounter++;
+                }
+                rowIndex++;
+                colIndex++;
+            }
+
+            rowIndex = startingRow - 1;
+            colIndex = startingCol - 1;
+            while (gameBoard.in_range(rowIndex, colIndex)) {
+                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                    winCounter++;
+                }
+                rowIndex--;
+                colIndex--;
+            }
+
+            return (winCounter === 3) ? true : false;
         }
 
         return (horizontal() || vertical() || pos_diagonal() || neg_diagonal()) ? true : false;
