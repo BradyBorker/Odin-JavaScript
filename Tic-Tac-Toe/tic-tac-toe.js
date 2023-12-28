@@ -102,6 +102,8 @@ tttGame = (function(player1, player2) {
                 rowIndex--;
             }
 
+            rowIndex = startingRow;
+            colIndex = startingCol;
             return (winCounter === 3) ? true : false;
         }
 
