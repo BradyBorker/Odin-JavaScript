@@ -60,33 +60,53 @@ tttGame = (function(player1, player2) {
     }
 
     check_win = function(player, rowIndex, colIndex) {
-        // Check horizontal, vertical, diagonal
-        let winCounter = 0;
+        const startingRow = rowIndex;
+        const startingCol = colIndex;
 
         horizontal = () => {
-            let startingCol = colIndex;
+            let winCounter = 0;
             while (gameBoard.in_range(rowIndex, colIndex)) {
                 if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
-                    winCounter += 1;
+                    winCounter++;
                 }
-                colIndex += 1;
+                colIndex++;
             }
+
             colIndex = startingCol - 1;
             while (gameBoard.in_range(rowIndex, colIndex)) {
                 if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
-                    winCounter += 1;
+                    winCounter++;
                 }
-                colIndex -= 1;
+                colIndex--;
             }
 
-            return (winCounter === 3) ? true : false
+            rowIndex = startingRow;
+            colIndex = startingCol;
+            return (winCounter === 3) ? true : false;
         }
 
         vertical = () => {
-            return false;
+            let winCounter = 0;
+            while (gameBoard.in_range(rowIndex, colIndex)) {
+                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                    winCounter++;
+                }
+                rowIndex++;
+            }
+
+            rowIndex = startingRow - 1;
+            while (gameBoard.in_range(rowIndex, colIndex)) {
+                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                    winCounter++;
+                }
+                rowIndex--;
+            }
+
+            return (winCounter === 3) ? true : false;
         }
 
         diagonal = () => {
+            let winCounter = 0;
             return false;
         }
 
