@@ -22,8 +22,7 @@ gameBoard = (function() {
     }
 
     place_marker = function(player, rowIndex, colIndex) {
-        // Getting input from the player, where to place marker needs to be index
-        board[rowIndex][colIndex] = player.marker()
+        board[rowIndex][colIndex] = player.marker();
         gameBoard.display_board();
     }
 
@@ -39,7 +38,7 @@ gameBoard = (function() {
         }
     }
 
-    has_marker = function(marker, rowIndex, colIndex) {
+    is_marked_by_player = function(marker, rowIndex, colIndex) {
         return (board[rowIndex][colIndex] === marker) ? true : false;
     }
 
@@ -47,24 +46,21 @@ gameBoard = (function() {
         return indexes[tile_id]
     }
 
-    return { reset_board, place_marker, display_board, has_marker, in_range, get_indexs }
+    return { reset_board, place_marker, display_board, is_marked_by_player, in_range, get_indexs }
 })();
 
 tttGame = (function(player1, player2) {
-    play_game = function() {
+    play_game = function(rowIndex, colIndex) {
         let current_player = (player1.my_turn()) ? player1 : player2;
 
-        gameBoard.display_board();
-        rowIndex = Number(prompt("Index 1: needs to be 0-2"));
-        colIndex = Number(prompt("Index 2: Needs to be 0-2"));
         gameBoard.place_marker(current_player, rowIndex, colIndex);
+        
         if (check_win(current_player, rowIndex, colIndex)) {
             console.log("WIN")
             return;
         } else {
             player1.switch_turn();
             player2.switch_turn();
-            this.play_game();
         }
     }
 
@@ -75,7 +71,7 @@ tttGame = (function(player1, player2) {
         horizontal = () => {
             let winCounter = 0;
             while (gameBoard.in_range(rowIndex, colIndex)) {
-                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                if (gameBoard.is_marked_by_player(player.marker(), rowIndex, colIndex)) {
                     winCounter++;
                 }
                 colIndex++;
@@ -83,7 +79,7 @@ tttGame = (function(player1, player2) {
 
             colIndex = startingCol - 1;
             while (gameBoard.in_range(rowIndex, colIndex)) {
-                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                if (gameBoard.is_marked_by_player(player.marker(), rowIndex, colIndex)) {
                     winCounter++;
                 }
                 colIndex--;
@@ -97,7 +93,7 @@ tttGame = (function(player1, player2) {
         vertical = () => {
             let winCounter = 0;
             while (gameBoard.in_range(rowIndex, colIndex)) {
-                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                if (gameBoard.is_marked_by_player(player.marker(), rowIndex, colIndex)) {
                     winCounter++;
                 }
                 rowIndex++;
@@ -105,7 +101,7 @@ tttGame = (function(player1, player2) {
 
             rowIndex = startingRow - 1;
             while (gameBoard.in_range(rowIndex, colIndex)) {
-                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                if (gameBoard.is_marked_by_player(player.marker(), rowIndex, colIndex)) {
                     winCounter++;
                 }
                 rowIndex--;
@@ -119,7 +115,7 @@ tttGame = (function(player1, player2) {
         pos_diagonal = () => {
             let winCounter = 0;
             while (gameBoard.in_range(rowIndex, colIndex)) {
-                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                if (gameBoard.is_marked_by_player(player.marker(), rowIndex, colIndex)) {
                     winCounter++;
                 }
                 rowIndex--;
@@ -129,7 +125,7 @@ tttGame = (function(player1, player2) {
             rowIndex = startingRow + 1;
             colIndex = startingCol - 1;
             while (gameBoard.in_range(rowIndex, colIndex)) {
-                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                if (gameBoard.is_marked_by_player(player.marker(), rowIndex, colIndex)) {
                     winCounter++
                 }
                 rowIndex++;
@@ -144,7 +140,7 @@ tttGame = (function(player1, player2) {
         neg_diagonal = () => {
             let winCounter = 0;
             while (gameBoard.in_range(rowIndex, colIndex)) {
-                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                if (gameBoard.is_marked_by_player(player.marker(), rowIndex, colIndex)) {
                     winCounter++;
                 }
                 rowIndex++;
@@ -154,7 +150,7 @@ tttGame = (function(player1, player2) {
             rowIndex = startingRow - 1;
             colIndex = startingCol - 1;
             while (gameBoard.in_range(rowIndex, colIndex)) {
-                if (gameBoard.has_marker(player.marker(), rowIndex, colIndex)) {
+                if (gameBoard.is_marked_by_player(player.marker(), rowIndex, colIndex)) {
                     winCounter++;
                 }
                 rowIndex--;
@@ -174,14 +170,12 @@ tttGame = (function(player1, player2) {
     return { play_game }
 })(player('X', true), player('O'));
 
-// tttGame.play_game()
-
 dom = (function() {
     const tiles = document.querySelectorAll(".tile")
     tiles.forEach((tile) => {
         tile.addEventListener('click', (e) => {
-            [rowIndex, colIndex] = gameBoard.get_indexs(e.target.id)
-
+            [rowIndex, colIndex] = gameBoard.get_indexs(e.target.id);
+            tttGame.play_game(rowIndex, colIndex);
         })
     })
 })();
