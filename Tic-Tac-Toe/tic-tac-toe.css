@@ -10,4 +10,9 @@
 
 .tile {
     border: 1px solid red;
+    font-size: 72px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

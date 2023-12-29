@@ -12,6 +12,7 @@ function player(m, turn=false) {
 gameBoard = (function() {
     const board = [[' ',' ',' '], [' ',' ',' '], [' ',' ',' ']];
     const indexes = { "1": [0, 0], "2": [0, 1], "3": [0, 2], "4": [1, 0], "5": [1, 1], "6": [1, 2], "7": [2, 0], "8": [2, 1], "9": [2, 2]};
+    let tilesRemaining = 9;
 
     reset_board = function() {
         for (let i = 0; i < board.length; i++) {
@@ -23,6 +24,7 @@ gameBoard = (function() {
 
     place_marker = function(player, rowIndex, colIndex) {
         board[rowIndex][colIndex] = player.marker();
+        tilesRemaining--;
         gameBoard.display_board();
     }
 
@@ -46,22 +48,38 @@ gameBoard = (function() {
         return indexes[tile_id]
     }
 
-    return { reset_board, place_marker, display_board, is_marked_by_player, in_range, get_indexs }
+    tile_already_marked = function(rowIndex, colIndex) {
+        return (board[rowIndex][colIndex] !== ' ') ? true : false
+    }
+
+    no_tiles_remaining = function() {
+        return (tilesRemaining === 0) ? true : false;
+    }
+
+    return { reset_board, place_marker, display_board, is_marked_by_player, in_range, get_indexs, tile_already_marked, no_tiles_remaining }
 })();
 
 tttGame = (function(player1, player2) {
-    play_game = function(rowIndex, colIndex) {
+    play_round = function(rowIndex, colIndex, tile) {
         let current_player = (player1.my_turn()) ? player1 : player2;
 
+        if (gameBoard.tile_already_marked(rowIndex, colIndex)) {
+            return false;
+        }
         gameBoard.place_marker(current_player, rowIndex, colIndex);
+        tile.textContent = current_player.marker()
         
         if (check_win(current_player, rowIndex, colIndex)) {
             console.log("WIN")
             return;
+        } else if (gameBoard.no_tiles_remaining()) {
+            console.log("TIE")
         } else {
             player1.switch_turn();
             player2.switch_turn();
         }
+
+        return;
     }
 
     check_win = function(player, rowIndex, colIndex) {
@@ -167,7 +185,7 @@ tttGame = (function(player1, player2) {
 
     }
 
-    return { play_game }
+    return { play_round }
 })(player('X', true), player('O'));
 
 dom = (function() {
@@ -175,7 +193,7 @@ dom = (function() {
     tiles.forEach((tile) => {
         tile.addEventListener('click', (e) => {
             [rowIndex, colIndex] = gameBoard.get_indexs(e.target.id);
-            tttGame.play_game(rowIndex, colIndex);
+            let result = tttGame.play_round(rowIndex, colIndex, e.target);
         })
     })
 })();
