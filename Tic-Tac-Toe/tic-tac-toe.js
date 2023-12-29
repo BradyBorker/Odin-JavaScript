@@ -212,7 +212,7 @@ dom = (function() {
     const playerNameInputs = document.querySelectorAll('.player-name');
     playerNameInputs.forEach((input) => {
         input.addEventListener('input', (e) => {
-            if (e.target.id === 'player1') {
+            if (e.target.id === 'player1-name') {
                 tttGame.player1.name = e.target.value;
             } else {
                 tttGame.player2.name = e.target.value;
