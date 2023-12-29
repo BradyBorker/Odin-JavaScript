@@ -48,7 +48,7 @@ gameBoard = (function() {
         return indexes[tile_id]
     }
 
-    tile_already_marked = function(rowIndex, colIndex) {
+    not_empty_tile = function(rowIndex, colIndex) {
         return (board[rowIndex][colIndex] !== ' ') ? true : false
     }
 
@@ -56,14 +56,14 @@ gameBoard = (function() {
         return (tilesRemaining === 0) ? true : false;
     }
 
-    return { reset_board, place_marker, display_board, is_marked_by_player, in_range, get_indexs, tile_already_marked, no_tiles_remaining }
+    return { reset_board, place_marker, display_board, is_marked_by_player, in_range, get_indexs, not_empty_tile, no_tiles_remaining }
 })();
 
 tttGame = (function(player1, player2) {
     play_round = function(rowIndex, colIndex, tile) {
         let current_player = (player1.my_turn()) ? player1 : player2;
 
-        if (gameBoard.tile_already_marked(rowIndex, colIndex)) {
+        if (gameBoard.not_empty_tile(rowIndex, colIndex)) {
             return false;
         }
         gameBoard.place_marker(current_player, rowIndex, colIndex);
