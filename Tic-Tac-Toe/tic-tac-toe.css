@@ -8,6 +8,22 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 50px;
+}
+
+.players-container {
+    width: min(500px, 100%);
+    display: flex;
+    justify-content: space-between;
+}
+
+.player1-container,
+.player2-container {
+    font-size: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .tic-tac-toe {

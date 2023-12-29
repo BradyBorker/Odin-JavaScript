@@ -1,4 +1,4 @@
-function player(m, turn=false) {
+function player(m, name, turn=false) {
     marker = () => m;
     my_turn = () => turn;
 
@@ -6,7 +6,7 @@ function player(m, turn=false) {
         turn = turn ? false : true
     }
 
-    return { marker, my_turn, switch_turn }
+    return { marker, my_turn, switch_turn, name }
 }
 
 gameBoard = (function() {
@@ -186,11 +186,11 @@ tttGame = (function(player1, player2) {
 
     }
 
-    return { play_round }
-})(player('X', true), player('O'));
+    return { play_round, player1, player2 }
+})(player('X', 'Player 1', true), player('O', 'Player 2'));
 
 dom = (function() {
-    const tiles = document.querySelectorAll(".tile")
+    const tiles = document.querySelectorAll(".tile");
     tiles.forEach((tile) => {
         tile.addEventListener('click', (e) => {
             [rowIndex, colIndex] = gameBoard.get_indexs(e.target.id);
@@ -205,6 +205,17 @@ dom = (function() {
                 } else if (result.tie) {
                     // Same as above but different message.
                 }
+            }
+        })
+    })
+
+    const playerNameInputs = document.querySelectorAll('.player-name');
+    playerNameInputs.forEach((input) => {
+        input.addEventListener('input', (e) => {
+            if (e.target.id === 'player1') {
+                tttGame.player1.name = e.target.value;
+            } else {
+                tttGame.player2.name = e.target.value;
             }
         })
     })
