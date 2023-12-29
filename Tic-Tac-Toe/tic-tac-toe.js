@@ -11,6 +11,7 @@ function player(m, turn=false) {
 
 gameBoard = (function() {
     const board = [[' ',' ',' '], [' ',' ',' '], [' ',' ',' ']];
+    const indexes = { "1": [0, 0], "2": [0, 1], "3": [0, 2], "4": [1, 0], "5": [1, 1], "6": [1, 2], "7": [2, 0], "8": [2, 1], "9": [2, 2]};
 
     reset_board = function() {
         for (let i = 0; i < board.length; i++) {
@@ -42,7 +43,11 @@ gameBoard = (function() {
         return (board[rowIndex][colIndex] === marker) ? true : false;
     }
 
-    return { reset_board, place_marker, display_board, has_marker, in_range }
+    get_indexs = function(tile_id) {
+        return indexes[tile_id]
+    }
+
+    return { reset_board, place_marker, display_board, has_marker, in_range, get_indexs }
 })();
 
 tttGame = (function(player1, player2) {
@@ -169,4 +174,14 @@ tttGame = (function(player1, player2) {
     return { play_game }
 })(player('X', true), player('O'));
 
-tttGame.play_game()
+// tttGame.play_game()
+
+dom = (function() {
+    const tiles = document.querySelectorAll(".tile")
+    tiles.forEach((tile) => {
+        tile.addEventListener('click', (e) => {
+            [rowIndex, colIndex] = gameBoard.get_indexs(e.target.id)
+
+        })
+    })
+})();
