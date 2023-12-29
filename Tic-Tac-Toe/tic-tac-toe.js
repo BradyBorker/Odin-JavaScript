@@ -70,16 +70,17 @@ tttGame = (function(player1, player2) {
         tile.textContent = current_player.marker()
         
         if (check_win(current_player, rowIndex, colIndex)) {
-            console.log("WIN")
-            return;
+            console.log("WIN");
+            return { 'marker': current_player.marker(), 'win': true, 'tie': false };
         } else if (gameBoard.no_tiles_remaining()) {
-            console.log("TIE")
+            console.log("TIE");
+            return { 'marker': current_player.marker(), 'win': false, 'tie': true };
         } else {
             player1.switch_turn();
             player2.switch_turn();
         }
 
-        return;
+        return { 'marker': current_player.marker(), 'win': false, 'tie': false };
     }
 
     check_win = function(player, rowIndex, colIndex) {
@@ -193,7 +194,20 @@ dom = (function() {
     tiles.forEach((tile) => {
         tile.addEventListener('click', (e) => {
             [rowIndex, colIndex] = gameBoard.get_indexs(e.target.id);
+            
             let result = tttGame.play_round(rowIndex, colIndex, e.target);
+            if (result) {
+                e.target.classList.add(result.marker)
+
+                if (result.win) {
+                    // Mabe some pop up here? 
+                    // Some congrats message, and play again option
+                } else if (result.tie) {
+                    // Same as above but different message.
+                }
+            }
         })
     })
+
+    // dom functions here
 })();
