@@ -56,7 +56,11 @@ gameBoard = (function() {
         return (tilesRemaining === 0) ? true : false;
     }
 
-    return { reset_board, place_marker, display_board, is_marked_by_player, in_range, get_indexs, not_empty_tile, no_tiles_remaining }
+    reset_tiles = function() {
+        tilesRemaining = 9;
+    }
+
+    return { reset_board, place_marker, display_board, is_marked_by_player, in_range, get_indexs, not_empty_tile, no_tiles_remaining, reset_tiles }
 })();
 
 tttGame = (function(player1, player2) {
@@ -71,17 +75,16 @@ tttGame = (function(player1, player2) {
         
         if (check_win(current_player, rowIndex, colIndex)) {
             console.log("WIN");
-            reset_game();
-            return { 'marker': current_player.marker(), 'win': true, 'tie': false };
+            return { current_player, 'win': true, 'tie': false };
         } else if (gameBoard.no_tiles_remaining()) {
             console.log("TIE");
-            return { 'marker': current_player.marker(), 'win': false, 'tie': true };
+            return { current_player, 'win': false, 'tie': true };
         } else {
             player1.switch_turn();
             player2.switch_turn();
         }
 
-        return { 'marker': current_player.marker(), 'win': false, 'tie': false };
+        return { current_player, 'win': false, 'tie': false };
     }
 
     check_win = function(player, rowIndex, colIndex) {
@@ -188,33 +191,48 @@ tttGame = (function(player1, player2) {
             player1.switch_turn();
             player2.switch_turn();
         }
-        
-        gameBoard.reset_board()
+
+        gameBoard.reset_board();
+        gameBoard.reset_tiles();
     }
 
-    return { play_round, player1, player2 }
+    return { play_round, reset_game, player1, player2 }
 })(player('X', 'Player 1', true), player('O', 'Player 2'));
 
 dom = (function() {
     const tiles = document.querySelectorAll(".tile");
+    const playersContainer = document.querySelector(".players-container");
+    const ticTacToeBoard = document.querySelector(".tic-tac-toe");
+    const winModal = document.querySelector(".modal.win");
+    const winMessage = document.querySelector(".win-message")
+    const tieModal = document.querySelector(".modal.tie")
+
+    const hideGameBoard = () => {
+        playersContainer.classList.add("hide");
+        ticTacToeBoard.classList.add("hide");
+    };
+
     tiles.forEach((tile) => {
         tile.addEventListener('click', (e) => {
             [rowIndex, colIndex] = gameBoard.get_indexs(e.target.id);
             
             let result = tttGame.play_round(rowIndex, colIndex, e.target);
             if (result) {
-                e.target.classList.add(result.marker)
+                e.target.classList.add(`${result.current_player.marker()}`)
 
                 if (result.win) {
-                    // Mabe some pop up here? 
-                    // Some congrats message, and play again option
+                    hideGameBoard();
+                    winMessage.textContent = `${result.current_player.name} Wins!`
+                    winModal.classList.add("display");
+
                 } else if (result.tie) {
-                    // Same as above but different message.
+                    hideGameBoard();
+                    tieModal.classList.add("display");
                 }
             }
         })
     })
-
+    
     const playerNameInputs = document.querySelectorAll('.player-name');
     playerNameInputs.forEach((input) => {
         input.addEventListener('input', (e) => {
@@ -226,5 +244,20 @@ dom = (function() {
         })
     })
 
-    // dom functions here
+    const modalButtons = document.querySelectorAll(".modal > button")
+    modalButtons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            tiles.forEach((tile) => {
+                if (tile.textContent !== '') {
+                    tile.classList.remove(`${tile.textContent}`);
+                    tile.textContent = '';
+                }
+            });
+            ticTacToeBoard.classList.remove('hide');
+            playersContainer.classList.remove("hide");
+
+            e.target.parentNode.classList.remove("display")
+            tttGame.reset_game();
+        })
+    })
 })();

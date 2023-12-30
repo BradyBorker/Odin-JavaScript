@@ -125,7 +125,7 @@ input {
 
 
 .display {
-    display: block;
+    display: flex;
 }
 
 .hide {
