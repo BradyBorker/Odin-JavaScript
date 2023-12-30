@@ -25,13 +25,6 @@ gameBoard = (function() {
     place_marker = function(player, rowIndex, colIndex) {
         board[rowIndex][colIndex] = player.marker();
         tilesRemaining--;
-        gameBoard.display_board();
-    }
-
-    display_board = function() {
-        for (let i = 0; i < board.length; i++) {
-            console.log(...board[i]);
-        }
     }
 
     in_range = function(rowIndex, colIndex) {
@@ -60,7 +53,7 @@ gameBoard = (function() {
         tilesRemaining = 9;
     }
 
-    return { reset_board, place_marker, display_board, is_marked_by_player, in_range, get_indexs, not_empty_tile, no_tiles_remaining, reset_tiles }
+    return { reset_board, place_marker, is_marked_by_player, in_range, get_indexs, not_empty_tile, no_tiles_remaining, reset_tiles }
 })();
 
 tttGame = (function(player1, player2) {
@@ -74,10 +67,8 @@ tttGame = (function(player1, player2) {
         tile.textContent = current_player.marker()
         
         if (check_win(current_player, rowIndex, colIndex)) {
-            console.log("WIN");
             return { current_player, 'win': true, 'tie': false };
         } else if (gameBoard.no_tiles_remaining()) {
-            console.log("TIE");
             return { current_player, 'win': false, 'tie': true };
         } else {
             player1.switch_turn();
@@ -232,17 +223,6 @@ dom = (function() {
             }
         })
     })
-    
-    const playerNameInputs = document.querySelectorAll('.player-name');
-    playerNameInputs.forEach((input) => {
-        input.addEventListener('input', (e) => {
-            if (e.target.id === 'player1-name') {
-                tttGame.player1.name = e.target.value;
-            } else {
-                tttGame.player2.name = e.target.value;
-            }
-        })
-    })
 
     const modalButtons = document.querySelectorAll(".modal > button")
     modalButtons.forEach((button) => {
@@ -258,6 +238,17 @@ dom = (function() {
 
             e.target.parentNode.classList.remove("display")
             tttGame.reset_game();
+        })
+    })
+    
+    const playerNameInputs = document.querySelectorAll('.player-name');
+    playerNameInputs.forEach((input) => {
+        input.addEventListener('input', (e) => {
+            if (e.target.id === 'player1-name') {
+                tttGame.player1.name = e.target.value;
+            } else {
+                tttGame.player2.name = e.target.value;
+            }
         })
     })
 })();
