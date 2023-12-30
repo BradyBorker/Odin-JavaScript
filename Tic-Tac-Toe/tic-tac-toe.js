@@ -71,6 +71,7 @@ tttGame = (function(player1, player2) {
         
         if (check_win(current_player, rowIndex, colIndex)) {
             console.log("WIN");
+            reset_game();
             return { 'marker': current_player.marker(), 'win': true, 'tie': false };
         } else if (gameBoard.no_tiles_remaining()) {
             console.log("TIE");
@@ -183,7 +184,12 @@ tttGame = (function(player1, player2) {
     }
 
     reset_game = function() {
-
+        if (!player1.my_turn()) {
+            player1.switch_turn();
+            player2.switch_turn();
+        }
+        
+        gameBoard.reset_board()
     }
 
     return { play_round, player1, player2 }
