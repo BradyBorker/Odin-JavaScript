@@ -3,7 +3,7 @@ class Book {
         this.author = author;
         this.title = title;
         this.pageCount = pageCount;
-        this.read = read;
+        this.read = (read == 'read') ? 'Yes' : 'No';
     }
 }
 
