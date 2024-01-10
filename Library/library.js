@@ -7,7 +7,6 @@ class Book {
     }
 }
 
-// const myLibrary = [new Book("Joe Abercrombie", "Before They are Hanged", 644, "No")];
 class Library {
     constructor() {
         this.books = [new Book("Joe Abercrombie", "Before They are Hanged", 644, "No")]
@@ -41,7 +40,6 @@ class Library {
         td.id = bookNumber;
         td.appendChild(document.createTextNode("X"));
         td.addEventListener('click', (e) => {
-            // removeBookFromLibrary(e.target.id)
             myLibrary.removeBook();
             
         })
@@ -79,71 +77,6 @@ class Library {
 myLibrary = new Library
 myLibrary.display();
 
-
-/*function addBookToLibrary(book) {
-    myLibrary.push(book);
-    displayLibrary();
-}
-
-function removeBookFromLibrary(index) {
-    myLibrary.splice(index, 1);
-    displayLibrary();
-}*/
-
-/*function addEditReadStatusListener(property, book, td) {    
-    td.addEventListener('click', (e) => {
-        if (book.read === 'No') {
-            book[property] = 'Yes';
-            td.textContent = 'Yes';
-
-        } else if (book.read === 'Yes') {
-            book[property] = 'No';
-            td.textContent = 'No';
-        }
-    })
-}*/
-
-/* function addBookRemovalListener(tr, bookNumber) {
-    let td = document.createElement("td");
-    td.id = bookNumber;
-    td.appendChild(document.createTextNode("X"));
-    td.addEventListener('click', (e) => {
-        // removeBookFromLibrary(e.target.id)
-        myLibrary.removeBook();
-        
-    })
-    tr.appendChild(td);
-}*/
-
-/*function displayLibrary() {
-    const tableBody = document.querySelector("tbody");
-    while (tableBody.firstChild) {
-        tableBody.removeChild(tableBody.firstChild)
-    }
-    
-    let bookNumber = 0;
-    for (let book of myLibrary) {
-        const tr = document.createElement("tr");
-        tableBody.appendChild(tr);
-        
-        for (let property of Object.keys(book)) {
-            let td = document.createElement("td");
-            let tdText = document.createTextNode(book[property]);
-
-            td.appendChild(tdText);
-            tr.appendChild(td);
-
-            if (property === 'read') {
-                addEditReadStatusListener(property, book, td)
-            }
-        }
-
-        addBookRemovalListener(tr, bookNumber)
-        bookNumber++;
-    }
-}*/
-// displayLibrary()
-
 function allInputsFilled(author, title, pageCount) {
     if (author === '' || title === '' || pageCount === '') {
         alert("All inputs need to be filled")
@@ -178,7 +111,6 @@ form.addEventListener('submit', (e) => {
     let read = document.querySelector("input[name=has-read]:checked");
     
     if (e.submitter.id === 'add' && allInputsFilled(author.value, title.value, pageCount.value)) {
-        // addBookToLibrary(new Book(author.value, title.value, pageCount.value, read.id));
         myLibrary.addBook = new Book(author.value, title.value, pageCount.value, read.id);
         dropModal(author, title, pageCount, modal, library);
     } else if (e.submitter.id === 'discard') {
