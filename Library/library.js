@@ -1,12 +1,13 @@
 const myLibrary = [new Book("Joe Abercrombie", "Before They are Hanged", 644, "No")];
 
-/* function Book(author, title, pageCount, read) {
-    this.author = author;
-    this.title = title;
-    this.pageCount = pageCount;
-    this.read = (read === 'read') ? 'Yes' : 'No'
-}*/
-
+class Book {
+    constructor(author, title, pageCount, read) {
+        this.author = author;
+        this.title = title;
+        this.pageCount = pageCount;
+        this.read = read;
+    }
+}
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
