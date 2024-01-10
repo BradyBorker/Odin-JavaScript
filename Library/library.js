@@ -1,5 +1,3 @@
-const myLibrary = [new Book("Joe Abercrombie", "Before They are Hanged", 644, "No")];
-
 class Book {
     constructor(author, title, pageCount, read) {
         this.author = author;
@@ -9,7 +7,51 @@ class Book {
     }
 }
 
-function addBookToLibrary(book) {
+// const myLibrary = [new Book("Joe Abercrombie", "Before They are Hanged", 644, "No")];
+class Library {
+    constructor() {
+        this.books = [new Book("Joe Abercrombie", "Before They are Hanged", 644, "No")]
+    }
+
+    set addBook(book) {
+        this.books.push(book)
+    }
+
+    removeBookFromLibrary(index) {
+        this.books.splice(index, 1);
+    }
+
+    display() {
+        const tableBody = document.querySelector("tbody");
+        while (tableBody.firstChild) {
+            tableBody.removeChild(tableBody.firstChild)
+        }
+        
+        let bookNumber = 0;
+        for (let book of this.books) {
+            const tr = document.createElement("tr");
+            tableBody.appendChild(tr);
+            
+            for (let property of Object.keys(book)) {
+                let td = document.createElement("td");
+                let tdText = document.createTextNode(book[property]);
+    
+                td.appendChild(tdText);
+                tr.appendChild(td);
+    
+                if (property === 'read') {
+                    addEditReadStatusListener(property, book, td)
+                }
+            }
+    
+            addBookRemovalListener(tr, bookNumber)
+            bookNumber++;
+        }
+    }
+}
+
+
+/*function addBookToLibrary(book) {
     myLibrary.push(book);
     displayLibrary();
 }
@@ -17,7 +59,7 @@ function addBookToLibrary(book) {
 function removeBookFromLibrary(index) {
     myLibrary.splice(index, 1);
     displayLibrary();
-}
+}*/
 
 function addEditReadStatusListener(property, book, td) {    
     td.addEventListener('click', (e) => {
@@ -37,12 +79,13 @@ function addBookRemovalListener(tr, bookNumber) {
     td.id = bookNumber;
     td.appendChild(document.createTextNode("X"));
     td.addEventListener('click', (e) => {
-        removeBookFromLibrary(e.target.id)
+        // removeBookFromLibrary(e.target.id)
+        
     })
     tr.appendChild(td);
 }
 
-function displayLibrary() {
+/*function displayLibrary() {
     const tableBody = document.querySelector("tbody");
     while (tableBody.firstChild) {
         tableBody.removeChild(tableBody.firstChild)
@@ -68,8 +111,8 @@ function displayLibrary() {
         addBookRemovalListener(tr, bookNumber)
         bookNumber++;
     }
-}
-displayLibrary()
+}*/
+// displayLibrary()
 
 function allInputsFilled(author, title, pageCount) {
     if (author === '' || title === '' || pageCount === '') {
