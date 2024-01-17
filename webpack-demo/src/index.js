@@ -1,4 +1,7 @@
 import _ from 'lodash'
+import './style.css'
+import Icon from './icon.png'
+
 // import function from another file
 import myName from './myName';
 
@@ -7,9 +10,16 @@ function component() {
 
     // Lodash, now imported by this script
     element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+    element.classList.add('hello')
+
+    // Add the image to our existing div.
+    const myIcon = new Image();
+    myIcon.src = Icon;
+
+    element.appendChild(myIcon);
 
     // Use imported function
-    element.textContent = myName('Cody');
+    // element.textContent = myName('Cody');
 
     return element;
 }
