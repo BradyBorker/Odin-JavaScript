@@ -17,4 +17,6 @@ export default function() {
     mainSection.appendChild(sectionBody);
     
     main.replaceChildren(mainSection, image);
+
+    return 'home';
 }
