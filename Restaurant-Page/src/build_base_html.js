@@ -12,6 +12,8 @@ export default function() {
     for (let tabId of tabIds) {
         const tab = document.createElement('div');
         tab.id = tabId;
+        tab.classList.add('tab');
+        if (tabId === 'home') { tab.classList.add('selected') };
         
         header.appendChild(tab)
     }
