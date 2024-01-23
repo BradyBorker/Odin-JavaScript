@@ -5,15 +5,18 @@ import './style.css'
 buildBaseHtml();
 let currentTabId = buildHomeHtml();
 
-const tabChange = function() {
+function tabChange(newTabId) {
     let currentTab = document.querySelector(`#${currentTabId}`)
     currentTab.classList.remove('selected');
+
+    let newTab = document.querySelector(`#${newTabId}`);
+    newTab.classList.add('selected');
 }
 
 const tabs = document.querySelectorAll('tab').forEach((tab) => {
     tab.addEventListener('click', (e) => {
         if (e.target.id === 'home' && currentTabId !== 'home') {
-            tabChange();
+            tabChange(e.target.id);
             currentTabId = buildHomeHtml();
         } else if (e.target.id === 'menu' && currentTabId !== 'menu') {
 
@@ -22,5 +25,3 @@ const tabs = document.querySelectorAll('tab').forEach((tab) => {
         };
     });
 });
-
-

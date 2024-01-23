@@ -14,6 +14,9 @@ export default function() {
         tab.id = tabId;
         tab.classList.add('tab');
         if (tabId === 'home') { tab.classList.add('selected') };
+
+        let text = document.createTextNode(tabId.toUpperCase());
+        tab.appendChild(text)
         
         header.appendChild(tab)
     }

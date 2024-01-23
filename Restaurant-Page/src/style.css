@@ -1,0 +1,38 @@
+* {
+    --body-color: #fffaf1;
+    --main-color: #fbe3ab;
+    --raspberry-color: #E30B5C;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: var(--body-color);
+}
+
+header {
+    background-color: var(--main-color);
+    height: 80px;
+
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    gap: 15px;
+}
+
+header .tab {
+    height: 100%;
+    width: 75px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header .tab:hover {
+    border-bottom: 3px solid var(--raspberry-color);
+}
+
+header .tab.selected {
+    border-bottom: 3px solid var(--raspberry-color);
+}
