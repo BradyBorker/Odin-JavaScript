@@ -21,7 +21,7 @@ export default function() {
     const imageContainer = document.createElement('div');
     const image = document.createElement('img');
     
-    image.src = cakeImage // Need to update later
+    image.src = cakeImage
     imageContainer.appendChild(image);
     imageContainer.classList.add('image-container');
 

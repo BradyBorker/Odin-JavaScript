@@ -30,7 +30,6 @@ export default function() {
     svg.src = gitHubSvg;
     anchor.appendChild(svg);
 
-    // Add github Icon here
     footer.appendChild(text)
     footer.appendChild(anchor)
     

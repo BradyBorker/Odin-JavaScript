@@ -71,7 +71,7 @@ footer img {
     height: 25px;
 }
 
-/* Home Tab */
+/* Home Page */
 section#home {
     display: flex;
     gap: 15px;
@@ -99,4 +99,14 @@ section#home > article > p {
 section#home img {
     width: 100%;
     height: 100%;
+}
+
+/* Menu Page */
+section#menu {
+    width: 600px;
+    height: 600px;
+    background-image: url(./images/menu.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;    
 }

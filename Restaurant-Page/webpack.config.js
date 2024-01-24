@@ -9,7 +9,7 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(svg|jpeg)$/i,
+                test: /\.(svg|jpeg|png)$/i,
                 type: 'asset/resource',
             },
         ],

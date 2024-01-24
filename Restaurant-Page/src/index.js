@@ -1,5 +1,6 @@
 import buildBaseHtml from './build_base_html';
 import buildHomeHtml from './build_home_html';
+import buildMenuHtml from './build_menu_html';
 import './style.css'
 
 buildBaseHtml();
@@ -19,9 +20,10 @@ const tabs = document.querySelectorAll('.tab').forEach((tab) => {
             tabChange(e.target.id);
             currentTabId = buildHomeHtml();
         } else if (e.target.id === 'menu' && currentTabId !== 'menu') {
-
+            tabChange(e.target.id);
+            currentTabId = buildMenuHtml();
         } else if (e.target.id === 'contact' && currentTabId !== 'contact') {
-
+            // tabChange(e.target.id);
         };
     });
 });
