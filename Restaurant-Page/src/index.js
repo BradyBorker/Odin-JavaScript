@@ -13,7 +13,7 @@ function tabChange(newTabId) {
     newTab.classList.add('selected');
 }
 
-const tabs = document.querySelectorAll('tab').forEach((tab) => {
+const tabs = document.querySelectorAll('.tab').forEach((tab) => {
     tab.addEventListener('click', (e) => {
         if (e.target.id === 'home' && currentTabId !== 'home') {
             tabChange(e.target.id);

@@ -10,6 +10,13 @@ body {
     background-color: var(--body-color);
 }
 
+div#content {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 header {
     background-color: var(--main-color);
     height: 80px;
@@ -31,8 +38,41 @@ header .tab {
 
 header .tab:hover {
     border-bottom: 3px solid var(--raspberry-color);
+    cursor: pointer;
 }
 
 header .tab.selected {
     border-bottom: 3px solid var(--raspberry-color);
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    height: 80px;
+    background-color: var(--main-color);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Home Tab */
+section#home {
+    border: 1px solid red;
+    display: flex;
+}
+
+section#home > .image-container {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+}
+
+img {
+    width: 100%;
+    height: 100%;
 }

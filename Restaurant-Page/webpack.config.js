@@ -8,6 +8,10 @@ module.exports = {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
             },
+            {
+                test: /\.(svg|jpeg)$/i,
+                type: 'asset/resource',
+            },
         ],
     },
     output: {

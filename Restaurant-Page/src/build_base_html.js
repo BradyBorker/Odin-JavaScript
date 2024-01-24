@@ -20,4 +20,8 @@ export default function() {
         
         header.appendChild(tab)
     }
+
+    let text = document.createTextNode('Built by BradyBorker')
+    // Add github Icon here
+    footer.appendChild(text)
 }
