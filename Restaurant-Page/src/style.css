@@ -110,3 +110,17 @@ section#menu {
     background-repeat: no-repeat;
     background-position: center;    
 }
+
+/* Contact Page */
+section#contact {
+    width: 400px;
+    height: max-content;
+    padding: 10px;
+    background-color: var(--main-color);
+    border-bottom: 8px solid var(--raspberry-color);
+}
+
+section#contact h1,
+section#contact p {
+    text-align: center;
+}
