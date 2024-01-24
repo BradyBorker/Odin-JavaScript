@@ -1,3 +1,5 @@
+import gitHubSvg from './images/github.svg'
+
 export default function() {
     const content = document.querySelector('div#content')
     const header = document.createElement('header');
@@ -21,7 +23,15 @@ export default function() {
         header.appendChild(tab)
     }
 
-    let text = document.createTextNode('Built by BradyBorker')
+    const text = document.createTextNode('Built by BradyBorker');
+    const anchor = document.createElement('a');
+    anchor.href = 'https://github.com/BradyBorker';
+    const svg = document.createElement('img');
+    svg.src = gitHubSvg;
+    anchor.appendChild(svg);
+
     // Add github Icon here
     footer.appendChild(text)
+    footer.appendChild(anchor)
+    
 }

@@ -1,5 +1,5 @@
 * {
-    --body-color: #fffaf1;
+    --body-color: #fff6e3;
     --main-color: #fbe3ab;
     --raspberry-color: #E30B5C;
 }
@@ -58,21 +58,45 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 25px;
+}
+
+footer a {
+    display: flex;
+    align-items: center;
+}
+
+footer img {
+    width: 25px;
+    height: 25px;
 }
 
 /* Home Tab */
 section#home {
-    border: 1px solid red;
     display: flex;
+    gap: 15px;
 }
 
 section#home > .image-container {
-    height: 100px;
-    width: 100px;
+    height: 400px;
+    width: 400px;
     object-fit: cover;
 }
 
-img {
+section#home > article {
+    padding: 10px;
+    width: 275px;
+    background-color: var(--main-color);
+    border-bottom: 8px solid var(--raspberry-color);
+    border-radius: 3px;
+}
+
+section#home > article > h1,
+section#home > article > p {
+    text-align: center;
+}
+
+section#home img {
     width: 100%;
     height: 100%;
 }

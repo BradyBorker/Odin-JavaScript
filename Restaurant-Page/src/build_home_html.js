@@ -8,7 +8,7 @@ export default function() {
 
     const sectionArticle = document.createElement('article'); 
     const articleHead = document.createElement('h1');
-    const articleHeadText = document.createTextNode('Delicious Cuisine!');
+    const articleHeadText = document.createTextNode('My Bakery!');
     articleHead.appendChild(articleHeadText);
 
     const articleBody = document.createElement('p');
