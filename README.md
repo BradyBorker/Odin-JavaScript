@@ -5,3 +5,6 @@ https://htmlpreview.github.io/?https://github.com/BradyBorker/Odin-JavaScript/bl
 
 Tic-Tac-Toe:
 https://htmlpreview.github.io/?https://github.com/BradyBorker/Odin-JavaScript/blob/main/Tic-Tac-Toe/tic-tac-toe.html
+
+Restaurant-Page:
+https://htmlpreview.github.io/?https://github.com/BradyBorker/Odin-JavaScript/blob/main/Restaurant-Page/dist/index.html
