@@ -1,7 +1,10 @@
 import { storageAvailable } from "./storage";
+import newProject from "./project";
 
-if (storageAvailable('localStorage')) {
-    // Storage available
-} else {
-    // Storage not available.
-}
+document.addEventListener('DOMContentLoaded', (e) => {
+    if (storageAvailable()) {
+
+    } else {
+        
+    }
+});
