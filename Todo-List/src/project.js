@@ -1,19 +1,11 @@
-export default function(name) {
-    const todos = []
-    
-    const getName = () => {
-        return name;
-    }
-
-    const setName = (newName) => {
-        name = newName;
-    }
+export function newProject(name) {
+    let todos = []
 
     const getTodos = () => {
-        todos
+        return todos
     }
     
-    const setTodo = (newTodo) => {
+    const addTodo = (newTodo) => {
         todos.push(newTodo);
     }
 
@@ -21,5 +13,9 @@ export default function(name) {
 
     }
 
-    return { getName, setName }
+    const loadTodos = (loadedTodos) => {
+        todos = loadedTodos
+    }
+
+    return { name, getTodos, addTodo, removeTodo, loadTodos }
 }

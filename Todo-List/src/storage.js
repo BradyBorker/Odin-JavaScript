@@ -24,3 +24,18 @@ export function storageAvailable(type) {
       );
     }
 }
+
+export function storeProjects(projects) {
+    let projectsArray = [];
+    for (let project of projects) {
+        let projectName = project.name
+        let projectObject = { [projectName]: [] }
+        for (let todo of project.getTodos()) {
+            projectObject[projectName].push(todo)
+        }
+
+        projectsArray.push(projectObject)
+    }
+
+    localStorage.setItem('projects', JSON.stringify(projectsArray))
+}
