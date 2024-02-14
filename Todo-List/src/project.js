@@ -14,7 +14,9 @@ export function newProject(name) {
     }
 
     const loadTodos = (loadedTodos) => {
-        todos = loadedTodos
+        for (let todo of loadedTodos) {
+            todos.push(todo);
+        }
     }
 
     return { name, getTodos, addTodo, removeTodo, loadTodos }

@@ -6,18 +6,22 @@ document.addEventListener('DOMContentLoaded', (e) => {
     let projects = [];
 
     if (storageAvailable('localStorage') && localStorage.getItem('projects')) {
-        projects = localStorage.getItem('projects');
-        console.log(projects)
-        console.log('hi')
-        localStorage.removeItem('projects');
-    } else {
-        // Create default project
-        console.log('there')
-        let defaultProject = newProject('Default');
-        defaultProject.addTodo(newTodo('Example Title', 'Example Description', 'Feb 21', 1))
-        projects.push(defaultProject)
-        console.log(defaultProject)
+        let storedProjects = JSON.parse(localStorage.getItem('projects'));
+        
+        for (let project of storedProjects) {
+            let projectName = Object.keys(project).pop();
+            let loadedProject = newProject(projectName);
+            
+            loadedProject.loadTodos(project[projectName]);
+            projects.push(loadedProject);
+        }
 
-        storeProjects(projects)
+        localStorage.removeItem('projects')
+    } else {
+        let defaultProject = newProject('Default');
+        defaultProject.addTodo(newTodo('Example Title', 'Example Description', 'Feb 21', 1));
+        projects.push(defaultProject);
+
+        storeProjects(projects);
     }
 });
