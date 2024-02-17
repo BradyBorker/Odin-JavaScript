@@ -1,0 +1,20 @@
+body {
+    padding: 0px;
+    margin: 0px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.projects-container {
+    border: 1px solid blue;
+    height: 100vh;
+}
+
+.todo-container {
+    border: 1px solid green;
+    height: 100vh;
+}

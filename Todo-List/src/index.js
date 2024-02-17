@@ -1,6 +1,8 @@
 import { storageAvailable, storeProjects } from "./storage";
 import { newProject } from "./project";
+import { displayProjects } from "./dom"
 import newTodo from "./todo";
+import "./style.css";
 
 document.addEventListener('DOMContentLoaded', (e) => {
     let projects = [];
@@ -15,8 +17,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
             loadedProject.loadTodos(project[projectName]);
             projects.push(loadedProject);
         }
-
-        localStorage.removeItem('projects')
     } else {
         let defaultProject = newProject('Default');
         defaultProject.addTodo(newTodo('Example Title', 'Example Description', 'Feb 21', 1));
@@ -24,4 +24,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
         storeProjects(projects);
     }
+
+    displayProjects(projects)
 });
