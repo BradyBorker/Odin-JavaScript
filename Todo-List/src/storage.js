@@ -28,14 +28,30 @@ export function storageAvailable(type) {
 export function storeProjects(projects) {
     let projectsArray = [];
     for (let project of projects) {
-        let projectName = project.name
-        let projectObject = { [projectName]: [] }
+        let projectName = project.name;
+        let projectObject = { [projectName]: [] };
         for (let todo of project.getTodos()) {
-            projectObject[projectName].push(todo)
+            projectObject[projectName].push(todo);
         }
 
-        projectsArray.push(projectObject)
+        projectsArray.push(projectObject);
     }
 
-    localStorage.setItem('projects', JSON.stringify(projectsArray))
+    localStorage.setItem('projects', JSON.stringify(projectsArray));
+}
+
+export function getProjects() {
+    return JSON.parse(localStorage.getItem('projects'));
+}
+
+export function storeLastOpenedTodo(todo) {
+    localStorage.setItem('lastOpenedTodo', JSON.stringify(todo));
+}
+
+export function getLastOpenedTodo() {
+    if (localStorage.getItem('lastOpenedTodo')) {
+        return localStorage.getItem('lastOpenedTodo');
+    } else {
+        return false; 
+    }
 }

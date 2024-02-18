@@ -1,6 +1,6 @@
 export function displayProjects(projects) {
     const projectsDisplay = document.querySelector('.projects');
-    const projectsNodes = [];
+    const projectNodes = [];
 
     for (let i=0; i<projects.length; i++) {
         const projectLi = document.createElement('li');
@@ -23,8 +23,12 @@ export function displayProjects(projects) {
             todoUl.appendChild(todoLi);
         }
 
-        projectsNodes.push(projectLi);
+        projectNodes.push(projectLi);
     }
 
-    projectsDisplay.replaceChildren(...projectsNodes)
+    projectsDisplay.replaceChildren(...projectNodes)
+}
+
+export function displayTodo(todo) {
+
 }
