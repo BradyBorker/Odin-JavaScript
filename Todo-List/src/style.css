@@ -19,6 +19,12 @@ ul {
     justify-content: center;
 }
 
+.project .add-todo {
+    font-weight: bold;
+    margin-left: 5px;
+    font-size: 24px;
+}
+
 .todo-container {
     border: 1px solid green;
     height: 100vh;
@@ -39,5 +45,20 @@ ul {
 .todo-container .description {
     max-width: 700px;
     margin: auto;
+    text-align: center;
+}
+
+/* Modal */
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    border: 1px solid red;
+}
+
+.modal.hidden {
+    display: none;
 }
 

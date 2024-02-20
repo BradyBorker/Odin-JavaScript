@@ -6,7 +6,13 @@ export function displayProjects(projects) {
         const projectLi = document.createElement('li');
         projectLi.classList.add('project');
         projectLi.id = i;
-        projectLi.textContent = projects[i].name
+        projectLi.textContent = projects[i].name;
+        
+        const addTodoButton = document.createElement('span');
+        addTodoButton.textContent = '+';
+        addTodoButton.classList.add('add-todo');
+        addTodoButton.id = i;
+        projectLi.appendChild(addTodoButton)
 
         const todoUl = document.createElement('ul');
         todoUl.classList.add('todos');
@@ -30,5 +36,19 @@ export function displayProjects(projects) {
 }
 
 export function displayTodo(todo) {
+    const titleNode = document.querySelector('.title');
+    titleNode.textContent = todo.title;
+
+    const dueDateNode = document.querySelector('.due-date');
+    dueDateNode.textContent = `Days Remaining: ${todo.dueDate}`;
+
+    const priorityNode = document.querySelector('.priority');
+    priorityNode.textContent = `Priority: ${todo.priority}`;
+
+    const descriptionNode = document.querySelector('.description');
+    descriptionNode.textContent = todo.description;
+}
+
+export function displayModal(modal) {
 
 }

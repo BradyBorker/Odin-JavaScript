@@ -1,15 +1,19 @@
 export function newProject(name) {
-    let todos = []
+    const todos = []
 
     const getTodos = () => {
         return todos
+    }
+
+    const getTodo = (todoIndex) => {
+        return todos[todoIndex]
     }
     
     const addTodo = (newTodo) => {
         todos.push(newTodo);
     }
 
-    const removeTodo = (index) => {
+    const removeTodo = (todoIndex) => {
 
     }
 
@@ -19,5 +23,27 @@ export function newProject(name) {
         }
     }
 
-    return { name, getTodos, addTodo, removeTodo, loadTodos }
+    return { name, getTodos, getTodo, addTodo, removeTodo, loadTodos }
+}
+
+export function myProjects() {
+    const projects = [];
+
+    const addProject = (project) => {
+        projects.push(project);
+    }
+
+    const getProjects = () => {
+        return projects;
+    }
+
+    const getProject = (projectIndex) => {
+        return projects[projectIndex];
+    }
+
+    const getProjectsTodo = (projectIndex, todoIndex) => {
+        return projects[projectIndex].getTodo(todoIndex);
+    }
+
+    return { addProject, getProjects, getProject, getProjectsTodo }
 }

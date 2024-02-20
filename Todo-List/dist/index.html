@@ -9,20 +9,41 @@
 <body>
     <section class="projects-container">
         <ul class="projects">
-
+    
         </ul>
         <div class="new-project">
 
         </div>
     </section>
     <section class="todo-container">
-        <h1 class="title">Test</h1>
+        <h1 class="title"></h1>
         <div class="details-container">
-            <div class="due-date">Days Remaining: 7</div>
-            <div class="priority">Priority: 1</div>
+            <div class="due-date"></div>
+            <div class="priority"></div>
         </div>
-        <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis fuga consectetur eaque magnam? Nobis ex enim, excepturi quam vitae expedita nisi minima aut aliquam quos reiciendis magni, asperiores, voluptates maiores.</p>
-        <article class="checklist"></article>
+        <p class="description"></p>
+        <article class="checklist-container"></article>
     </section>
+    <div class="modal todoModal hidden">
+        <form action="">
+            <div class="input">
+                <label for="todo">Todo Title</label>
+                <input type="text" name="todo" id="todo">
+            </div>
+            <div class="input">
+                <label for="date">Due Date</label>
+                <input type="date" name="date" id="date">
+            </div>
+            <div class="input">
+                <label for="priority">Priority</label>
+                <input type="number" name="priority" id="priority">
+            </div>
+            <div class="input">
+                <label for="description">Description</label>
+                <input type="text" name="description" id="description">
+            </div>
+            <button>Submit</button>
+        </form>
+    </div>
 </body>
 </html>

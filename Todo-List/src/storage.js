@@ -40,17 +40,17 @@ export function storeProjects(projects) {
     localStorage.setItem('projects', JSON.stringify(projectsArray));
 }
 
-export function getProjects() {
+export function getStoredProjects() {
     return JSON.parse(localStorage.getItem('projects'));
 }
 
-export function storeLastOpenedTodo(todo) {
+export function storeTodo(todo) {
     localStorage.setItem('lastOpenedTodo', JSON.stringify(todo));
 }
 
-export function getLastOpenedTodo() {
+export function getStoredTodo() {
     if (localStorage.getItem('lastOpenedTodo')) {
-        return localStorage.getItem('lastOpenedTodo');
+        return JSON.parse(localStorage.getItem('lastOpenedTodo'));
     } else {
         return false; 
     }
