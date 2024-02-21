@@ -6,18 +6,18 @@ export default function(title, description, dueDate, priority) {
     return { title, description, dueDate, priority }
 }
 
-export function addTodoEventListeners(todoNodes, projects) {
+export function addTodosEventListener(todoNodes, projects) {
     todoNodes.forEach((todoNode) => {
         todoNode.addEventListener('click', (e) => {
             let [projectId, todoId] = e.target.id.split('-');
-            todo = projects.getProjectsTodo(projectId, todoId);
+            const todo = projects.getProjectsTodo(projectId, todoId);
             displayTodo(todo);
             storeTodo(todo);
         })
     })
 }
 
-export function addNewTodoEventListeners(addTodoButtons) {
+export function addNewTodosEventListener(addTodoButtons) {
     addTodoButtons.forEach((addTodoButton) => {
         addTodoButton.addEventListener('click', (e) => {
             showModal(document.querySelector('.todoModal'));

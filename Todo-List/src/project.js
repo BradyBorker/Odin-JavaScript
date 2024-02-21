@@ -12,8 +12,6 @@ export function newProject(name) {
     }
     
     const addTodo = (data) => {
-        console.log(data)
-
         todos.push(newTodo(data.title, data.description, data.date, data.priority));
     }
 
