@@ -1,3 +1,5 @@
+import newTodo from './todo'
+
 export function newProject(name) {
     const todos = []
 
@@ -9,8 +11,10 @@ export function newProject(name) {
         return todos[todoIndex]
     }
     
-    const addTodo = (newTodo) => {
-        todos.push(newTodo);
+    const addTodo = (data) => {
+        console.log(data)
+
+        todos.push(newTodo(data.title, data.description, data.date, data.priority));
     }
 
     const removeTodo = (todoIndex) => {

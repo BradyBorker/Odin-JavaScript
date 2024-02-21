@@ -49,6 +49,14 @@ export function displayTodo(todo) {
     descriptionNode.textContent = todo.description;
 }
 
-export function displayModal(modal) {
+export function addClass(node, className) {
+    node.classList.add(className);
+}
 
+export function removeClass(node, className) {
+    node.classList.remove(className);
+}
+
+export function setId(node, idName) {
+    node.id = idName;
 }

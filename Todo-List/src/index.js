@@ -1,14 +1,12 @@
 import { storageAvailable, storeProjects, getStoredProjects, storeTodo, getStoredTodo } from "./storage";
 import { newProject, myProjects, getProjectsTodo } from "./project";
 import { displayProjects, displayTodo } from "./dom"
-import { showModal, hideModal, extractModalData } from "./modal";
-import newTodo from "./todo";
+import { showModal, hideModal, extractModalData, setFormFor } from "./modal";
+import newTodo, { addTodoEventListeners, addNewTodoEventListeners } from "./todo";
 import "./style.css";
 
 const projects = myProjects();
 document.addEventListener('DOMContentLoaded', (e) => {
-    // let projects = [];
-
     if (storageAvailable('localStorage') && localStorage.getItem('projects')) {
         let storedProjects = getStoredProjects();
 
@@ -23,11 +21,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
         localStorage.removeItem('projects')
     } else {
         let defaultProject = newProject('Default');
-        defaultProject.addTodo(newTodo('Example Title', 'Example Description', 'Feb 21', 1));
+        defaultProject.addTodo({title: 'Example Title', description: 'Example Description', date: 'Feb 21', priority: 1});
         projects.addProject(defaultProject);
 
         storeProjects(projects.getProjects());
-        storeTodo(projects.getProjectsTodo(0, 0));
+        storeTodo(defaultProject.getTodo(0));
     }
 
     let todo = getStoredTodo() ? getStoredTodo() : projects.getProjectsTodo(0, 0);
@@ -35,33 +33,33 @@ document.addEventListener('DOMContentLoaded', (e) => {
     displayTodo(todo);
 
     const todoNodes = document.querySelectorAll('.todo');
-    todoNodes.forEach((todoNode) => {
-        todoNode.addEventListener('click', (e) => {
-            let [projectId, todoId] = e.target.id.split('-');
-            todo = projects.getProjectsTodo(projectId, todoId);
-            displayTodo(todo);
-            storeTodo(todo);
-        })
-    })
+    addTodoEventListeners(todoNodes, projects)
 
     const addTodoButtons = document.querySelectorAll('.add-todo');
-    addTodoButtons.forEach((addTodoButton) => {
-        addTodoButton.addEventListener('click', (e) => {
-            showModal(document.querySelector('.todoModal'))
-
-        })
-    })
+    addNewTodoEventListeners(addTodoButtons);
 });
+
+const closeModal = document.querySelector('.close-modal');
+closeModal.addEventListener('click', (e) => {
+    const modal = e.target.parentNode;
+    hideModal(modal);
+})
 
 const modalForms = document.querySelectorAll('.modal > form');
 modalForms.forEach((modalForm) => {
     modalForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        let projects = getProjects();
         let data = extractModalData(e.target);
         if (e.target.parentNode.classList.contains('todoModal')) {
-            
+            const project = projects.getProject(e.target.id);
+            project.addTodo(newTodo(data))
+
+            hideModal(document.querySelector('.todoModal'));
+            storeProjects(projects.getProjects());
+            displayProjects(projects.getProjects());
+            // Need to add event listeners to newly created todo :(
+            // Need to fix data sigh...
         } else if(e.target.parentNode.classList.contains('projectModal')) {
 
         }

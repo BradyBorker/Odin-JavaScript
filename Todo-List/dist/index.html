@@ -25,22 +25,23 @@
         <article class="checklist-container"></article>
     </section>
     <div class="modal todoModal hidden">
+        <div class="close-modal">X</div>
         <form action="">
             <div class="input">
-                <label for="todo">Todo Title</label>
-                <input type="text" name="todo" id="todo">
+                <label for="title">Todo Title</label>
+                <input type="text" name="title" id="title" required>
             </div>
             <div class="input">
                 <label for="date">Due Date</label>
-                <input type="date" name="date" id="date">
+                <input type="date" name="date" id="date" required>
             </div>
             <div class="input">
                 <label for="priority">Priority</label>
-                <input type="number" name="priority" id="priority">
+                <input type="number" name="priority" id="priority" required>
             </div>
             <div class="input">
                 <label for="description">Description</label>
-                <input type="text" name="description" id="description">
+                <input type="text" name="description" id="description" required>
             </div>
             <button>Submit</button>
         </form>

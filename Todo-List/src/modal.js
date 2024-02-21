@@ -1,9 +1,15 @@
+import { addClass, removeClass, setId } from "./dom";
+
 export function showModal(modal) {
-    modal.classList.remove('hidden');
+    removeClass(modal, 'hidden');
 }
 
 export function hideModal(modal) {
-    modal.classList.add('hidden');
+    addClass(modal, 'hidden');
+}
+
+export function setFormFor(form, projectId) {
+    setId(form, projectId);
 }
 
 export function extractModalData(modal) {
