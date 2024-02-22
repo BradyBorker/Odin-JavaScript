@@ -1,6 +1,6 @@
 import { displayTodo } from "./dom";
 import { storeTodo } from "./storage";
-import { showModal, setFormFor } from "./modal";
+import { showModal, setTodoFormFor } from "./modal";
 
 export default function(title, description, dueDate, priority) {
     return { title, description, dueDate, priority }
@@ -23,7 +23,7 @@ export function addNewTodosEventListener(addTodoButtons) {
             showModal(document.querySelector('.todoModal'));
             
             const todoModalForm = document.querySelector('.todoModal > form');
-            setFormFor(todoModalForm, e.target.id)
+            setTodoFormFor(todoModalForm, e.target.id)
         })
     })
 }

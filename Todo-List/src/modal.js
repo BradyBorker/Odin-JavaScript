@@ -1,7 +1,5 @@
-import { addClass, removeClass, setId, displayProjects } from "./dom";
-import { addTodosEventListener, addNewTodosEventListener } from "./todo";
-import { storeProjects } from "./storage";
-import { newProject } from "./project";
+import { addClass, removeClass, setId } from "./dom";
+import { newProject, storeAndDisplayProjects } from "./project";
 
 export function showModal(modal) {
     removeClass(modal, 'hidden');
@@ -11,7 +9,7 @@ function hideModal(modal) {
     addClass(modal, 'hidden');
 }
 
-export function setFormFor(form, projectId) {
+export function setTodoFormFor(form, projectId) {
     setId(form, projectId);
 }
 
@@ -45,27 +43,13 @@ export function addSubmitsEventListener(modalForms, projects) {
                 project.addTodo(data);
     
                 hideModal(document.querySelector('.todoModal'));
-                storeProjects(projects.getProjects());
-                displayProjects(projects.getProjects());
-    
-                const todoNodes = document.querySelectorAll('.todo');
-                addTodosEventListener(todoNodes, projects)
-                
-                const addTodoButtons = document.querySelectorAll('.add-todo');
-                addNewTodosEventListener(addTodoButtons);
+                storeAndDisplayProjects(projects);
             } else if(e.target.parentNode.classList.contains('projectModal')) {
                 const project = newProject(data.name);
                 projects.addProject(project);
 
                 hideModal(document.querySelector('.projectModal'));
-                storeProjects(projects.getProjects());
-                displayProjects(projects.getProjects());
-
-                const todoNodes = document.querySelectorAll('.todo');
-                addTodosEventListener(todoNodes, projects)
-                
-                const addTodoButtons = document.querySelectorAll('.add-todo');
-                addNewTodosEventListener(addTodoButtons);
+                storeAndDisplayProjects(projects)
             }
         })
     })
