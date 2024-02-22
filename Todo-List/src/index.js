@@ -1,5 +1,5 @@
 import { storageAvailable, storeProjects, getStoredProjects, storeTodo, getStoredTodo } from "./storage";
-import { newProject, myProjects, addNewProjectEventListener } from "./project";
+import { newProject, myProjects, addNewProjectEventListener, storeAndDisplayProjects } from "./project";
 import { displayProjects, displayTodo } from "./dom"
 import { addClosesEventListener, addSubmitsEventListener } from "./modal";
 import { addTodosEventListener, addNewTodosEventListener } from "./todo";
@@ -29,14 +29,9 @@ document.addEventListener('DOMContentLoaded', (e) => {
     }
 
     let todo = getStoredTodo() ? getStoredTodo() : projects.getProjectsTodo(0, 0);
-    displayProjects(projects.getProjects());
+    
     displayTodo(todo);
-
-    const todoNodes = document.querySelectorAll('.todo');
-    addTodosEventListener(todoNodes, projects)
-
-    const addTodoButtons = document.querySelectorAll('.add-todo');
-    addNewTodosEventListener(addTodoButtons);
+    storeAndDisplayProjects(projects)
 });
 
 const addNewProjectNode = document.querySelector('.new-project');
