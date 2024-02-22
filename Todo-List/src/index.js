@@ -1,7 +1,7 @@
 import { storageAvailable, storeProjects, getStoredProjects, storeTodo, getStoredTodo } from "./storage";
-import { newProject, myProjects, getProjectsTodo } from "./project";
+import { newProject, myProjects, addNewProjectEventListener } from "./project";
 import { displayProjects, displayTodo } from "./dom"
-import { hideModal, extractModalData, addClosesEventListener, addSubmitsEventListener } from "./modal";
+import { addClosesEventListener, addSubmitsEventListener } from "./modal";
 import { addTodosEventListener, addNewTodosEventListener } from "./todo";
 import "./style.css";
 
@@ -39,8 +39,13 @@ document.addEventListener('DOMContentLoaded', (e) => {
     addNewTodosEventListener(addTodoButtons);
 });
 
+const addNewProjectNode = document.querySelector('.new-project');
+addNewProjectEventListener(addNewProjectNode);
+
 const closeModals = document.querySelectorAll('.close-modal');
 addClosesEventListener(closeModals);
 
 const modalForms = document.querySelectorAll('.modal > form');
-addSubmitsEventListener(modalForms)
+addSubmitsEventListener(modalForms, projects);
+
+// Add modal for Project creation

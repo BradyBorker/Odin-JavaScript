@@ -1,4 +1,5 @@
 import newTodo from './todo'
+import { showModal } from './modal'
 
 export function newProject(name) {
     const todos = []
@@ -48,4 +49,10 @@ export function myProjects() {
     }
 
     return { addProject, getProjects, getProject, getProjectsTodo }
+}
+
+export function addNewProjectEventListener(newProjectNode) {
+    newProjectNode.addEventListener(('click'), (e) => {
+        showModal(document.querySelector('.projectModal'));
+    })
 }

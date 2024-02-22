@@ -8,11 +8,9 @@
 </head>
 <body>
     <section class="projects-container">
-        <ul class="projects">
-    
-        </ul>
+        <ul class="projects"></ul>
         <div class="new-project">
-
+            Add New Project
         </div>
     </section>
     <section class="todo-container">
@@ -28,20 +26,30 @@
         <div class="close-modal">X</div>
         <form action="">
             <div class="input">
-                <label for="title">Todo Title</label>
+                <label for="title">Todo Title:</label>
                 <input type="text" name="title" id="title" required>
             </div>
             <div class="input">
-                <label for="date">Due Date</label>
+                <label for="date">Due Date:</label>
                 <input type="date" name="date" id="date" required>
             </div>
             <div class="input">
-                <label for="priority">Priority</label>
+                <label for="priority">Priority:</label>
                 <input type="number" name="priority" id="priority" required>
             </div>
             <div class="input">
-                <label for="description">Description</label>
+                <label for="description">Description:</label>
                 <input type="text" name="description" id="description" required>
+            </div>
+            <button>Submit</button>
+        </form>
+    </div>
+    <div class="modal projectModal hidden">
+        <div class="close-modal">X</div>
+        <form action="">
+            <div class="input">
+                <label for="name">Project Name:</label>
+                <input type="text" name="name" id="name">
             </div>
             <button>Submit</button>
         </form>

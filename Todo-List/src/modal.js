@@ -1,25 +1,18 @@
-import { addClass, removeClass, setId } from "./dom";
+import { addClass, removeClass, setId, displayProjects } from "./dom";
+import { addTodosEventListener, addNewTodosEventListener } from "./todo";
+import { storeProjects } from "./storage";
+import { newProject } from "./project";
 
 export function showModal(modal) {
     removeClass(modal, 'hidden');
 }
 
-export function hideModal(modal) {
+function hideModal(modal) {
     addClass(modal, 'hidden');
 }
 
 export function setFormFor(form, projectId) {
     setId(form, projectId);
-}
-
-export function extractModalData(modal) {
-    const data = {};
-    let inputs = modal.querySelectorAll('input');
-    inputs.forEach((input) => {
-        data[input.name] = input.value
-    })
-
-    return data
 }
 
 export function addClosesEventListener(closeBtns) {
@@ -31,7 +24,17 @@ export function addClosesEventListener(closeBtns) {
     })
 }
 
-export function addSubmitsEventListener(modalForms) {
+function extractModalData(modal) {
+    const data = {};
+    let inputs = modal.querySelectorAll('input');
+    inputs.forEach((input) => {
+        data[input.name] = input.value
+    })
+
+    return data
+}
+
+export function addSubmitsEventListener(modalForms, projects) {
     modalForms.forEach((modalForm) => {
         modalForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -51,7 +54,18 @@ export function addSubmitsEventListener(modalForms) {
                 const addTodoButtons = document.querySelectorAll('.add-todo');
                 addNewTodosEventListener(addTodoButtons);
             } else if(e.target.parentNode.classList.contains('projectModal')) {
-    
+                const project = newProject(data.name);
+                projects.addProject(project);
+
+                hideModal(document.querySelector('.projectModal'));
+                storeProjects(projects.getProjects());
+                displayProjects(projects.getProjects());
+
+                const todoNodes = document.querySelectorAll('.todo');
+                addTodosEventListener(todoNodes, projects)
+                
+                const addTodoButtons = document.querySelectorAll('.add-todo');
+                addNewTodosEventListener(addTodoButtons);
             }
         })
     })
