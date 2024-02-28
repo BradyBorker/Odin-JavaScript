@@ -1,8 +1,7 @@
-import { storageAvailable, storeProjects, getStoredProjects, storeTodo, getStoredTodo } from "./storage";
+import { storageAvailable, getStoredProjects, storeTodo, getStoredTodo } from "./storage";
 import { newProject, myProjects, addNewProjectEventListener, storeAndDisplayProjects } from "./project";
 import { displayProjects, displayTodo } from "./dom"
 import { addClosesEventListener, addSubmitsEventListener } from "./modal";
-import { addTodosEventListener, addNewTodosEventListener } from "./todo";
 import "./style.css";
 
 const projects = myProjects();
