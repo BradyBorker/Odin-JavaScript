@@ -17,14 +17,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
             loadedProject.loadTodos(project[projectName]);
             projects.addProject(loadedProject);
         }
-
-        localStorage.removeItem('projects')
     } else {
         let defaultProject = newProject('Default');
         defaultProject.addTodo({title: 'Example Title', description: 'Example Description', date: 'Feb 21', priority: 1});
         projects.addProject(defaultProject);
 
-        storeProjects(projects.getProjects());
         storeTodo(defaultProject.getTodo(0));
     }
 
@@ -43,4 +40,4 @@ addClosesEventListener(closeModals);
 const modalForms = document.querySelectorAll('.modal > form');
 addSubmitsEventListener(modalForms, projects);
 
-// Add modal for Project creation
+// TODO: 1. Checklist 2. Delete Todo
