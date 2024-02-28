@@ -40,7 +40,7 @@ export function displayTodo(todo) {
     titleNode.textContent = todo.title;
 
     const dueDateNode = document.querySelector('.due-date');
-    dueDateNode.textContent = `Days Remaining: ${todo.dueDate}`;
+    dueDateNode.textContent = `Time Remaining: ${todo.daysRemaining}`;
 
     const priorityNode = document.querySelector('.priority');
     priorityNode.textContent = `Priority: ${todo.priority}`;

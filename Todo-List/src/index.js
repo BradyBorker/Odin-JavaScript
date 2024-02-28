@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         }
     } else {
         let defaultProject = newProject('Default');
-        defaultProject.addTodo({title: 'Example Title', description: 'Example Description', date: 'Feb 21', priority: 1});
+        defaultProject.addTodo({title: 'Example Title', description: 'Example Description', date: '2024-02-27', priority: 1});
         projects.addProject(defaultProject);
 
         storeTodo(defaultProject.getTodo(0));
@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     
     displayTodo(todo);
     storeAndDisplayProjects(projects)
+    localStorage.removeItem('projects');
 });
 
 const addNewProjectNode = document.querySelector('.new-project');

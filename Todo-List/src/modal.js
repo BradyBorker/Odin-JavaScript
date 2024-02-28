@@ -22,9 +22,9 @@ export function addClosesEventListener(closeBtns) {
     })
 }
 
-function extractModalData(modal) {
+function extractModalData(modalForm) {
     const data = {};
-    let inputs = modal.querySelectorAll('input');
+    let inputs = modalForm.querySelectorAll('input');
     inputs.forEach((input) => {
         data[input.name] = input.value
     })
