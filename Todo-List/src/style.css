@@ -26,6 +26,20 @@ ul {
     font-size: 24px;
 }
 
+.project .todo {
+    display: flex;
+    gap: 10px;
+}
+
+.project .todo .remove-todo {
+    color: red;
+    cursor: pointer;
+}
+
+.project .todo .todo-title {
+    flex-grow: 1;
+}
+
 .new-project {
     border: 1px solid red;
     position: absolute;

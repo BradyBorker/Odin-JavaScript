@@ -22,9 +22,18 @@ export function displayProjects(projects) {
             const todoLi = document.createElement('li');
             const todoTitle = projects[i].getTodos()[j].title;
             
+            const titleNode = document.createElement('span');
+            titleNode.textContent = todoTitle;
+            titleNode.classList.add('todo-title');
+
+            const removeTodoButton = document.createElement('span');
+            removeTodoButton.classList.add('remove-todo')
+            removeTodoButton.textContent = 'x';
+            
             todoLi.classList.add('todo');
             todoLi.id = `${i}-${j}`;
-            todoLi.textContent = todoTitle;
+            todoLi.appendChild(removeTodoButton);
+            todoLi.appendChild(titleNode);
 
             todoUl.appendChild(todoLi);
         }

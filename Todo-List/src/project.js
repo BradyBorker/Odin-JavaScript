@@ -1,7 +1,7 @@
 import newTodo from './todo'
 import { showModal } from './modal'
 import { displayProjects } from "./dom";
-import { addTodosEventListener, addNewTodosEventListener } from "./todo";
+import { addTodosEventListener, addNewTodosEventListener, addRemoveTodoEventListener } from "./todo";
 import { storeProjects } from "./storage";
 
 export function newProject(name) {
@@ -20,7 +20,7 @@ export function newProject(name) {
     }
 
     const removeTodo = (todoIndex) => {
-
+        todos.splice(todoIndex, todoIndex);
     }
 
     const loadTodos = (loadedTodos) => {
@@ -64,9 +64,12 @@ export function storeAndDisplayProjects(projects) {
     storeProjects(projects.getProjects());
     displayProjects(projects.getProjects());
 
-    const todoNodes = document.querySelectorAll('.todo');
+    const todoNodes = document.querySelectorAll('.todo > .todo-title');
     addTodosEventListener(todoNodes, projects)
     
     const addTodoButtons = document.querySelectorAll('.add-todo');
     addNewTodosEventListener(addTodoButtons);
+
+    const removeTodoButtons = document.querySelectorAll('.remove-todo');
+    addRemoveTodoEventListener(removeTodoButtons, projects);
 }

@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
     
     displayTodo(todo);
     storeAndDisplayProjects(projects)
-    localStorage.removeItem('projects');
 });
 
 const addNewProjectNode = document.querySelector('.new-project');
