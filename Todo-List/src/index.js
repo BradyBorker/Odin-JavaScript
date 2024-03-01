@@ -1,7 +1,8 @@
 import { storageAvailable, getStoredProjects, storeTodo, getStoredTodo } from "./storage";
 import { newProject, myProjects, addNewProjectEventListener, storeAndDisplayProjects } from "./project";
-import { displayProjects, displayTodo } from "./dom"
+import { displayTodo } from "./dom"
 import { addClosesEventListener, addSubmitsEventListener } from "./modal";
+import { addNewCheckListItemEventListener } from "./todo";
 import "./style.css";
 
 const projects = myProjects();
@@ -23,10 +24,13 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
         storeTodo(defaultProject.getTodo(0));
     }
-
     let todo = getStoredTodo() ? getStoredTodo() : projects.getProjectsTodo(0, 0);
     
     displayTodo(todo);
+
+    const newCheckListItemButton = document.querySelector('.new-item');
+    addNewCheckListItemEventListener(newCheckListItemButton)
+    
     storeAndDisplayProjects(projects)
 });
 
@@ -39,4 +43,4 @@ addClosesEventListener(closeModals);
 const modalForms = document.querySelectorAll('.modal > form');
 addSubmitsEventListener(modalForms, projects);
 
-// TODO: 1. Checklist 2. Delete Todo
+// TODO: 1. Checklist

@@ -16,7 +16,7 @@ export function newProject(name) {
     }
     
     const addTodo = (data) => {
-        todos.push(newTodo(data.title, data.description, data.date, data.priority));
+        todos.push(newTodo(todos.length, data.title, data.description, data.date, data.priority));
     }
 
     const removeTodo = (todoIndex) => {

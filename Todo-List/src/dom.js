@@ -45,6 +45,10 @@ export function displayProjects(projects) {
 }
 
 export function displayTodo(todo) {
+    const todoContainer = document.querySelector('.todo-container');
+    todoContainer.id = todo.id
+    console.log(todo.id)
+
     const titleNode = document.querySelector('.title');
     titleNode.textContent = todo.title;
 

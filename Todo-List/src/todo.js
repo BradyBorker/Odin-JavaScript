@@ -4,11 +4,11 @@ import { showModal, setTodoFormFor } from "./modal";
 import { formatDistanceToNow } from "date-fns";
 import { storeAndDisplayProjects } from "./project";
 
-export default function(title, description, dueDate, priority) {
+export default function(id, title, description, dueDate, priority) {
     let [ year, month, day ] = dueDate.split('-').map((value) => Number(value));
     let daysRemaining = formatDistanceToNow(new Date(year, month - 1, day));
     
-    return { title, description, daysRemaining, priority }
+    return { id, title, description, daysRemaining, priority }
 }
 
 export function addTodosEventListener(todoNodes, projects) {
@@ -42,5 +42,18 @@ export function addRemoveTodoEventListener(removeTodoButtons, projects) {
             project.removeTodo(todoId);
             storeAndDisplayProjects(projects)
         })
+    })
+}
+
+export function addNewCheckListItemEventListener(button) {
+    button.addEventListener('click', (e) => {
+        const checklistItems = document.querySelector('.checklist-items');
+        console.log(checklistItems)
+
+        const itemText = document.createElement('input')
+        const itemCheckBox = document.createElement('div')
+        
+        checklistItems.appendChild(itemText)
+        checklistItems.appendChild(itemCheckBox)
     })
 }
