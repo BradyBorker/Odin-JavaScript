@@ -1,14 +1,33 @@
 import { displayTodo } from "./dom";
-import { storeTodo } from "./storage";
+import { storeTodo, getStoredTodo, storeProjects } from "./storage";
 import { showModal, setTodoFormFor } from "./modal";
 import { formatDistanceToNow } from "date-fns";
 import { storeAndDisplayProjects } from "./project";
 
-export default function(id, title, description, dueDate, priority) {
+export default function(id, projectId, title, description, dueDate, priority, checkList=[]) {
     let [ year, month, day ] = dueDate.split('-').map((value) => Number(value));
     let daysRemaining = formatDistanceToNow(new Date(year, month - 1, day));
+
+    const checkListItem = () => {
+        let description = '';
+        let checked = false;
+
+        const updateDescription = (text) => {
+            description = text;
+        }
+
+        const updateChecked = () => {
+            returnchecked = !checked;
+        }
+
+        return { description, checked, updateDescription, updateChecked }
+    }
+
+    const addCheckListItem = () => {
+        checkList.push(checkListItem());
+    }
     
-    return { id, title, description, daysRemaining, priority }
+    return { id, projectId, title, description, daysRemaining, priority }
 }
 
 export function addTodosEventListener(todoNodes, projects) {
@@ -45,15 +64,16 @@ export function addRemoveTodoEventListener(removeTodoButtons, projects) {
     })
 }
 
-export function addNewCheckListItemEventListener(button) {
+export function addNewCheckListItemEventListener(button, projects) {
     button.addEventListener('click', (e) => {
-        const checklistItems = document.querySelector('.checklist-items');
-        console.log(checklistItems)
-
-        const itemText = document.createElement('input')
-        const itemCheckBox = document.createElement('div')
+        const [ todoId, projectId ] = [ getStoredTodo().id, getStoredTodo().projectId ];
+        const todo = projects.getProjectsTodo(projectId, todoId);
+        console.log(projects.getProject(0))
+        console.log(todo)
+        // todo.addCheckListItem()
         
-        checklistItems.appendChild(itemText)
-        checklistItems.appendChild(itemCheckBox)
+        //storeTodo(todo);
+        //storeProjects(projects);
+        //displayTodo(todo);
     })
 }

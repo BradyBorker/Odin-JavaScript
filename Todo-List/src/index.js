@@ -12,30 +12,31 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
         for (let project of storedProjects) {
             let projectName = Object.keys(project).pop();
-            let loadedProject = newProject(projectName);
+            let loadedProject = newProject(projectName, projects.projectCount());
             
             loadedProject.loadTodos(project[projectName]);
             projects.addProject(loadedProject);
         }
     } else {
-        let defaultProject = newProject('Default');
+        let defaultProject = newProject('Default', projects.projectCount());
         defaultProject.addTodo({title: 'Example Title', description: 'Example Description', date: '2024-02-27', priority: 1});
         projects.addProject(defaultProject);
 
         storeTodo(defaultProject.getTodo(0));
     }
     let todo = getStoredTodo() ? getStoredTodo() : projects.getProjectsTodo(0, 0);
+    // console.log(todo)
     
-    displayTodo(todo);
-
-    const newCheckListItemButton = document.querySelector('.new-item');
-    addNewCheckListItemEventListener(newCheckListItemButton)
-    
+    displayTodo(todo);    
     storeAndDisplayProjects(projects)
+    //localStorage.clear()
 });
 
 const addNewProjectNode = document.querySelector('.new-project');
 addNewProjectEventListener(addNewProjectNode);
+
+const newCheckListItemButton = document.querySelector('.new-item');
+addNewCheckListItemEventListener(newCheckListItemButton, projects)
 
 const closeModals = document.querySelectorAll('.close-modal');
 addClosesEventListener(closeModals);
@@ -44,3 +45,5 @@ const modalForms = document.querySelectorAll('.modal > form');
 addSubmitsEventListener(modalForms, projects);
 
 // TODO: 1. Checklist
+// TODO: Fix how todos are stored
+// Store todo ID and project ID instead

@@ -47,7 +47,6 @@ export function displayProjects(projects) {
 export function displayTodo(todo) {
     const todoContainer = document.querySelector('.todo-container');
     todoContainer.id = todo.id
-    console.log(todo.id)
 
     const titleNode = document.querySelector('.title');
     titleNode.textContent = todo.title;
@@ -60,6 +59,17 @@ export function displayTodo(todo) {
 
     const descriptionNode = document.querySelector('.description');
     descriptionNode.textContent = todo.description;
+
+    // Display Checklist
+    /*
+    const checklistItems = document.querySelector('.checklist-items');
+
+    const itemText = document.createElement('input')
+    const itemCheckBox = document.createElement('div')
+    
+    checklistItems.appendChild(itemText)
+    checklistItems.appendChild(itemCheckBox)
+    */
 }
 
 export function addClass(node, className) {

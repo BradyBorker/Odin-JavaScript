@@ -4,19 +4,19 @@ import { displayProjects } from "./dom";
 import { addTodosEventListener, addNewTodosEventListener, addRemoveTodoEventListener } from "./todo";
 import { storeProjects } from "./storage";
 
-export function newProject(name) {
-    const todos = []
+export function newProject(name, id) {
+    const todos = [];
 
     const getTodos = () => {
-        return todos
+        return todos;
     }
 
     const getTodo = (todoIndex) => {
-        return todos[todoIndex]
+        return todos[todoIndex];
     }
     
     const addTodo = (data) => {
-        todos.push(newTodo(todos.length, data.title, data.description, data.date, data.priority));
+        todos.push(newTodo(todos.length, id, data.title, data.description, data.date, data.priority));
     }
 
     const removeTodo = (todoIndex) => {
@@ -29,7 +29,7 @@ export function newProject(name) {
         }
     }
 
-    return { name, getTodos, getTodo, addTodo, removeTodo, loadTodos }
+    return { name, id, getTodos, getTodo, addTodo, removeTodo, loadTodos }
 }
 
 export function myProjects() {
@@ -51,7 +51,11 @@ export function myProjects() {
         return projects[projectIndex].getTodo(todoIndex);
     }
 
-    return { addProject, getProjects, getProject, getProjectsTodo }
+    const projectCount = () => {
+        return projects.length;
+    }
+
+    return { addProject, getProjects, getProject, getProjectsTodo, projectCount }
 }
 
 export function addNewProjectEventListener(newProjectNode) {

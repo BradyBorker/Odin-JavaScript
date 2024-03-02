@@ -45,7 +45,7 @@ export function addSubmitsEventListener(modalForms, projects) {
                 hideModal(document.querySelector('.todoModal'));
                 storeAndDisplayProjects(projects);
             } else if(e.target.parentNode.classList.contains('projectModal')) {
-                const project = newProject(data.name);
+                const project = newProject(data.name, projects.projectCount());
                 projects.addProject(project);
 
                 hideModal(document.querySelector('.projectModal'));
