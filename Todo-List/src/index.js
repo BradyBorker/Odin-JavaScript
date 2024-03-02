@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
         storeTodo(defaultProject.getTodo(0));
     }
     let todo = getStoredTodo() ? getStoredTodo() : projects.getProjectsTodo(0, 0);
-    // console.log(todo)
     
+    console.log(projects.getProjectsTodo(0,0))
     displayTodo(todo);    
     storeAndDisplayProjects(projects)
     //localStorage.clear()

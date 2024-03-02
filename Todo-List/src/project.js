@@ -1,7 +1,7 @@
 import newTodo from './todo'
 import { showModal } from './modal'
 import { displayProjects } from "./dom";
-import { addTodosEventListener, addNewTodosEventListener, addRemoveTodoEventListener } from "./todo";
+import { addTodosEventListener, addNewTodosEventListener, addRemoveTodoEventListener, checkList } from "./todo";
 import { storeProjects } from "./storage";
 
 export function newProject(name, id) {
@@ -16,7 +16,7 @@ export function newProject(name, id) {
     }
     
     const addTodo = (data) => {
-        todos.push(newTodo(todos.length, id, data.title, data.description, data.date, data.priority));
+        todos.push(Object.assign(newTodo(todos.length, id, data.title, data.description, data.date, data.priority), checkList));
     }
 
     const removeTodo = (todoIndex) => {
@@ -25,7 +25,7 @@ export function newProject(name, id) {
 
     const loadTodos = (loadedTodos) => {
         for (let todo of loadedTodos) {
-            todos.push(todo);
+            todos.push(Object.assign(todo, checkList(todo.checkList)))
         }
     }
 

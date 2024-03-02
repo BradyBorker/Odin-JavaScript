@@ -27,6 +27,7 @@ export function storageAvailable(type) {
 
 export function storeProjects(projects) {
     let projectsArray = [];
+    console.log(projects)
     for (let project of projects) {
         let projectName = project.name;
         let projectObject = { [projectName]: [] };

@@ -7,27 +7,23 @@ import { storeAndDisplayProjects } from "./project";
 export default function(id, projectId, title, description, dueDate, priority, checkList=[]) {
     let [ year, month, day ] = dueDate.split('-').map((value) => Number(value));
     let daysRemaining = formatDistanceToNow(new Date(year, month - 1, day));
+    
+    return { id, projectId, title, description, daysRemaining, priority, checkList }
+}
 
+export function checkList(checkList) {
     const checkListItem = () => {
         let description = '';
         let checked = false;
 
-        const updateDescription = (text) => {
-            description = text;
-        }
-
-        const updateChecked = () => {
-            returnchecked = !checked;
-        }
-
-        return { description, checked, updateDescription, updateChecked }
+        return { description, checked }
     }
 
-    const addCheckListItem = () => {
+    const addItem = () => {
         checkList.push(checkListItem());
     }
-    
-    return { id, projectId, title, description, daysRemaining, priority }
+
+    return { addItem }
 }
 
 export function addTodosEventListener(todoNodes, projects) {
@@ -68,12 +64,10 @@ export function addNewCheckListItemEventListener(button, projects) {
     button.addEventListener('click', (e) => {
         const [ todoId, projectId ] = [ getStoredTodo().id, getStoredTodo().projectId ];
         const todo = projects.getProjectsTodo(projectId, todoId);
-        console.log(projects.getProject(0))
-        console.log(todo)
-        // todo.addCheckListItem()
+        todo.addItem()
         
-        //storeTodo(todo);
-        //storeProjects(projects);
+        storeTodo(todo);
+        storeProjects(projects.getProjects());
         //displayTodo(todo);
     })
 }
