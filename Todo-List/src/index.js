@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     todo = projects.getProjectsTodo(todo.projectId, todo.id);
 
     displayTodo(todo, projects);    
-    storeAndDisplayProjects(projects)
+    storeAndDisplayProjects(projects);
 });
 
 const addNewProjectNode = document.querySelector('.new-project');

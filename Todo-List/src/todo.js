@@ -65,6 +65,7 @@ export function addNewCheckListItemEventListener(button, projects) {
         const [ todoId, projectId ] = [ getStoredTodo().id, getStoredTodo().projectId ];
         const todo = projects.getProjectsTodo(projectId, todoId);
         todo.addItem(todo.checkList.length);
+        
         storeTodo(todo);
         storeProjects(projects.getProjects());
         displayTodo(todo, projects);
@@ -74,6 +75,7 @@ export function addNewCheckListItemEventListener(button, projects) {
 export function addCheckListItemDescriptionEventListener(checkListItemInput, todo, projects) {
     checkListItemInput.addEventListener('input', (e) => {
         todo.checkList[e.target.id].description = e.target.value
+        
         storeTodo(todo);
         storeProjects(projects.getProjects());
     })
@@ -82,7 +84,7 @@ export function addCheckListItemDescriptionEventListener(checkListItemInput, tod
 export function addCheckBoxEventListener(checkBox, todo, projects) {
     checkBox.addEventListener('click', (e) => { 
         todo.checkList[e.target.id].checked = !todo.checkList[e.target.id].checked;
-        console.log(todo)
+
         if (todo.checkList[e.target.id].checked) {
             checkBox.textContent = 'X';
         } else {
