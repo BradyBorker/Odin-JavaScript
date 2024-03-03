@@ -1,3 +1,5 @@
+import { addCheckListItemDescriptionEventListener } from "./todo";
+
 export function displayProjects(projects) {
     const projectsDisplay = document.querySelector('.projects');
     const projectNodes = [];
@@ -44,7 +46,7 @@ export function displayProjects(projects) {
     projectsDisplay.replaceChildren(...projectNodes)
 }
 
-export function displayTodo(todo) {
+export function displayTodo(todo, projects) {
     const todoContainer = document.querySelector('.todo-container');
     todoContainer.id = todo.id
 
@@ -59,17 +61,24 @@ export function displayTodo(todo) {
 
     const descriptionNode = document.querySelector('.description');
     descriptionNode.textContent = todo.description;
-
-    // Display Checklist
-    /*
-    const checklistItems = document.querySelector('.checklist-items');
-
-    const itemText = document.createElement('input')
-    const itemCheckBox = document.createElement('div')
     
-    checklistItems.appendChild(itemText)
-    checklistItems.appendChild(itemCheckBox)
-    */
+    const checklistItems = document.querySelector('.checklist-items');
+    const itemsArray = [];
+    todo.checkList.forEach((item) => {
+        const itemText = document.createElement('input');
+        itemText.value = item.description;
+        itemText.classList.add('item-description');
+        itemText.id = item.id;
+        addCheckListItemDescriptionEventListener(itemText, todo, projects);
+
+        const itemCheckBox = document.createElement('div');
+        itemCheckBox.classList.add('item-checkbox');
+        itemCheckBox.id = item.id;
+        
+        itemsArray.push(itemText);
+        itemsArray.push(itemCheckBox);
+    })
+    checklistItems.replaceChildren(...itemsArray);
 }
 
 export function addClass(node, className) {

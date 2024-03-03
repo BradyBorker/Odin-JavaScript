@@ -16,7 +16,8 @@ export function newProject(name, id) {
     }
     
     const addTodo = (data) => {
-        todos.push(Object.assign(newTodo(todos.length, id, data.title, data.description, data.date, data.priority), checkList));
+        const todo = newTodo(todos.length, id, data.title, data.description, data.date, data.priority)
+        todos.push(Object.assign(todo, checkList(todo.checkList)));
     }
 
     const removeTodo = (todoIndex) => {

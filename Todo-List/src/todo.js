@@ -12,15 +12,15 @@ export default function(id, projectId, title, description, dueDate, priority, ch
 }
 
 export function checkList(checkList) {
-    const checkListItem = () => {
+    const checkListItem = (id) => {
         let description = '';
         let checked = false;
 
-        return { description, checked }
+        return { id, description, checked }
     }
 
-    const addItem = () => {
-        checkList.push(checkListItem());
+    const addItem = (itemId) => {
+        checkList.push(checkListItem(itemId));
     }
 
     return { addItem }
@@ -31,7 +31,7 @@ export function addTodosEventListener(todoNodes, projects) {
         todoNode.addEventListener('click', (e) => {
             let [ projectId, todoId ] = e.target.parentNode.id.split('-');
             const todo = projects.getProjectsTodo(projectId, todoId);
-            displayTodo(todo);
+            displayTodo(todo, projects);
             storeTodo(todo);
         })
     })
@@ -64,10 +64,17 @@ export function addNewCheckListItemEventListener(button, projects) {
     button.addEventListener('click', (e) => {
         const [ todoId, projectId ] = [ getStoredTodo().id, getStoredTodo().projectId ];
         const todo = projects.getProjectsTodo(projectId, todoId);
-        todo.addItem()
-        
+        todo.addItem(todo.checkList.length);
         storeTodo(todo);
         storeProjects(projects.getProjects());
-        //displayTodo(todo);
+        displayTodo(todo, projects);
+    })
+}
+
+export function addCheckListItemDescriptionEventListener(checkListItemInput, todo, projects) {
+    checkListItemInput.addEventListener('input', (e) => {
+        todo.checkList[e.target.id].description = e.target.value
+        storeTodo(todo);
+        storeProjects(projects.getProjects());
     })
 }

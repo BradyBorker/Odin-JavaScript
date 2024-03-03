@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', (e) => {
         storeTodo(defaultProject.getTodo(0));
     }
     let todo = getStoredTodo() ? getStoredTodo() : projects.getProjectsTodo(0, 0);
-    
-    console.log(projects.getProjectsTodo(0,0))
-    displayTodo(todo);    
+    todo = projects.getProjectsTodo(todo.projectId, todo.id);
+
+    displayTodo(todo, projects);    
     storeAndDisplayProjects(projects)
     //localStorage.clear()
 });
@@ -44,6 +44,3 @@ addClosesEventListener(closeModals);
 const modalForms = document.querySelectorAll('.modal > form');
 addSubmitsEventListener(modalForms, projects);
 
-// TODO: 1. Checklist
-// TODO: Fix how todos are stored
-// Store todo ID and project ID instead
