@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
     displayTodo(todo, projects);    
     storeAndDisplayProjects(projects)
-    //localStorage.clear()
 });
 
 const addNewProjectNode = document.querySelector('.new-project');

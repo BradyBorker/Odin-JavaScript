@@ -1,4 +1,4 @@
-import { addCheckListItemDescriptionEventListener } from "./todo";
+import { addCheckListItemDescriptionEventListener, addCheckBoxEventListener } from "./todo";
 
 export function displayProjects(projects) {
     const projectsDisplay = document.querySelector('.projects');
@@ -74,6 +74,10 @@ export function displayTodo(todo, projects) {
         const itemCheckBox = document.createElement('div');
         itemCheckBox.classList.add('item-checkbox');
         itemCheckBox.id = item.id;
+        if (todo.checkList[item.id].checked) {
+            itemCheckBox.textContent = 'X';
+        }
+        addCheckBoxEventListener(itemCheckBox, todo, projects);
         
         itemsArray.push(itemText);
         itemsArray.push(itemCheckBox);

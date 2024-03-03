@@ -78,3 +78,18 @@ export function addCheckListItemDescriptionEventListener(checkListItemInput, tod
         storeProjects(projects.getProjects());
     })
 }
+
+export function addCheckBoxEventListener(checkBox, todo, projects) {
+    checkBox.addEventListener('click', (e) => { 
+        todo.checkList[e.target.id].checked = !todo.checkList[e.target.id].checked;
+        console.log(todo)
+        if (todo.checkList[e.target.id].checked) {
+            checkBox.textContent = 'X';
+        } else {
+            checkBox.textContent = '';
+        }
+
+        storeTodo(todo);
+        storeProjects(projects.getProjects());
+    })
+}
