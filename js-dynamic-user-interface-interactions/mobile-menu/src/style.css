@@ -1,0 +1,28 @@
+:root {
+    --rudder-color: blue;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        margin: 0;
+    }
+
+    .rudder-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        border: 1px solid var(--rudder-color);
+
+        position: absolute;
+        bottom: 0;
+        right: 50%;
+        transform: translate(50%);
+        margin-bottom: 10px;
+
+        transition: width 0.5s ease-in-out;
+    }
+
+    .extend {
+        width: 250px;
+    }
+}
