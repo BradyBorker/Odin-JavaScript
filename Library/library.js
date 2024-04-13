@@ -18,6 +18,7 @@ class Library {
     }
 
     removeBook(index) {
+        console.log(index)
         this.books.splice(index, 1);
         this.display();
     }
@@ -40,8 +41,7 @@ class Library {
         td.id = bookNumber;
         td.appendChild(document.createTextNode("X"));
         td.addEventListener('click', (e) => {
-            myLibrary.removeBook();
-
+            myLibrary.removeBook(e.target.id);
         })
         tr.appendChild(td);
     }
