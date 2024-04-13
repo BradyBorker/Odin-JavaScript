@@ -9,7 +9,7 @@
     transform-origin: center;
     transform: translate(-50%, -50%);
     transition: transform .5s ease-out,
-                opacity .5s;
+        opacity .5s;
     background-color: #333;
     color: #fff;
 
@@ -25,17 +25,23 @@
 }
 
 /* Modal Form */
-.modal > form {
+.modal>form {
     display: grid;
     grid-template-columns: repeat(2, min-content);
     grid-auto-rows: max-content;
     gap: 10px;
 }
 
+.modal input:invalid {
+    background-color: lightcoral;
+}
+
+/* Library */
+
 .library-container {
     margin: auto;
     max-width: max-content;
-    
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,7 +54,7 @@
     pointer-events: none;
 }
 
-.library-container > button {
+.library-container>button {
     margin: 25px auto 25px auto;
     background-color: #333;
     color: #fff;
@@ -62,7 +68,7 @@ td {
     border: 1px solid #333;
 }
 
-tr > td:last-child {
+tr>td:last-child {
     border: none;
     color: red;
     cursor: pointer;

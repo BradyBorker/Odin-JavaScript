@@ -74,9 +74,20 @@ class Library {
         }
     }
 }
+
+(function formValidations() {
+    const authorInput = document.querySelector('#author');
+    authorInput.addEventListener('input', () => {
+        if (!authorInput.validity.valid) {
+            authorInput.setCustomValidity('Please enter an authors name');
+        }
+    })
+})()
+
 const myLibrary = new Library
 myLibrary.display();
 
+/*
 function allInputsFilled(author, title, pageCount) {
     if (author === '' || title === '' || pageCount === '') {
         alert("All inputs need to be filled")
@@ -84,6 +95,7 @@ function allInputsFilled(author, title, pageCount) {
     }
     return true;
 }
+*/
 
 function dropModal(author, title, pageCount, modal, library) {
     author.value = '';
@@ -110,7 +122,8 @@ form.addEventListener('submit', (e) => {
     let pageCount = document.querySelector("#page-count");
     let read = document.querySelector("input[name=has-read]:checked");
 
-    if (e.submitter.id === 'add' && allInputsFilled(author.value, title.value, pageCount.value)) {
+    //if (e.submitter.id === 'add' && allInputsFilled(author.value, title.value, pageCount.value)) {
+    if (e.submitter.id === 'add') {
         myLibrary.addBook = new Book(author.value, title.value, pageCount.value, read.id);
         dropModal(author, title, pageCount, modal, library);
     } else if (e.submitter.id === 'discard') {
