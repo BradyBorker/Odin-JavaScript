@@ -5,12 +5,14 @@ const form = document.querySelector("form");
 form.addEventListener("submit", (e) => {
   if (!e.target.checkValidity()) {
     e.preventDefault();
+  } else {
+    alert("High Five!");
   }
 });
 
 // Email Input
 const emailInput = document.querySelector("input#email");
-emailInput.addEventListener("change", (e) => {
+emailInput.addEventListener("input", (e) => {
   const errorMessage = document.querySelector("input#email + span.error");
   if (!e.target.validity.valid) {
     errorMessage.textContent = "Please enter an email address";
@@ -21,7 +23,7 @@ emailInput.addEventListener("change", (e) => {
 
 // Country Input
 const countryInput = document.querySelector("input#country");
-countryInput.addEventListener("change", (e) => {
+countryInput.addEventListener("input", (e) => {
   const errorMessage = document.querySelector("input#country + span.error");
   if (!e.target.validity.valid) {
     errorMessage.textContent = "Please enter a country";
@@ -32,7 +34,7 @@ countryInput.addEventListener("change", (e) => {
 
 // Zip Code Input
 const zipCodeInput = document.querySelector("input#zip-code");
-zipCodeInput.addEventListener("change", (e) => {
+zipCodeInput.addEventListener("input", (e) => {
   const errorMessage = document.querySelector("input#zip-code + span.error");
   if (!e.target.validity.valid) {
     errorMessage.textContent = "Please enter a zip code";
