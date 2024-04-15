@@ -1,19 +1,31 @@
 body {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 form {
-    width: 500px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
+  width: 500px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 
 form label {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+form label input:valid {
+  background-color: lightgreen;
+}
+
+form label input:invalid {
+  background-color: #fe8181;
+}
+
+form label span.error {
+  background-color: #fe5757;
 }

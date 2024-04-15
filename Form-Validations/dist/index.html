@@ -1,43 +1,46 @@
 <!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="./main.js" defer></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <form action="" novalidate>
-        <label for="email">
-            <span>Email:</span>
-            <input type="email" name="email" id="email">
-            <span class="error"></span>
-        </label>
-        <label for="country">
-            <span>Country:</span>
-            <input type="text" name="country" id="country">
-            <span class="error"></span>
-        </label>
-        <label for="zip-code">
-            <span>Zip Code:</span>
-            <input type="text" name="zip-code" id="zip-code">
-            <span class="error"></span>
-        </label>
-        <label for="password">
-            <span>Password:</span>
-            <input type="text" name="password" id="password">
-            <span class="error"></span>
-        </label>
-        <label for="password-confirmation">
-            <span>Confirm Password:</span>
-            <input type="text" name="password-confirmation" id="password-confirmation">
-            <span class="error"></span>
-        </label>
+      <label for="email">
+        <span>Email:</span>
+        <input type="email" name="email" id="email" required />
+        <span class="error"></span>
+      </label>
+      <label for="country">
+        <span>Country:</span>
+        <input type="text" name="country" id="country" required />
+        <span class="error"></span>
+      </label>
+      <label for="zip-code">
+        <span>Zip Code:</span>
+        <input type="text" name="zip-code" id="zip-code" required />
+        <span class="error"></span>
+      </label>
+      <label for="password">
+        <span>Password:</span>
+        <input type="password" name="password" id="password" required />
+        <span class="error"></span>
+      </label>
+      <label for="password-confirmation">
+        <span>Confirm Password:</span>
+        <input
+          type="password"
+          name="password-confirmation"
+          id="password-confirmation"
+          required
+        />
+        <span class="error"></span>
+      </label>
 
-        <button type="submit">Submit</button>
+      <button type="submit">Submit</button>
     </form>
-</body>
-
+  </body>
 </html>
