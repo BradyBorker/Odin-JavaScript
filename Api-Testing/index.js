@@ -1,6 +1,6 @@
 const img = document.querySelector('img');
 function getGif(search) {
-    fetch(`https://api.giphy.com/v1/gifs/translate?api_key=zQZfa80h0Q8Z2Q6I4jGTA54kHQLTBC53&s=${search}`, { mode: 'cors' })
+    fetch(`https://api.giphy.com/v1/gifs/translate?api_key=API_KEY=${search}`, { mode: 'cors' })
         .then(function (response) {
             return response.json();
         })
