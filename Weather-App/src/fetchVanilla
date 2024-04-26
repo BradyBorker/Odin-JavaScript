@@ -1,0 +1,20 @@
+/*
+This module uses vanilla methods to work with the promises returned from the
+fetch and .json() function/method
+*/
+
+import { apiKey } from "./api-key"
+
+const location = 'tampa';
+const query = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}`
+
+let forcastData = {};
+const weatherPromise = fetch(query, { mode: 'cors' }).then((response) => response.json())
+weatherPromise.then((resolve) => {
+    forcastData = resolve;
+}).catch((err) => {
+    console.log(err);
+    forcastData = undefined;
+})
+
+console.log(forcastData)
