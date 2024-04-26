@@ -5,16 +5,19 @@ fetch and .json() function/method
 
 import { apiKey } from "./api-key"
 
-const location = 'tampa';
-const query = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}`
+function getForcast(location) {
+    const query = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}`
 
-let forcastData = {};
-const weatherPromise = fetch(query, { mode: 'cors' }).then((response) => response.json())
-weatherPromise.then((resolve) => {
-    forcastData = resolve;
-}).catch((err) => {
-    console.log(err);
-    forcastData = undefined;
-})
+    let forcastData = {};
+    const weatherPromise = fetch(query, { mode: 'cors' }).then((response) => response.json())
+    weatherPromise.then((resolve) => {
+        forcastData = resolve;
+    }).catch((err) => {
+        console.log(err);
+        forcastData = undefined;
+    })
 
-console.log(forcastData)
+    console.log(forcastData)
+}
+
+getForcast('tampa');
