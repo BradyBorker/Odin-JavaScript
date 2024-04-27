@@ -3,10 +3,10 @@ This module uses Async and Await to work with the promises returned from
 the fetch() and .json() function/methods
 */
 
-import { apiKey } from "./api-key";
+import { apiKey } from "./apiKey";
 
-async function getForcast(location) {
-    const query = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}`
+export default async function getForcast(location) {
+    const query = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=7`
 
     try {
         const fetchForcast = await fetch(query, { mode: 'cors' });
@@ -17,7 +17,3 @@ async function getForcast(location) {
         return undefined;
     }
 }
-
-const location = 'seattle';
-const forcastData = await getForcast(location)
-console.log(forcastData);
