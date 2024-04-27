@@ -7,9 +7,9 @@ import "./style.css";
 
 const form = document.querySelector("form");
 form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const city = document.querySelector("input").value;
-  const forcastData = await getForcast(city);
-  displayWeatherReport(forcastData);
+    const city = document.querySelector("input").value;
+    const forcastData = await getForcast(city);
+    displayWeatherReport(forcastData, city);
 });
