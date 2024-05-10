@@ -56,7 +56,7 @@ export default function gameBoard() {
         return false
     }
 
-    const getShips = () => {
+    const getPlacedShips = () => {
         const shipsArray = [];
         shipCoordinates.forEach((shipObject) => {
             shipsArray.push(shipObject.ship);
@@ -65,7 +65,7 @@ export default function gameBoard() {
     }
 
     const allSunk = () => {
-        const ships = getShips();
+        const ships = getPlacedShips();
         return ships.every((ship) => ship.isSunk())
     }
 
