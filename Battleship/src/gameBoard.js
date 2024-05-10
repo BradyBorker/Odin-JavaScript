@@ -1,9 +1,9 @@
 export default function gameBoard() {
-    const board = [];
+    const state = [];
     for (let row = 0; row < 10; row += 1) {
-        board.push([]);
+        state.push([]);
         for (let col = 0; col < 10; col += 1) {
-            board[row].push(false);
+            state[row].push(false);
         }
     }
 
@@ -11,7 +11,7 @@ export default function gameBoard() {
         for (let i = 0; i < coordinates.length; i += 1) {
             const coordinate = coordinates[i];
             const [row, column] = coordinate;
-            if (row < 0 || row > 9 || column < 0 || column > 9 || board[row][column]) {
+            if (row < 0 || row > 9 || column < 0 || column > 9 || state[row][column]) {
                 return false
             }
         }
@@ -33,7 +33,7 @@ export default function gameBoard() {
             shipCoordinates.push({ 'ship': ship, 'coordinates': coordinates })
             coordinates.forEach((coordinate) => {
                 const [row, column] = coordinate;
-                board[row][column] = ship;
+                state[row][column] = ship;
             })
             return true
         }
@@ -46,7 +46,7 @@ export default function gameBoard() {
     const missedAttacks = [];
     const receiveAttack = (coordinate) => {
         const [row, column] = coordinate;
-        const boardTile = board[row][column];
+        const boardTile = state[row][column];
         if (boardTile) {
             boardTile.hit(coordinate);
             hitAttacks.push(coordinate);
@@ -69,5 +69,5 @@ export default function gameBoard() {
         return ships.every((ship) => ship.isSunk())
     }
 
-    return { placeShip, receiveAttack, allSunk, board, shipCoordinates, hitAttacks, missedAttacks }
+    return { placeShip, receiveAttack, allSunk, state, shipCoordinates, hitAttacks, missedAttacks }
 }
