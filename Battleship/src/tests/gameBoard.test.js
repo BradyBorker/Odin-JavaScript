@@ -61,4 +61,27 @@ test('receiveAttack returns true if hit false if no hit', () => {
     expect(newGameBoard.receiveAttack([0, 0])).toBeTruthy();
     expect(newGameBoard.receiveAttack([0, 1])).toBeTruthy();
     expect(newGameBoard.receiveAttack([0, 5])).toBeFalsy();
+    expect(newGameBoard.hitAttacks).toEqual([[0, 0], [0, 1]]);
+    expect(newGameBoard.missedAttacks).toEqual([[0, 5]]);
+})
+
+test('allSunk returns true if all ships have sunk', () => {
+    const ship1 = ship(1);
+    ship1.hit([]);
+    const ship2 = ship(1);
+    ship2.hit([]);
+    const newGameBoard = gameBoard();
+    newGameBoard.placeShip(ship1, [0, 0]);
+    newGameBoard.placeShip(ship2, [1, 0]);
+    expect(newGameBoard.allSunk()).toBeTruthy();
+})
+
+test('allSunk returns false if not all ships have sunk', () => {
+    const ship1 = ship(1);
+    ship1.hit([]);
+    const ship2 = ship(1);
+    const newGameBoard = gameBoard();
+    newGameBoard.placeShip(ship1, [0, 0]);
+    newGameBoard.placeShip(ship2, [1, 0]);
+    expect(newGameBoard.allSunk()).toBeFalsy();
 })

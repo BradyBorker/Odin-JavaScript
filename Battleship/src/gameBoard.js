@@ -56,5 +56,18 @@ export default function gameBoard() {
         return false
     }
 
-    return { placeShip, receiveAttack, board, shipCoordinates }
+    const getShips = () => {
+        const shipsArray = [];
+        shipCoordinates.forEach((shipObject) => {
+            shipsArray.push(shipObject.ship);
+        })
+        return shipsArray;
+    }
+
+    const allSunk = () => {
+        const ships = getShips();
+        return ships.every((ship) => ship.isSunk())
+    }
+
+    return { placeShip, receiveAttack, allSunk, board, shipCoordinates, hitAttacks, missedAttacks }
 }
