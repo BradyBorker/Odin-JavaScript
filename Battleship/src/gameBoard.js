@@ -7,19 +7,7 @@ export default function gameBoard() {
         }
     }
 
-    const shipCoordinates = [
-        /*
-        {
-            ship: ship object,
-            coordiantes: [[]]
-        }
-        */
-    ]
-
-    // valid ship placement function
     const validShipPlacement = (coordinates) => {
-        // Onboard check
-        // Not colliding with other ships
         for (let i = 0; i < coordinates.length; i += 1) {
             const coordinate = coordinates[i];
             const [row, column] = coordinate;
@@ -30,6 +18,7 @@ export default function gameBoard() {
         return true
     }
 
+    const shipCoordinates = []
     const placeShip = (ship, firstCoordinate) => {
         const coordinates = []
         for (let i = 0; i < ship.length; i += 1) {
@@ -50,31 +39,22 @@ export default function gameBoard() {
         }
         return false
 
+        // Add ship moved function?
     }
 
-    return { placeShip, board }
-}
-
-/*
-Ideas for Ship storage
-1. Element ids for grid are the row and column: 00, 01, etc.
-1a. Element class contains the ship name (Updated when ship is placed for every element)
-2. gameBoard stores ships like so:
-    const ships = {
-        'shipName': {
-            head: Coordinate (beginning of the ship),
-            ship: ship object
+    const hitAttacks = [];
+    const missedAttacks = [];
+    const receiveAttack = (coordinate) => {
+        const [row, column] = coordinate;
+        const boardTile = board[row][column];
+        if (boardTile) {
+            boardTile.hit(coordinate);
+            hitAttacks.push(coordinate);
+            return true
         }
+        missedAttacks.push(coordinate)
+        return false
     }
-3. openCoordinates Array gets updated when ship is moved into place
-3a. true when space is open
-3b. false when space is closed
-*/
-/*
-INSTEAD:
-shipCoordinates = {
-    "coordinate": {
-        ship: ship object
-    }
+
+    return { placeShip, receiveAttack, board, shipCoordinates }
 }
-*/

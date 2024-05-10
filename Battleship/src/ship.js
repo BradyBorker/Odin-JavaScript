@@ -1,12 +1,12 @@
 export default function ship(length, orientation = 'horizontal') {
-    const hitIndex = [];
+    const hitCoordinates = [];
 
-    const hit = (index) => {
-        hitIndex.push(index)
-        return hitIndex
+    const hit = (coordinate) => {
+        hitCoordinates.push(coordinate)
+        return hitCoordinates
     }
 
-    const isSunk = () => (length - hitIndex.length) <= 0
+    const isSunk = () => (length - hitCoordinates.length) <= 0
 
-    return { length, orientation, hitIndex, hit, isSunk }
+    return { length, orientation, hitCoordinates, hit, isSunk }
 }

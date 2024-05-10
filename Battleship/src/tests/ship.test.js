@@ -6,8 +6,8 @@ test('Return length of the ship', () => {
 
 test('Call hit on ship', () => {
     const newShip = ship(4);
-    expect(newShip.hit(1)).toEqual([1]);
-    expect(newShip.hit(2)).toEqual([1, 2]);
+    expect(newShip.hit([0, 0])).toEqual([[0, 0]]);
+    expect(newShip.hit([0, 1])).toEqual([[0, 0], [0, 1]]);
 })
 
 test('Call isSunk on ship', () => {
