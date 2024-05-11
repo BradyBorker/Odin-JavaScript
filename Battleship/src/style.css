@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+/* Menu */
+.game-mode-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.center-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

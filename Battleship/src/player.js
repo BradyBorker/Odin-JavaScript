@@ -1,18 +1,15 @@
 import gameBoard from "./gameBoard";
 
-export default function player() {
+function player() {
     const board = gameBoard();
 
     return { board }
 }
 
 export function human() {
-    const test = () => {
-
-    }
-    return { test, ...player() }
+    return { ...player() }
 }
 
 export function computer() {
-
+    return { ...player() }
 }
