@@ -1,7 +1,7 @@
 import ship from "./ship";
 import { human, computer } from "./player";
 import displayMenu from "./menu";
-import startGame from "./game";
+import startGame from "./battleship";
 import "./style.css";
 
 /*
@@ -12,4 +12,4 @@ import "./style.css";
 
 // Called on refresh if there is nothing in local storage
 // Or on 'Play again' button
-startGame(await displayMenu(human, computer))
+startGame(await displayMenu(human, computer), ship)

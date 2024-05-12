@@ -1,11 +1,8 @@
 function removeMenu(body) {
-    body.classList.remove('center-child');
-    while (body.firstChild) {
-        body.firstChild.remove();
-    }
+    body.removeChild(document.querySelector('.game-mode-container'))
 }
 
-export default async function displayMenu(human, computer) {
+export default function displayMenu(human, computer) {
     const gameModeContainer = document.createElement('div');
     const pvpModeBtn = document.createElement('button');
     pvpModeBtn.textContent = 'Player vs. Player';
@@ -17,12 +14,12 @@ export default async function displayMenu(human, computer) {
     gameModeContainer.classList.add('game-mode-container');
 
     const body = document.querySelector('body');
-    body.replaceChildren(gameModeContainer);
-    body.classList.add('center-child');
+    body.appendChild(gameModeContainer);
+    body.classList.add('center-menu');
 
     return new Promise((resolve) => {
         pvpModeBtn.addEventListener('click', () => {
-            removeMenu(body)
+            removeMenu(body, gameModeContainer)
             resolve([human(), human()]);
         })
 

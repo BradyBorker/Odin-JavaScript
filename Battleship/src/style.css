@@ -2,6 +2,19 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.removed {
+    display: none;
+}
+
+.hidden {
+    opacity: 0;
 }
 
 /* Menu */
@@ -11,9 +24,37 @@ body {
     gap: 10px;
 }
 
-.center-child {
+.center-menu {}
+
+/* Battleship Game */
+.battleship-container {
+    border: 1px solid black;
+    max-width: 1200px;
+}
+
+.player-boards {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    gap: 50px;
+}
+
+.player1-board,
+.player2-board {
+    width: 500px;
+    min-height: 500px;
+
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+}
+
+.tile {
+    border: 1px solid green;
+}
+
+.tile:hover {
+    background-color: lightblue;
+}
+
+.tile.ship {
+    background-color: black;
 }
