@@ -1,4 +1,5 @@
 export function renderGameBoards(players) {
+    const [player1, player2] = players
     players.forEach((player, index) => {
         const boardNode = document.querySelector(`.player${index + 1}-board`);
         const hitCoordinates = player.board.hitAttacks;
@@ -10,7 +11,7 @@ export function renderGameBoards(players) {
                 const tile = document.createElement('div');
                 tile.classList.add('tile');
                 tile.id = `${rowIndex}-${columnIndex}`
-                if (column) {
+                if (column && player.isHuman && !(player1.isHuman && player2.isHuman)) {
                     tile.classList.add('ship')
                 }
                 tiles.push(tile)
@@ -51,4 +52,5 @@ export default function startGame(players, ship) {
     staticShipPlacements(player2, ship);
 
     renderGameBoards(players)
+    // # TODO: Begin rounds, render after each round
 }

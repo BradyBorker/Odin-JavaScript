@@ -20,12 +20,12 @@ export default function displayMenu(human, computer) {
     return new Promise((resolve) => {
         pvpModeBtn.addEventListener('click', () => {
             removeMenu(body, gameModeContainer)
-            resolve([human(), human()]);
+            resolve([human(true), human()]);
         })
 
         pvcModeBtn.addEventListener('click', () => {
             removeMenu(body)
-            resolve([human(), computer()]);
+            resolve([human(true), computer()]);
         })
     })
 }

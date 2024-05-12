@@ -6,10 +6,14 @@ function player() {
     return { board }
 }
 
-export function human() {
-    return { ...player() }
+export function human(myTurn = false) {
+    const isHuman = true;
+
+    return { ...player(), isHuman, myTurn }
 }
 
-export function computer() {
-    return { ...player() }
+export function computer(myTurn = false) {
+    const isHuman = false;
+
+    return { ...player(), isHuman, myTurn }
 }
