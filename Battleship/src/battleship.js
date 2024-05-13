@@ -35,7 +35,7 @@ function renderGameBoards(players) {
         const tiles = [];
 
         player.board.state.forEach((row, rowIndex) => {
-            row.forEach(async (column, columnIndex) => {
+            row.forEach((column, columnIndex) => {
                 const tile = document.createElement('div');
                 tile.classList.add('tile');
                 tile.id = `${index + 1}-${rowIndex}-${columnIndex}`
@@ -44,8 +44,13 @@ function renderGameBoards(players) {
                 }
 
                 const ready = players.every((p) => p.isReady)
-                if (ready && !player.myTurn && player.board.isAttackable([rowIndex, columnIndex]) && (!player.isHuman || !playerVsComputer)) {
+                if (ready && !player.myTurn && player.board.isAttackable([rowIndex.toString(), columnIndex.toString()]) && (!player.isHuman || !playerVsComputer)) {
+                    console.log(player.board.isAttackable(['0', '0']))
+                    console.log(player.board.hitAttacks);
+                    console.log(player.board.missedAttacks)
                     const coordinate = tile.id.split('-').slice(1);
+                    // TODO: Fix! This is being applied to tiles that have already been hit
+                    // TODO: FIXED, but why does player version work???
                     tile.addEventListener('click', () => {
                         makeAttack(players, coordinate)
                     })
