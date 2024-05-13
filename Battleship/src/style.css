@@ -9,7 +9,7 @@ body {
     align-items: center;
 
     background: rgb(194, 178, 128);
-    background: linear-gradient(0deg, rgba(194, 178, 128, 1) 0%, rgba(194, 178, 128, 1) 7%, rgba(35, 137, 218, 1) 100%);
+    background: linear-gradient(0deg, rgba(194, 178, 128, 1) 0%, rgba(194, 178, 128, 1) 0%, rgba(35, 137, 218, 1) 20%);
     box-shadow: inset 0px 0px 23px 12px rgba(194, 178, 128, 1);
     border: 2px inset #C2B280;
 }
@@ -28,8 +28,6 @@ body {
     flex-direction: column;
     gap: 10px;
 }
-
-.center-menu {}
 
 /* Battleship Game */
 .battleship-container {
@@ -53,7 +51,7 @@ body {
 }
 
 .tile {
-    border: 1px solid green;
+    border: 1px solid #005b72;
 }
 
 .tile:hover {
@@ -62,4 +60,12 @@ body {
 
 .tile.ship {
     background-color: black;
+}
+
+.tile.hit {
+    background-color: red;
+}
+
+.tile.missed {
+    background-color: yellow;
 }

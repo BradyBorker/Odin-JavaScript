@@ -64,10 +64,15 @@ export default function gameBoard() {
         return shipsArray;
     }
 
+    const isAttackable = (coordinate) => {
+        const allAttacks = hitAttacks.concat(missedAttacks).map((attack) => JSON.stringify(attack));
+        return !allAttacks.includes(JSON.stringify(coordinate))
+    }
+
     const allSunk = () => {
         const ships = getPlacedShips();
         return ships.every((ship) => ship.isSunk())
     }
 
-    return { placeShip, receiveAttack, allSunk, state, shipCoordinates, hitAttacks, missedAttacks }
+    return { placeShip, receiveAttack, allSunk, isAttackable, state, shipCoordinates, hitAttacks, missedAttacks }
 }

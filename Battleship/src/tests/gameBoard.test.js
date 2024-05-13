@@ -85,3 +85,10 @@ test('allSunk returns false if not all ships have sunk', () => {
     newGameBoard.placeShip(ship2, [1, 0]);
     expect(newGameBoard.allSunk()).toBeFalsy();
 })
+
+test('isAttackable returns true if coordinate has not been attacked', () => {
+    const newGameBoard = gameBoard();
+    newGameBoard.receiveAttack([0, 0]);
+    expect(newGameBoard.isAttackable([1, 0])).toBeTruthy();
+    expect(newGameBoard.isAttackable([0, 0])).toBeFalsy();
+})

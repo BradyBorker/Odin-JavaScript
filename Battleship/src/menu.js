@@ -15,7 +15,6 @@ export default function displayMenu(human, computer) {
 
     const body = document.querySelector('body');
     body.appendChild(gameModeContainer);
-    body.classList.add('center-menu');
 
     return new Promise((resolve) => {
         pvpModeBtn.addEventListener('click', () => {
