@@ -15,27 +15,35 @@ function player() {
 // TODO: Test switchTurn and readyUp
 
 export function human(myTurn = false) {
+    const name = myTurn ? 'Player 1' : 'Player 2'
     const isHuman = true;
 
     const switchTurn = function () {
         this.myTurn = !this.myTurn;
     }
 
-    return { ...player(), switchTurn, isHuman, myTurn }
+    return { ...player(), switchTurn, isHuman, myTurn, name }
 }
 
 export function computer(myTurn = false) {
+    const name = 'Player 2';
     const isHuman = false;
 
     const switchTurn = function () {
         this.myTurn = !this.myTurn;
     }
 
-    const previousAttacks = [];
+    let previousHit = null;
     const attackQueue = [];
     const attack = function (opponent) {
+        if (previousHit) {
+            for (let index = 1; index <= 4; index += 1) {
+                attackQueue.push([])
+            }
+        }
+
         if (attackQueue.length > 0) {
-            return attackQueue.pop();
+            return attackQueue.shift();
         }
 
         const attackPool = []
@@ -52,5 +60,11 @@ export function computer(myTurn = false) {
         return randomCoordinate
     }
 
-    return { ...player(), attack, switchTurn, isHuman, myTurn }
+    const logAttack = (isHit, coordinate) => {
+        if (isHit) {
+            previousHit = coordinate;
+        }
+    }
+
+    return { ...player(), attack, switchTurn, logAttack, isHuman, myTurn, name }
 }

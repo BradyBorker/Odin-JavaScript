@@ -92,3 +92,18 @@ test('isAttackable returns true if coordinate has not been attacked', () => {
     expect(newGameBoard.isAttackable([1, 0])).toBeTruthy();
     expect(newGameBoard.isAttackable([0, 0])).toBeFalsy();
 })
+
+test('allShipsPlaced returns true if all ships have been placed', () => {
+    const newGameBoard = gameBoard();
+    newGameBoard.placeShip(ship(1), [0, 1]);
+    newGameBoard.placeShip(ship(1), [1, 0]);
+    newGameBoard.placeShip(ship(1), [2, 0]);
+    newGameBoard.placeShip(ship(1), [3, 0]);
+    newGameBoard.placeShip(ship(1), [4, 0]);
+    expect(newGameBoard.allShipsPlaced()).toBeTruthy();
+})
+
+test('allShipsPlaced returns false if not all ships have been place', () => {
+    const newGameBoard = gameBoard();
+    expect(newGameBoard.allShipsPlaced()).toBeFalsy();
+})

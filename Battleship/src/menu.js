@@ -18,7 +18,7 @@ export default function displayMenu(human, computer) {
 
     return new Promise((resolve) => {
         pvpModeBtn.addEventListener('click', () => {
-            removeMenu(body, gameModeContainer)
+            removeMenu(body)
             resolve([human(true), human()]);
         })
 

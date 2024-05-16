@@ -1,30 +1,47 @@
+/* eslint-disable no-use-before-define */
+import placedShips, { randomShipPlacement } from "./placeShips";
+
 function switchTurn(players) {
     players.forEach((player) => {
         player.switchTurn();
     })
 }
 
+function isGameOver(players) {
+    const loser = players.filter((player) => player.board.allSunk());
+    if (loser.length > 0) {
+        const [winner] = players.filter((player) => !player.board.allSunk());
+        console.log(`Winner: ${winner.name}`)
+        return true;
+    }
+    return false;
+}
+
 function makeAttack(players, coordinate) {
     let [attackedPlayer] = players.filter((player) => !player.myTurn);
-    attackedPlayer.board.receiveAttack(coordinate);
+    let [attackingPlayer] = players.filter((player) => player.myTurn);
+    if (!attackingPlayer.isHuman) {
+        attackingPlayer.logAttack(attackedPlayer.board.receiveAttack(coordinate), coordinate)
+    } else {
+        attackedPlayer.board.receiveAttack(coordinate)
+    }
+
     switchTurn(players)
-    // eslint-disable-next-line no-use-before-define
     renderGameBoards(players)
+    if (isGameOver(players)) {
+        renderGameBoards(players, true)
+        return
+    }
 
-    // TODO: Split into human & computer functions
-
-    // If computer
-    const attackingPlayer = players.filter((player) => player.myTurn)[0];
+    [attackingPlayer] = players.filter((player) => player.myTurn);
     [attackedPlayer] = players.filter((player) => !player.myTurn);
     if (!attackingPlayer.isHuman) {
-        // Computer makes attack
         const attackCoordinate = attackingPlayer.attack(attackedPlayer);
-        console.log(attackCoordinate)
         makeAttack(players, attackCoordinate);
     }
 }
 
-function renderGameBoards(players) {
+function renderGameBoards(players, gameOver = false) {
     const [player1, player2] = players
     const playerVsComputer = !(player1.isHuman && player2.isHuman)
 
@@ -44,13 +61,8 @@ function renderGameBoards(players) {
                 }
 
                 const ready = players.every((p) => p.isReady)
-                if (ready && !player.myTurn && player.board.isAttackable([rowIndex.toString(), columnIndex.toString()]) && (!player.isHuman || !playerVsComputer)) {
-                    console.log(player.board.isAttackable(['0', '0']))
-                    console.log(player.board.hitAttacks);
-                    console.log(player.board.missedAttacks)
-                    const coordinate = tile.id.split('-').slice(1);
-                    // TODO: Fix! This is being applied to tiles that have already been hit
-                    // TODO: FIXED, but why does player version work???
+                if (ready && !player.myTurn && player.board.isAttackable([rowIndex, columnIndex]) && (!player.isHuman || !playerVsComputer) && !gameOver) {
+                    const coordinate = [rowIndex, columnIndex]
                     tile.addEventListener('click', () => {
                         makeAttack(players, coordinate)
                     })
@@ -71,11 +83,6 @@ function renderGameBoards(players) {
             const tile = document.getElementById(`${index + 1}-${row}-${column}`);
             tile.classList.add('missed');
         })
-        /*
-        if (playerVsComputer && !player.isHuman && player.myTurn) {
-
-        } */
-        // Computer attack logic. Where to move this?
     })
 }
 
@@ -88,7 +95,7 @@ function staticShipPlacements(player, ship) {
     }
 }
 
-export default function startGame(players, ship) {
+export default async function startGame(players, ship) {
     /*
     Order of Events:
     0. TODO: Display board, then allow move to board, then readyUp
@@ -97,17 +104,18 @@ export default function startGame(players, ship) {
     3. Ready Up
     4. Begin action
     */
-
+    renderGameBoards(players)
     const battleShipContainer = document.querySelector('.battleship-container');
     battleShipContainer.classList.remove('removed');
-
+    // Add random ship button
+    // TODO: Show Ready Up button once all ships have been placed
     const [player1, player2] = players
-    staticShipPlacements(player1, ship);
-    player1.readyUp();
+    randomShipPlacement(players, player1, ship, renderGameBoards)
+    await placedShips(player1)
+    // staticShipPlacements(player1, ship);
+    // player1.readyUp();
     staticShipPlacements(player2, ship);
     player2.readyUp();
-
-    console.log(player1.isReady)
 
     renderGameBoards(players)
     // # TODO: Begin rounds, render after each round

@@ -42,6 +42,8 @@ export default function gameBoard() {
         // Add ship moved function?
     }
 
+    const allShipsPlaced = () => shipCoordinates.length === 5
+
     const hitAttacks = [];
     const missedAttacks = [];
     const receiveAttack = (coordinate) => {
@@ -64,6 +66,15 @@ export default function gameBoard() {
         return shipsArray;
     }
 
+    const removePlacedShips = () => {
+        state.forEach((row, rowIndex) => {
+            row.forEach((col, colIndex) => {
+                state[rowIndex][colIndex] = false;
+            })
+        })
+        shipCoordinates.splice(0, shipCoordinates.length)
+    }
+
     const isAttackable = (coordinate) => {
         const allAttacks = hitAttacks.concat(missedAttacks).map((attack) => JSON.stringify(attack));
         return !allAttacks.includes(JSON.stringify(coordinate))
@@ -74,5 +85,5 @@ export default function gameBoard() {
         return ships.every((ship) => ship.isSunk())
     }
 
-    return { placeShip, receiveAttack, allSunk, isAttackable, state, shipCoordinates, hitAttacks, missedAttacks }
+    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, state, shipCoordinates, hitAttacks, missedAttacks }
 }
