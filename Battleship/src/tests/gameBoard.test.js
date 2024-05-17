@@ -107,3 +107,10 @@ test('allShipsPlaced returns false if not all ships have been place', () => {
     const newGameBoard = gameBoard();
     expect(newGameBoard.allShipsPlaced()).toBeFalsy();
 })
+
+test('getShip returns the ship at the specified coordinate', () => {
+    const newGameBoard = gameBoard();
+    const newShip = ship(2);
+    newGameBoard.placeShip(newShip, [0, 0]);
+    expect(newGameBoard.getShip([0, 0])).toEqual(newShip);
+})

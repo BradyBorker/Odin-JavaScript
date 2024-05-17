@@ -66,6 +66,11 @@ export default function gameBoard() {
         return shipsArray;
     }
 
+    const getShip = (coordinate) => {
+        const theShip = state[coordinate[0]][coordinate[1]];
+        return theShip
+    }
+
     const removePlacedShips = () => {
         state.forEach((row, rowIndex) => {
             row.forEach((col, colIndex) => {
@@ -85,5 +90,5 @@ export default function gameBoard() {
         return ships.every((ship) => ship.isSunk())
     }
 
-    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, state, shipCoordinates, hitAttacks, missedAttacks }
+    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, getShip, state, shipCoordinates, hitAttacks, missedAttacks }
 }

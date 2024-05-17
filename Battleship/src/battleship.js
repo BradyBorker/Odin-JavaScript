@@ -20,11 +20,13 @@ function isGameOver(players) {
 function makeAttack(players, coordinate) {
     let [attackedPlayer] = players.filter((player) => !player.myTurn);
     let [attackingPlayer] = players.filter((player) => player.myTurn);
+
     if (!attackingPlayer.isHuman) {
         attackingPlayer.logAttack(attackedPlayer.board.receiveAttack(coordinate), coordinate)
     } else {
         attackedPlayer.board.receiveAttack(coordinate)
     }
+    // attackedPlayer.board.receiveAttack(coordinate)
 
     switchTurn(players)
     renderGameBoards(players)
@@ -56,7 +58,7 @@ function renderGameBoards(players, gameOver = false) {
                 const tile = document.createElement('div');
                 tile.classList.add('tile');
                 tile.id = `${index + 1}-${rowIndex}-${columnIndex}`
-                if (column && player.isHuman && playerVsComputer) {
+                if (column && player.isHuman && (playerVsComputer || !player.isReady)) {
                     tile.classList.add('ship')
                 }
 
