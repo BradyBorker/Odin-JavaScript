@@ -22,21 +22,21 @@ function makeAttack(players, coordinate) {
     let [attackingPlayer] = players.filter((player) => player.myTurn);
 
     if (!attackingPlayer.isHuman) {
-        attackingPlayer.logAttack(attackedPlayer.board.receiveAttack(coordinate), coordinate)
+        attackingPlayer.logAttack(attackedPlayer.board.receiveAttack(coordinate), coordinate);
     } else {
-        attackedPlayer.board.receiveAttack(coordinate)
+        attackedPlayer.board.receiveAttack(coordinate);
     }
-    // attackedPlayer.board.receiveAttack(coordinate)
 
-    switchTurn(players)
-    renderGameBoards(players)
+    switchTurn(players);
+    renderGameBoards(players);
     if (isGameOver(players)) {
-        renderGameBoards(players, true)
-        return
+        renderGameBoards(players, true);
+        return;
     }
 
-    [attackingPlayer] = players.filter((player) => player.myTurn);
+    // Computer Attack
     [attackedPlayer] = players.filter((player) => !player.myTurn);
+    [attackingPlayer] = players.filter((player) => player.myTurn);
     if (!attackingPlayer.isHuman) {
         const attackCoordinate = attackingPlayer.attack(attackedPlayer);
         makeAttack(players, attackCoordinate);

@@ -114,3 +114,10 @@ test('getShip returns the ship at the specified coordinate', () => {
     newGameBoard.placeShip(newShip, [0, 0]);
     expect(newGameBoard.getShip([0, 0])).toEqual(newShip);
 })
+
+test('getShipCoordinates returns an Array of a ships coordinates', () => {
+    const newGameBoard = gameBoard();
+    const newShip = ship(2);
+    newGameBoard.placeShip(newShip, [0, 0]);
+    expect(newGameBoard.getShipCoordinates(newShip)).toEqual([[0, 0], [0, 1]]);
+})

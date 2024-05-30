@@ -18,6 +18,7 @@ export default function gameBoard() {
         return true
     }
 
+    // TODO: Probably remove: shipCoordinates, getPlacedShips, getShipCoordinates
     const shipCoordinates = []
     const placeShip = (ship, firstCoordinate) => {
         const coordinates = []
@@ -67,8 +68,19 @@ export default function gameBoard() {
     }
 
     const getShip = (coordinate) => {
-        const theShip = state[coordinate[0]][coordinate[1]];
+        const [row, column] = coordinate;
+        const theShip = state[row][column];
         return theShip
+    }
+
+    const getShipCoordinates = (ship) => {
+        for (let index = 0; index < shipCoordinates.length; index += 1) {
+            const shipObject = shipCoordinates[index]
+            if (shipObject.ship === ship) {
+                return shipObject.coordinates
+            }
+        }
+        return false
     }
 
     const removePlacedShips = () => {
@@ -80,9 +92,14 @@ export default function gameBoard() {
         shipCoordinates.splice(0, shipCoordinates.length)
     }
 
+    const validAttack = (coordinate) => {
+        const [row, column] = coordinate;
+        return row >= 0 && row <= 9 && column >= 0 && column <= 9;
+    }
+
     const isAttackable = (coordinate) => {
         const allAttacks = hitAttacks.concat(missedAttacks).map((attack) => JSON.stringify(attack));
-        return !allAttacks.includes(JSON.stringify(coordinate))
+        return !allAttacks.includes(JSON.stringify(coordinate)) && validAttack(coordinate)
     }
 
     const allSunk = () => {
@@ -90,5 +107,5 @@ export default function gameBoard() {
         return ships.every((ship) => ship.isSunk())
     }
 
-    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, getShip, state, shipCoordinates, hitAttacks, missedAttacks }
+    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, getShip, getShipCoordinates, state, shipCoordinates, hitAttacks, missedAttacks }
 }

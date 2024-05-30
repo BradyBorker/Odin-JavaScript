@@ -34,22 +34,27 @@ export function computer(myTurn = false) {
     }
 
     let initialHit = null;
-    let attackStack = [];
     let hitHistory = [];
+    let attackStack = [];
     const attack = function (opponent) {
-        // Check to see if ship has sunk based on last attack!
+        // Check to see if ship has sunk based on last attack
         if (initialHit) {
             const attackedShip = opponent.board.getShip(initialHit);
             if (attackedShip.isSunk()) {
-                initialHit = null;
+                // const sunkShipCoordinates = opponent.board.getShipCoordinates(attackedShip).map((coordinate) => JSON.stringify(coordinate));
+                const sunkShipCoordinates = attackedShip.hitCoordinates.map((hitCoordinate) => JSON.stringify(hitCoordinate));
                 const remainingCoordinates = [];
                 hitHistory.forEach((coordinate) => {
-                    const sunkShipCoordinates = attackedShip.hitCoordinates.map((hitCoordinate) => JSON.stringify(hitCoordinate));
                     if (!sunkShipCoordinates.includes(coordinate)) {
                         remainingCoordinates.push(coordinate);
                     }
                 })
+                initialHit = null;
                 hitHistory = remainingCoordinates;
+                attackStack = [];
+            }
+            if (!initialHit && hitHistory.length >= 1) {
+                initialHit = hitHistory.pop();
             }
         }
 
@@ -65,7 +70,7 @@ export function computer(myTurn = false) {
                 }
             })
         } else if (initialHit && attackStack.length >= 1) {
-            attackStack = [];
+            attackStack.splice(0, attackStack.length);
             const newHit = hitHistory[hitHistory.length - 1];
             const x1 = initialHit[1];
             const y1 = initialHit[0];
@@ -104,21 +109,22 @@ export function computer(myTurn = false) {
         }
 
         if (attackStack.length > 0) {
-            return attackStack.shift();
-        }
-
-        const attackPool = []
-        for (let row = 0; row < 10; row += 1) {
-            for (let col = 0; col < 10; col += 1) {
-                if (opponent.board.isAttackable([row, col])) {
-                    attackPool.push([row, col]);
+            return attackStack.pop();
+        } if (attackStack.length <= 0) {
+            const attackPool = []
+            for (let row = 0; row < 10; row += 1) {
+                for (let col = 0; col < 10; col += 1) {
+                    if (opponent.board.isAttackable([row, col])) {
+                        attackPool.push([row, col]);
+                    }
                 }
             }
-        }
 
-        const randomIndex = Math.floor(Math.random() * (attackPool.length - 1))
-        const randomAttack = attackPool[randomIndex];
-        return randomAttack
+            const randomIndex = Math.floor(Math.random() * (attackPool.length - 1))
+            const randomAttack = attackPool[randomIndex];
+            return randomAttack
+        }
+        return false
     }
 
     const logAttack = (isHit, coordinate) => {
