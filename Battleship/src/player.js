@@ -34,6 +34,7 @@ export function computer(myTurn = false) {
     }
 
     let initialHit = null;
+    let wasHit = false;
     let hitHistory = [];
     let attackStack = [];
     const attack = function (opponent) {
@@ -45,16 +46,18 @@ export function computer(myTurn = false) {
                 const sunkShipCoordinates = attackedShip.hitCoordinates.map((hitCoordinate) => JSON.stringify(hitCoordinate));
                 const remainingCoordinates = [];
                 hitHistory.forEach((coordinate) => {
-                    if (!sunkShipCoordinates.includes(coordinate)) {
+                    if (!sunkShipCoordinates.includes(JSON.stringify(coordinate))) {
                         remainingCoordinates.push(coordinate);
                     }
                 })
-                initialHit = null;
                 hitHistory = remainingCoordinates;
                 attackStack = [];
-            }
-            if (!initialHit && hitHistory.length >= 1) {
-                initialHit = hitHistory.pop();
+
+                if (hitHistory.length >= 1) {
+                    initialHit = hitHistory.pop();
+                } else {
+                    initialHit = null;
+                }
             }
         }
 
@@ -66,11 +69,10 @@ export function computer(myTurn = false) {
             possibleAttacks.push([initialHit[0] - 1, initialHit[1]]);
             possibleAttacks.forEach((possibleAttack) => {
                 if (opponent.board.isAttackable(possibleAttack)) {
-                    attackStack.pop(possibleAttack)
+                    attackStack.push(possibleAttack);
                 }
             })
-        } else if (initialHit && attackStack.length >= 1) {
-            attackStack.splice(0, attackStack.length);
+        } else if (initialHit && attackStack.length >= 1 && wasHit) {
             const newHit = hitHistory[hitHistory.length - 1];
             const x1 = initialHit[1];
             const y1 = initialHit[0];
@@ -81,16 +83,16 @@ export function computer(myTurn = false) {
             const yDiff = y1 - y2;
 
             if (xDiff < 0) {
-                // left
-                const leftOne = [newHit[0], newHit[1] - 1];
-                if (opponent.board.isAttackable(leftOne)) {
-                    attackStack.push(leftOne);
-                }
-            } else if (xDiff > 0) {
                 // right
                 const rightOne = [newHit[0], newHit[1] + 1];
                 if (opponent.board.isAttackable(rightOne)) {
                     attackStack.push(rightOne);
+                }
+            } else if (xDiff > 0) {
+                // left
+                const leftOne = [newHit[0], newHit[1] - 1];
+                if (opponent.board.isAttackable(leftOne)) {
+                    attackStack.push(leftOne);
                 }
             } else if (yDiff < 0) {
                 // up
@@ -105,12 +107,12 @@ export function computer(myTurn = false) {
                     attackStack.push(downOne);
                 }
             }
-
         }
 
         if (attackStack.length > 0) {
             return attackStack.pop();
-        } if (attackStack.length <= 0) {
+        }
+        if (attackStack.length <= 0) {
             const attackPool = []
             for (let row = 0; row < 10; row += 1) {
                 for (let col = 0; col < 10; col += 1) {
@@ -130,9 +132,13 @@ export function computer(myTurn = false) {
     const logAttack = (isHit, coordinate) => {
         if (isHit && !initialHit) {
             initialHit = coordinate;
-            hitHistory.push(JSON.stringify(coordinate));
+            hitHistory.push(coordinate);
+            wasHit = true;
         } else if (isHit) {
-            hitHistory.push(JSON.stringify(coordinate));
+            hitHistory.push(coordinate);
+            wasHit = true;
+        } else {
+            wasHit = false;
         }
     }
 
