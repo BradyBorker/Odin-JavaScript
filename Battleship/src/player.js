@@ -38,14 +38,9 @@ export function computer(myTurn = false) {
     let hitHistory = [];
     let attackStack = [];
     const attack = function (opponent) {
-        // Check to see if ship has sunk based on last attack
         if (initialHit) {
             const attackedShip = opponent.board.getShip(initialHit);
             if (attackedShip.isSunk()) {
-                // This is being invoked on the hit after the sink
-                // TODO: Move this to be done once the attack has been made instead?
-                console.log('SUnk')
-                // const sunkShipCoordinates = opponent.board.getShipCoordinates(attackedShip).map((coordinate) => JSON.stringify(coordinate));
                 const sunkShipCoordinates = attackedShip.hitCoordinates.map((hitCoordinate) => JSON.stringify(hitCoordinate));
                 const remainingCoordinates = [];
                 hitHistory.forEach((coordinate) => {
@@ -63,12 +58,7 @@ export function computer(myTurn = false) {
                 }
             }
         }
-        // Something causes the init hit to never get to null...
-        // Has to do with previousAttackHit flag
-        // attackStack runs out of attacks probably hits first if statement
-        console.log('init hit', initialHit)
 
-        // && hitHistory is empty?
         if (initialHit && attackStack.length === 0 && hitHistory.length === 0) {
             const possibleAttacks = []
             possibleAttacks.push([initialHit[0], initialHit[1] + 1]);
@@ -81,7 +71,6 @@ export function computer(myTurn = false) {
                 }
             })
         } else if (initialHit && hitHistory.length >= 1 && previousAttackHit) {
-            console.log('inside')
             const newHit = hitHistory[hitHistory.length - 1];
             const x1 = initialHit[1];
             const y1 = initialHit[0];
@@ -139,10 +128,8 @@ export function computer(myTurn = false) {
     }
 
     const logAttack = (isHit, coordinate) => {
-        // Remove hitHistory push in first if?
         if (isHit && !initialHit) {
             initialHit = coordinate;
-            // hitHistory.push(coordinate);
             previousAttackHit = true;
         } else if (isHit) {
             hitHistory.push(coordinate);

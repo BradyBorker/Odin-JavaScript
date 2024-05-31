@@ -109,16 +109,18 @@ export default async function startGame(players, ship) {
     renderGameBoards(players)
     const battleShipContainer = document.querySelector('.battleship-container');
     battleShipContainer.classList.remove('removed');
-    // Add random ship button
-    // TODO: Show Ready Up button once all ships have been placed
+
     const [player1, player2] = players
-    randomShipPlacement(players, player1, ship, renderGameBoards)
+    randomShipPlacement(player2, ship, players, renderGameBoards)
     await placedShips(player1)
-    // staticShipPlacements(player1, ship);
-    // player1.readyUp();
-    staticShipPlacements(player2, ship);
-    player2.readyUp();
+
+    if (player2.isHuman) {
+        randomShipPlacement(player2, ship, players, renderGameBoards)
+        await placedShips(player2);
+    } else {
+        staticShipPlacements(player2, ship);
+        player2.readyUp();
+    }
 
     renderGameBoards(players)
-    // # TODO: Begin rounds, render after each round
 }

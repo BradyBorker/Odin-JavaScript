@@ -22,7 +22,7 @@ export function staticShipPlacements(player, ship) {
     }
 }
 
-export function randomShipPlacement(players, player, ship, renderGameBoards) {
+export function randomShipPlacement(player, ship, players, renderGameBoards) {
     const randomShipPlacementButton = document.createElement('button');
     const body = document.querySelector('body')
     randomShipPlacementButton.classList.add('random-ship-placement');
