@@ -111,7 +111,7 @@ export default async function startGame(players, ship) {
     battleShipContainer.classList.remove('removed');
 
     const [player1, player2] = players
-    randomShipPlacement(player2, ship, players, renderGameBoards)
+    randomShipPlacement(player1, ship, players, renderGameBoards)
     await placedShips(player1)
 
     if (player2.isHuman) {

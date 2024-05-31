@@ -8,6 +8,9 @@ export default function placedShips(player) {
             const body = document.querySelector('body');
             const randomShipPlacementButton = document.querySelector('.random-ship-placement');
             body.removeChild(randomShipPlacementButton);
+
+            const readyUpButtonClone = readyUpButton.cloneNode(true);
+            readyUpButton.parentNode.replaceChild(readyUpButtonClone, readyUpButton);
             resolve();
         })
     })
