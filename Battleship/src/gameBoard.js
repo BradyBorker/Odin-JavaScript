@@ -43,7 +43,18 @@ export default function gameBoard() {
         // Add ship moved function?
     }
 
-    const allShipsPlaced = () => shipCoordinates.length === 5
+    const areAllShipsPlaced = () => {
+        const placedShips = [];
+        state.forEach((row) => {
+            row.forEach((column) => {
+                if (column && !placedShips.includes(column)) {
+                    placedShips.push(column)
+                }
+            })
+        })
+
+        return placedShips.length === 5;
+    }
 
     const hitAttacks = [];
     const missedAttacks = [];
@@ -107,5 +118,5 @@ export default function gameBoard() {
         return ships.every((ship) => ship.isSunk())
     }
 
-    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, getShip, getShipCoordinates, state, shipCoordinates, hitAttacks, missedAttacks }
+    return { placeShip, receiveAttack, allSunk, isAttackable, areAllShipsPlaced, removePlacedShips, getShip, getShipCoordinates, state, shipCoordinates, hitAttacks, missedAttacks }
 }

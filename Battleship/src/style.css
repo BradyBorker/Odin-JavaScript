@@ -37,7 +37,7 @@ body {
 
 .player-boards {
     display: flex;
-    gap: 50px;
+    justify-content: space-between;
 }
 
 .player1-board,
@@ -68,4 +68,13 @@ body {
 
 .tile.missed {
     background-color: yellow;
+}
+
+/* Ship pieces container */
+.ship-holder {
+    flex: 1;
+    border: 1px solid pink;
+    width: 50px;
+
+    display: flex;
 }

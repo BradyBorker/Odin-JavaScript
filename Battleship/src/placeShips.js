@@ -1,5 +1,4 @@
-export default function placedShips(player) {
-    // Finish ship placement
+export default function allShipsPlaced(player) {
     return new Promise((resolve) => {
         const readyUpButton = document.querySelector('.ready-up');
         readyUpButton.addEventListener('click', () => {
@@ -52,7 +51,7 @@ export function randomShipPlacement(player, ship, players, renderGameBoards) {
 
         })
 
-        if (player.board.allShipsPlaced()) {
+        if (player.board.areAllShipsPlaced()) {
             const readyUpButton = document.querySelector('.ready-up');
             readyUpButton.classList.remove('removed');
         }

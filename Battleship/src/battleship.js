@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import placedShips, { randomShipPlacement } from "./placeShips";
+import allShipsPlaced, { randomShipPlacement } from "./placeShips";
 
 function switchTurn(players) {
     players.forEach((player) => {
@@ -112,11 +112,11 @@ export default async function startGame(players, ship) {
 
     const [player1, player2] = players
     randomShipPlacement(player1, ship, players, renderGameBoards)
-    await placedShips(player1)
+    await allShipsPlaced(player1)
 
     if (player2.isHuman) {
         randomShipPlacement(player2, ship, players, renderGameBoards)
-        await placedShips(player2);
+        await allShipsPlaced(player2);
     } else {
         staticShipPlacements(player2, ship);
         player2.readyUp();
