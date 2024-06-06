@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import allShipsPlaced, { randomShipPlacement } from "./placeShips";
+import finishedPlacingShips, { createRandomShipPlacementButton, randomShipPlacement, createDraggableShipElements } from "./placeShips";
 
 function switchTurn(players) {
     players.forEach((player) => {
@@ -27,12 +27,12 @@ function makeAttack(players, coordinate) {
         attackedPlayer.board.receiveAttack(coordinate);
     }
 
-    switchTurn(players);
-    renderGameBoards(players);
     if (isGameOver(players)) {
         renderGameBoards(players, true);
         return;
     }
+    switchTurn(players);
+    renderGameBoards(players);
 
     // Computer Attack
     [attackedPlayer] = players.filter((player) => !player.myTurn);
@@ -88,37 +88,33 @@ function renderGameBoards(players, gameOver = false) {
     })
 }
 
-function staticShipPlacements(player, ship) {
+/* function staticShipPlacements(player, ship) {
     // TODO: Will be removed upon refactor
     const lengths = [5, 4, 3, 3, 2]
     const coordinates = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]];
     for (let i = 0; i < lengths.length; i += 1) {
         player.board.placeShip(ship(lengths[i]), coordinates[i])
     }
-}
+} */
 
 export default async function startGame(players, ship) {
-    /*
-    Order of Events:
-    0. TODO: Display board, then allow move to board, then readyUp
-    1. Add to board
-    2. Display board
-    3. Ready Up
-    4. Begin action
-    */
     renderGameBoards(players)
     const battleShipContainer = document.querySelector('.battleship-container');
     battleShipContainer.classList.remove('removed');
 
     const [player1, player2] = players
-    randomShipPlacement(player1, ship, players, renderGameBoards)
-    await allShipsPlaced(player1)
+    // randomShipPlacement(player1, ship, players, renderGameBoards)
+    createRandomShipPlacementButton(player1, ship, players, renderGameBoards)
+    createDraggableShipElements(player1, ship, players, renderGameBoards)
+    await finishedPlacingShips(player1)
 
     if (player2.isHuman) {
-        randomShipPlacement(player2, ship, players, renderGameBoards)
-        await allShipsPlaced(player2);
+        // randomShipPlacement(player2, ship, players, renderGameBoards)
+        createRandomShipPlacementButton(player2, ship, players, renderGameBoards)
+        await finishedPlacingShips(player2);
     } else {
-        staticShipPlacements(player2, ship);
+        // staticShipPlacements(player2, ship);
+        randomShipPlacement(player2, ship, players, renderGameBoards)
         player2.readyUp();
     }
 
