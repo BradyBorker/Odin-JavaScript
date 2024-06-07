@@ -18,8 +18,6 @@ export default function gameBoard() {
         return true
     }
 
-    // TODO: Probably remove: shipCoordinates, getPlacedShips, getShipCoordinates
-    // TODO: Keep track of firstCoordinate!
     const shipCoordinates = [];
     const placeShip = (ship, firstCoordinate) => {
         const coordinates = []
@@ -85,12 +83,6 @@ export default function gameBoard() {
     }
 
     const getShipHeadCoordinate = (ship) => {
-        /* for (let index = 0; index < shipCoordinates.length; index += 1) {
-            const shipObject = shipCoordinates[index]
-            if (shipObject.ship === ship) {
-                return shipObject.coordinates[0]
-            }
-        } */
         const index = shipCoordinates.findIndex((shipObject) => shipObject.ship === ship);
         if (index > -1) {
             return shipCoordinates[index].coordinates[0]
@@ -100,12 +92,6 @@ export default function gameBoard() {
     }
 
     const getShipCoordinates = (ship) => {
-        /* for (let index = 0; index < shipCoordinates.length; index += 1) {
-            const shipObject = shipCoordinates[index]
-            if (shipObject.ship === ship) {
-                return shipObject.coordinates
-            }
-        } */
         const index = shipCoordinates.findIndex((shipObject) => shipObject.ship === ship);
         if (index > -1) {
             return shipCoordinates[index].coordinates
