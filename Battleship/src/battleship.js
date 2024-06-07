@@ -88,32 +88,21 @@ function renderGameBoards(players, gameOver = false) {
     })
 }
 
-/* function staticShipPlacements(player, ship) {
-    // TODO: Will be removed upon refactor
-    const lengths = [5, 4, 3, 3, 2]
-    const coordinates = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]];
-    for (let i = 0; i < lengths.length; i += 1) {
-        player.board.placeShip(ship(lengths[i]), coordinates[i])
-    }
-} */
-
 export default async function startGame(players, ship) {
     renderGameBoards(players)
     const battleShipContainer = document.querySelector('.battleship-container');
     battleShipContainer.classList.remove('removed');
 
     const [player1, player2] = players
-    // randomShipPlacement(player1, ship, players, renderGameBoards)
     createRandomShipPlacementButton(player1, ship, players, renderGameBoards)
     createDraggableShipElements(player1, ship, players, renderGameBoards)
     await finishedPlacingShips(player1)
 
     if (player2.isHuman) {
-        // randomShipPlacement(player2, ship, players, renderGameBoards)
         createRandomShipPlacementButton(player2, ship, players, renderGameBoards)
+        createDraggableShipElements(player2, ship, players, renderGameBoards)
         await finishedPlacingShips(player2);
     } else {
-        // staticShipPlacements(player2, ship);
         randomShipPlacement(player2, ship, players, renderGameBoards)
         player2.readyUp();
     }

@@ -15,15 +15,6 @@ export default function finishedPlacingShips(player) {
     })
 }
 
-export function staticShipPlacements(player, ship) {
-    // TODO: Will be removed upon refactor
-    const lengths = [5, 4, 3, 3, 2]
-    const coordinates = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]];
-    for (let i = 0; i < lengths.length; i += 1) {
-        player.board.placeShip(ship(lengths[i]), coordinates[i])
-    }
-}
-
 export function randomShipPlacement(player, ship, players, renderGameBoards) {
     player.board.removePlacedShips();
     const shipOrientations = ['horizontal', 'vertical'];
@@ -44,7 +35,7 @@ export function randomShipPlacement(player, ship, players, renderGameBoards) {
 
     })
 
-    if (player.isHuman && player.board.areAllShipsPlaced()) {
+    if (player.isHuman && player.board.allShipsPlaced()) {
         const readyUpButton = document.querySelector('.ready-up');
         readyUpButton.classList.remove('removed');
     }
@@ -61,6 +52,12 @@ export function createRandomShipPlacementButton(player, ship, players, renderGam
     body.appendChild(randomShipPlacementButton);
 
     randomShipPlacementButton.addEventListener('click', () => randomShipPlacement(player, ship, players, renderGameBoards))
+    randomShipPlacementButton.addEventListener('click', () => {
+        const draggableShipsContainer = document.querySelector('.draggable-ships-container');
+        while (draggableShipsContainer.firstChild) {
+            draggableShipsContainer.removeChild(draggableShipsContainer.firstChild)
+        }
+    })
 }
 
 // TODO:

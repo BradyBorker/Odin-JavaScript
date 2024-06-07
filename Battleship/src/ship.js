@@ -1,6 +1,5 @@
 export default function ship(length, orientation = 'horizontal') {
     const hitCoordinates = [];
-    // Starting coordinate to help with orientation change?
 
     const hit = (coordinate) => {
         hitCoordinates.push(coordinate)

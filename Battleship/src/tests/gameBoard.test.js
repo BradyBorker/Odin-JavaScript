@@ -115,6 +115,13 @@ test('getShip returns the ship at the specified coordinate', () => {
     expect(newGameBoard.getShip([0, 0])).toEqual(newShip);
 })
 
+test('getShipHeadCoordinate returns the first coordinate of the ship coordinates', () => {
+    const newGameBoard = gameBoard();
+    const newShip = ship(2);
+    newGameBoard.placeShip(newShip, [0, 0]);
+    expect(newGameBoard.getShipHeadCoordinate(newShip)).toEqual([0, 0]);
+})
+
 test('getShipCoordinates returns an Array of a ships coordinates', () => {
     const newGameBoard = gameBoard();
     const newShip = ship(2);
