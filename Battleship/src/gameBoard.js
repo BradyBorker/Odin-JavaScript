@@ -18,6 +18,7 @@ export default function gameBoard() {
         return true
     }
 
+
     const shipCoordinates = [];
     const placeShip = (ship, firstCoordinate) => {
         const coordinates = []
@@ -129,5 +130,5 @@ export default function gameBoard() {
         return ships.every((ship) => ship.isSunk())
     }
 
-    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, getShip, getShipHeadCoordinate, getShipCoordinates, state, shipCoordinates, hitAttacks, missedAttacks }
+    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, getShip, getShipHeadCoordinate, getShipCoordinates, state, hitAttacks, missedAttacks }
 }

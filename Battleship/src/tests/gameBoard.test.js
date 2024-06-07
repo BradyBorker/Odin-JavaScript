@@ -13,7 +13,6 @@ test('Valid horizontal ship placement; adds ship object to board', () => {
     expect(newGameBoard.state[0][0]).toEqual(newShip)
     expect(newGameBoard.state[0][1]).toEqual(newShip)
     expect(newGameBoard.state[0][2]).not.toEqual(newShip)
-    expect(newGameBoard.shipCoordinates).toEqual([{ 'ship': newShip, 'coordinates': [[0, 0], [0, 1]] }])
 })
 
 test('Invalid horizontal ship placement; does not add ship object to board', () => {
@@ -22,7 +21,6 @@ test('Invalid horizontal ship placement; does not add ship object to board', () 
     expect(newGameBoard.placeShip(newShip, [0, 9])).toBeFalsy();
     expect(newGameBoard.placeShip(newShip, [-1, 0])).toBeFalsy();
     expect(newGameBoard.state[0][9]).not.toEqual(newShip);
-    expect(newGameBoard.shipCoordinates).toEqual([]);
 
     const oldShip = ship(2);
     newGameBoard.placeShip(oldShip, [0, 0]);
@@ -37,7 +35,6 @@ test('Valid vertical ship placement; adds ship object to board', () => {
     expect(newGameBoard.state[0][0]).toEqual(newShip);
     expect(newGameBoard.state[1][0]).toEqual(newShip);
     expect(newGameBoard.state[2][0]).not.toEqual(newShip)
-    expect(newGameBoard.shipCoordinates).toEqual([{ 'ship': newShip, 'coordinates': [[0, 0], [1, 0]] }])
 })
 
 test('Invalid vertical ship placement; does not add ship object to board', () => {
@@ -46,7 +43,6 @@ test('Invalid vertical ship placement; does not add ship object to board', () =>
     expect(newGameBoard.placeShip(newShip, [9, 0])).toBeFalsy();
     expect(newGameBoard.placeShip(newShip, [-1, 0])).toBeFalsy();
     expect(newGameBoard.state[9][0]).not.toEqual(newShip);
-    expect(newGameBoard.shipCoordinates).toEqual([]);
 
     const oldShip = ship(2, 'vertical');
     newGameBoard.placeShip(oldShip, [0, 0]);

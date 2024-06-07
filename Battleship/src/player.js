@@ -10,28 +10,23 @@ function player() {
         this.isReady = true;
     }
 
-    return { readyUp, board, isReady }
+    const switchTurn = function () {
+        this.myTurn = !this.myTurn;
+    }
+
+    return { readyUp, switchTurn, board, isReady }
 }
-// TODO: Test switchTurn and readyUp
 
 export function human(myTurn = false) {
     const name = myTurn ? 'Player 1' : 'Player 2'
     const isHuman = true;
 
-    const switchTurn = function () {
-        this.myTurn = !this.myTurn;
-    }
-
-    return { ...player(), switchTurn, isHuman, myTurn, name }
+    return { ...player(), isHuman, myTurn, name }
 }
 
 export function computer(myTurn = false) {
     const name = 'Player 2';
     const isHuman = false;
-
-    const switchTurn = function () {
-        this.myTurn = !this.myTurn;
-    }
 
     let initialHit = null;
     let previousAttackHit = false;
@@ -139,5 +134,5 @@ export function computer(myTurn = false) {
         }
     }
 
-    return { ...player(), attack, switchTurn, logAttack, isHuman, myTurn, name }
+    return { ...player(), attack, logAttack, isHuman, myTurn, name }
 }
