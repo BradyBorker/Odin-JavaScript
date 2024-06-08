@@ -1,3 +1,5 @@
+import ship from "./ship";
+
 export default function finishedPlacingShips(player) {
     return new Promise((resolve) => {
         const readyUpButton = document.querySelector('.ready-up');
@@ -15,7 +17,7 @@ export default function finishedPlacingShips(player) {
     })
 }
 
-export function randomShipPlacement(player, ship, players, renderGameBoards) {
+export function randomShipPlacement(player, players, renderGameBoards) {
     player.board.removePlacedShips();
     const shipOrientations = ['horizontal', 'vertical'];
 
@@ -66,11 +68,43 @@ export function createRandomShipPlacementButton(player, ship, players, renderGam
 // give class to ships: length-#
 // For Board:
 //  Make ships draggable and droppable
-export function createDraggableShipElements(player, ship, players, renderGameBoards) {
+
+// TODO: Two draggable functions
+// 1. From outside the board
+// 2. From inside the board
+function draggedFromOutsideBoard(e) {
+    e.dataTransfer.dropEffect = 'move'
+    const re = /length-(\d)/;
+    for (let i = 0; i < e.target.classList.length; i += 1) {
+        if (re.test(e.target.classList[i])) {
+            const shipLength = e.target.classList[i].split('-')[1]
+            e.dataTransfer.setData('text/plain', shipLength);
+            break
+        }
+    }
+}
+
+function draggedFromInsideBoard() {
+
+}
+
+export function droppedFromOutsideBoard() {
+
+}
+
+export function droppedFromInsideBoard() {
+
+}
+
+export function createDraggableShipElements(player, players, renderGameBoards) {
     const draggableShipsContainer = document.querySelector('.draggable-ships-container');
     [5, 4, 3, 3, 2].forEach((length) => {
         const shipContainerElement = document.createElement('div');
         shipContainerElement.classList.add('ship-container', `length-${length}`);
+        shipContainerElement.setAttribute('draggable', 'true');
+        shipContainerElement.addEventListener('dragstart', (e) => {
+            draggedFromOutsideBoard(e);
+        });
 
         for (let index = 0; index < length; index += 1) {
             const shipBody = document.createElement('div');

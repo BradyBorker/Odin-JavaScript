@@ -46,6 +46,8 @@ function makeAttack(players, coordinate) {
 function renderGameBoards(players, gameOver = false) {
     const [player1, player2] = players
     const playerVsComputer = !(player1.isHuman && player2.isHuman)
+    const playerPlacingShips = players.find((player) => !player.isReady);
+
 
     players.forEach((player, index) => {
         const boardNode = document.querySelector(`.player${index + 1}-board`);
@@ -57,7 +59,13 @@ function renderGameBoards(players, gameOver = false) {
             row.forEach((column, columnIndex) => {
                 const tile = document.createElement('div');
                 tile.classList.add('tile');
-                tile.id = `${index + 1}-${rowIndex}-${columnIndex}`
+                tile.id = `p${index + 1}-${rowIndex}-${columnIndex}`
+                // Drag Over
+                if (player === playerPlacingShips && player.isHuman) {
+                    // And Dropped event listeners
+
+                }
+
                 if (column && player.isHuman && (playerVsComputer || !player.isReady)) {
                     tile.classList.add('ship')
                 }
@@ -77,33 +85,33 @@ function renderGameBoards(players, gameOver = false) {
 
         hitCoordinates.forEach((coordinate) => {
             const [row, column] = coordinate;
-            const tile = document.getElementById(`${index + 1}-${row}-${column}`);
+            const tile = document.getElementById(`p${index + 1}-${row}-${column}`);
             tile.classList.add('hit');
         })
         missedCoordinates.forEach((coordinate) => {
             const [row, column] = coordinate;
-            const tile = document.getElementById(`${index + 1}-${row}-${column}`);
+            const tile = document.getElementById(`p${index + 1}-${row}-${column}`);
             tile.classList.add('missed');
         })
     })
 }
 
-export default async function startGame(players, ship) {
+export default async function startGame(players) {
     renderGameBoards(players)
     const battleShipContainer = document.querySelector('.battleship-container');
     battleShipContainer.classList.remove('removed');
 
     const [player1, player2] = players
-    createRandomShipPlacementButton(player1, ship, players, renderGameBoards)
-    createDraggableShipElements(player1, ship, players, renderGameBoards)
+    createRandomShipPlacementButton(player1, players, renderGameBoards)
+    createDraggableShipElements(player1, players, renderGameBoards)
     await finishedPlacingShips(player1)
 
     if (player2.isHuman) {
-        createRandomShipPlacementButton(player2, ship, players, renderGameBoards)
-        createDraggableShipElements(player2, ship, players, renderGameBoards)
+        createRandomShipPlacementButton(player2, players, renderGameBoards)
+        createDraggableShipElements(player2, players, renderGameBoards)
         await finishedPlacingShips(player2);
     } else {
-        randomShipPlacement(player2, ship, players, renderGameBoards)
+        randomShipPlacement(player2, players, renderGameBoards)
         player2.readyUp();
     }
 

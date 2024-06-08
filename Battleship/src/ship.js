@@ -1,4 +1,4 @@
-export default function ship(length, orientation = 'horizontal') {
+export default function ship(length, orientation = 'vertical') {
     const hitCoordinates = [];
 
     const hit = (coordinate) => {
