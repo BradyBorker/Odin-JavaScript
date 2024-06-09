@@ -76,15 +76,14 @@ function renderGameBoards(players, dragData = {}, preservedCoords = [], gameOver
                     }
 
                     // Droppable tile
-                    if (dragData.origin === 'insideBoard') {
-                        if (Object.keys(dragData).length > 0 && !column && player === playerPlacingShips && player.isHuman && player.board.validShipPlacement(player.board.getCoordsFromStartingCoord([rowIndex, columnIndex], dragData.ship.orientation, dragData.ship.length))) {
+                    if (Object.keys(dragData).length > 0 && !column && player === playerPlacingShips && player.isHuman && player.board.validShipPlacement(player.board.getCoordsFromStartingCoord([rowIndex, columnIndex], dragData.ship.orientation, dragData.ship.length))) {
+                        if (dragData.origin === 'insideBoard') {
                             droppableFromInside(tile, dragData, player, players, renderGameBoards)
-                        }
-                    } else if (dragData.origin === 'outsideBoard') {
-                        if (Object.keys(dragData).length > 0 && !column && player === playerPlacingShips && player.isHuman && player.board.validShipPlacement(player.board.getCoordsFromStartingCoord([rowIndex, columnIndex], dragData.shipOrientation, dragData.shipLength))) {
+                        } else if (dragData.origin === 'outsideBoard') {
                             droppableFromOutside(tile, dragData, player, players, renderGameBoards)
                         }
                     }
+
 
                     // Conditions for displaying ships
                     if (column && player.isHuman && (playerVsComputer || !player.isReady)) {
@@ -126,13 +125,13 @@ export default async function startGame(players) {
 
     const [player1, player2] = players
     createRandomShipPlacementButton(player1, players, renderGameBoards)
-    createDraggableShipElements(player1, players, renderGameBoards)
+    createDraggableShipElements(players, renderGameBoards)
     await finishedPlacingShips(player1)
     renderGameBoards(players)
 
     if (player2.isHuman) {
         createRandomShipPlacementButton(player2, players, renderGameBoards)
-        createDraggableShipElements(player2, players, renderGameBoards)
+        createDraggableShipElements(players, renderGameBoards)
         await finishedPlacingShips(player2);
     } else {
         randomShipPlacement(player2, players, renderGameBoards)

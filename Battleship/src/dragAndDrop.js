@@ -53,8 +53,10 @@ function draggedFromOutsideBoard(e, players, renderGameBoards) {
             break
         }
     }
+    const newShip = ship(Number(e.dataTransfer.getData('text/plain')))
+    // 'shipLength': Number(e.dataTransfer.getData('text/plain')), 'shipOrientation': 'vertical' }
 
-    renderGameBoards(players, { 'origin': 'outsideBoard', 'shipLength': Number(e.dataTransfer.getData('text/plain')), 'shipOrientation': 'vertical' })
+    renderGameBoards(players, { 'origin': 'outsideBoard', 'ship': newShip })
 }
 
 export function draggableFromOutside(shipContainerElement, draggableShipsContainer, players, renderGameBoards) {
@@ -92,7 +94,7 @@ export function droppableFromInside(tile, dragData, player, players, renderGameB
 
 function droppedFromOutsideBoard(dragData, player, e, players, renderGameBoards) {
     const startingCoordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
-    player.board.placeShip(ship(dragData.shipLength, dragData.shipOrientation), startingCoordinate)
+    player.board.placeShip(dragData.ship, startingCoordinate);
 
     if (player.board.allShipsPlaced()) {
         const readyUpButton = document.querySelector('.ready-up');

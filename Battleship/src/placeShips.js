@@ -63,7 +63,7 @@ export function createRandomShipPlacementButton(player, players, renderGameBoard
     })
 }
 
-export function createDraggableShipElements(player, players, renderGameBoards) {
+export function createDraggableShipElements(players, renderGameBoards) {
     const draggableShipsContainer = document.querySelector('.draggable-ships-container');
     [5, 4, 3, 3, 2].forEach((length) => {
         const shipContainerElement = document.createElement('div');
