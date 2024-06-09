@@ -56,10 +56,26 @@ function renderGameBoards(players, dragData = {}, preservedCoords = [], gameOver
         player.board.state.forEach((row, rowIndex) => {
             row.forEach((column, columnIndex) => {
                 if (preservedCoords.includes(JSON.stringify([rowIndex, columnIndex]))) {
-                    const preservedCoordinate = preservedCoords.find((coord) => coord === JSON.stringify([rowIndex, columnIndex]))
-                    const [preserveRow, preserveColumn] = JSON.parse(preservedCoordinate);
-                    const tile = document.getElementById(`p${index + 1}-${preserveRow}-${preserveColumn}`)
+                    const tile = document.getElementById(`p${index + 1}-${rowIndex}-${columnIndex}`)
                     tile.classList.remove('ship');
+                    console.log(dragData)
+
+                    if (player.board.validShipPlacement(player.board.getCoordsFromStartingCoord([rowIndex, columnIndex], dragData.ship.orientation, dragData.ship.length))) {
+                        tile.addEventListener('dragover', (e) => {
+                            e.preventDefault();
+                            e.dataTransfer.dropEffect = 'move';
+                        })
+
+                        tile.addEventListener('drop', (e) => {
+                            e.preventDefault();
+                            if (dragData.origin === 'outsideBoard') {
+                                droppedFromOutsideBoard(dragData, player, e, players, renderGameBoards);
+                            } else if (dragData.origin === 'insideBoard') {
+                                // Find ship, remove from board, place on board
+                                droppedFromInsideBoard(dragData, player, e, players, renderGameBoards);
+                            }
+                        })
+                    }
 
                     tiles.push(tile)
                 } else {
@@ -84,7 +100,6 @@ function renderGameBoards(players, dragData = {}, preservedCoords = [], gameOver
                                 player.board.restoreState();
                                 renderGameBoards(players);
                             }
-                            console.log('end')
                         })
                     }
 
