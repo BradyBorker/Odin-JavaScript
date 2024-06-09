@@ -1,4 +1,6 @@
+import { draggableFromOutside } from "./dragAndDrop";
 import ship from "./ship";
+
 
 export default function finishedPlacingShips(player) {
     return new Promise((resolve) => {
@@ -15,11 +17,6 @@ export default function finishedPlacingShips(player) {
             resolve();
         })
     })
-}
-
-function displayReadyUpButton() {
-    const readyUpButton = document.querySelector('.ready-up');
-    readyUpButton.classList.remove('removed');
 }
 
 export function randomShipPlacement(player, players, renderGameBoards) {
@@ -43,7 +40,8 @@ export function randomShipPlacement(player, players, renderGameBoards) {
     })
 
     if (player.isHuman && player.board.allShipsPlaced()) {
-        displayReadyUpButton();
+        const readyUpButton = document.querySelector('.ready-up');
+        readyUpButton.classList.remove('removed');
     }
 
     renderGameBoards(players)
@@ -65,64 +63,6 @@ export function createRandomShipPlacementButton(player, players, renderGameBoard
     })
 }
 
-export function draggedFromInsideBoard(e, player, players, renderGameBoards) {
-    const coordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
-    const theShip = player.board.getShipAt(coordinate);
-
-    const ghostShip = document.createElement('div');
-    ghostShip.id = 'drag-ghost';
-    ghostShip.style.height = `${theShip.length * 25}px`;
-
-    for (let i = 0; i < theShip.length; i += 1) {
-        const ghostShipBody = document.createElement('div')
-        ghostShipBody.classList.add('ghost-ship-body');
-        ghostShip.appendChild(ghostShipBody);
-    }
-
-    document.body.appendChild(ghostShip);
-    e.dataTransfer.setDragImage(ghostShip, 0, 0);
-
-    const shipCoordinates = player.board.getShipCoordinates(theShip);
-    const preservedCoordinates = shipCoordinates.map((coord) => JSON.stringify(coord));
-
-    player.board.removePlacedShip(shipCoordinates);
-
-    renderGameBoards(players, { 'origin': 'insideBoard', 'ship': theShip }, preservedCoordinates)
-}
-
-export function droppedFromInsideBoard(dragData, player, e, players, renderGameBoards) {
-    const theShip = dragData.ship
-
-    const startingCoordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
-    player.board.placeShip(theShip, startingCoordinate)
-
-    renderGameBoards(players);
-}
-
-function draggedFromOutsideBoard(e, players, renderGameBoards) {
-    e.dataTransfer.dropEffect = 'move'
-    const re = /length-(\d)/;
-    for (let i = 0; i < e.target.classList.length; i += 1) {
-        if (re.test(e.target.classList[i])) {
-            e.dataTransfer.setData('text/plain', e.target.classList[i].split('-')[1]);
-            break
-        }
-    }
-
-    renderGameBoards(players, { 'origin': 'outsideBoard', 'shipLength': Number(e.dataTransfer.getData('text/plain')), 'shipOrientation': 'vertical' })
-}
-
-export function droppedFromOutsideBoard(dragData, player, e, players, renderGameBoards) {
-    const startingCoordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
-    player.board.placeShip(ship(dragData.shipLength, dragData.shipOrientation), startingCoordinate)
-
-    if (player.board.allShipsPlaced()) {
-        displayReadyUpButton();
-    }
-
-    renderGameBoards(players);
-}
-
 export function createDraggableShipElements(player, players, renderGameBoards) {
     const draggableShipsContainer = document.querySelector('.draggable-ships-container');
     [5, 4, 3, 3, 2].forEach((length) => {
@@ -130,15 +70,7 @@ export function createDraggableShipElements(player, players, renderGameBoards) {
         shipContainerElement.classList.add('ship-container', `length-${length}`);
         shipContainerElement.setAttribute('draggable', 'true');
 
-        shipContainerElement.addEventListener('dragstart', (e) => {
-            draggedFromOutsideBoard(e, players, renderGameBoards);
-        });
-
-        shipContainerElement.addEventListener('dragend', (e) => {
-            if (e.dataTransfer.dropEffect !== 'none') {
-                draggableShipsContainer.removeChild(e.target)
-            }
-        })
+        draggableFromOutside(shipContainerElement, draggableShipsContainer, players, renderGameBoards)
 
         for (let index = 0; index < length; index += 1) {
             const shipBody = document.createElement('div');

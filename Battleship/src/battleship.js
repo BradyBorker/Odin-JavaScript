@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
-import finishedPlacingShips, { createRandomShipPlacementButton, randomShipPlacement, createDraggableShipElements, droppedFromOutsideBoard, draggedFromInsideBoard, droppedFromInsideBoard } from "./placeShips";
+import finishedPlacingShips, { createRandomShipPlacementButton, randomShipPlacement, createDraggableShipElements } from "./placeShips";
+import { draggableFromInside, droppableFromInside, droppableFromOutside } from "./dragAndDrop";
 
 function switchTurn(players) {
     players.forEach((player) => {
@@ -60,15 +61,7 @@ function renderGameBoards(players, dragData = {}, preservedCoords = [], gameOver
                     tile.classList.remove('ship');
 
                     if (player === playerPlacingShips && player.isHuman && player.board.validShipPlacement(player.board.getCoordsFromStartingCoord([rowIndex, columnIndex], dragData.ship.orientation, dragData.ship.length))) {
-                        tile.addEventListener('dragover', (e) => {
-                            e.preventDefault();
-                            e.dataTransfer.dropEffect = 'move';
-                        })
-
-                        tile.addEventListener('drop', (e) => {
-                            e.preventDefault();
-                            droppedFromInsideBoard(dragData, player, e, players, renderGameBoards);
-                        })
+                        droppableFromInside(tile, dragData, player, players, renderGameBoards)
                     }
 
                     tiles.push(tile)
@@ -79,48 +72,17 @@ function renderGameBoards(players, dragData = {}, preservedCoords = [], gameOver
 
                     // Draggable tile
                     if (column && player === playerPlacingShips && player.isHuman) {
-                        tile.setAttribute('draggable', 'true');
-                        tile.addEventListener('dragstart', (e) => {
-                            draggedFromInsideBoard(e, player, players, renderGameBoards);
-                        })
-
-                        tile.addEventListener('dragend', (e) => {
-                            const ghostShip = document.querySelector('#drag-ghost')
-                            if (ghostShip.parentElement) {
-                                ghostShip.parentElement.removeChild(ghostShip);
-                            }
-                            console.log(e.dataTransfer.dropEffect)
-                            if (e.dataTransfer.dropEffect === 'none') {
-                                player.board.restoreState();
-                                renderGameBoards(players);
-                            }
-                        })
+                        draggableFromInside(tile, player, players, renderGameBoards)
                     }
 
                     // Droppable tile
                     if (dragData.origin === 'insideBoard') {
                         if (Object.keys(dragData).length > 0 && !column && player === playerPlacingShips && player.isHuman && player.board.validShipPlacement(player.board.getCoordsFromStartingCoord([rowIndex, columnIndex], dragData.ship.orientation, dragData.ship.length))) {
-                            tile.addEventListener('dragover', (e) => {
-                                e.preventDefault();
-                                e.dataTransfer.dropEffect = 'move';
-                            })
-
-                            tile.addEventListener('drop', (e) => {
-                                e.preventDefault();
-                                droppedFromInsideBoard(dragData, player, e, players, renderGameBoards);
-                            })
+                            droppableFromInside(tile, dragData, player, players, renderGameBoards)
                         }
                     } else if (dragData.origin === 'outsideBoard') {
                         if (Object.keys(dragData).length > 0 && !column && player === playerPlacingShips && player.isHuman && player.board.validShipPlacement(player.board.getCoordsFromStartingCoord([rowIndex, columnIndex], dragData.shipOrientation, dragData.shipLength))) {
-                            tile.addEventListener('dragover', (e) => {
-                                e.preventDefault();
-                                e.dataTransfer.dropEffect = 'move';
-                            })
-
-                            tile.addEventListener('drop', (e) => {
-                                e.preventDefault();
-                                droppedFromOutsideBoard(dragData, player, e, players, renderGameBoards);
-                            })
+                            droppableFromOutside(tile, dragData, player, players, renderGameBoards)
                         }
                     }
 
