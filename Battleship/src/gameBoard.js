@@ -18,17 +18,23 @@ export default function gameBoard() {
         return true
     }
 
+    const getCoordsFromStartingCoord = (firstCoordinate, orientation, shipLength) => {
+        const coordinates = []
+        for (let i = 0; i < shipLength; i += 1) {
+            if (orientation === 'horizontal') {
+                coordinates.push([firstCoordinate[0], firstCoordinate[1] + i]);
+            } else if (orientation === 'vertical') {
+                coordinates.push([firstCoordinate[0] + i, firstCoordinate[1]]);
+            }
+        }
+
+        return coordinates
+    }
+
 
     const shipCoordinates = [];
     const placeShip = (ship, firstCoordinate) => {
-        const coordinates = []
-        for (let i = 0; i < ship.length; i += 1) {
-            if (ship.orientation === 'horizontal') {
-                coordinates.push([firstCoordinate[0], firstCoordinate[1] + i])
-            } else if (ship.orientation === 'vertical') {
-                coordinates.push([firstCoordinate[0] + i, firstCoordinate[1]])
-            }
-        }
+        const coordinates = getCoordsFromStartingCoord(firstCoordinate, ship.orientation, ship.length);
 
         if (validShipPlacement(coordinates)) {
             const index = shipCoordinates.findIndex((shipObject) => shipObject.ship === ship);
@@ -130,5 +136,5 @@ export default function gameBoard() {
         return ships.every((ship) => ship.isSunk())
     }
 
-    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, getShip, getShipHeadCoordinate, getShipCoordinates, state, hitAttacks, missedAttacks }
+    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, getShip, getShipHeadCoordinate, getShipCoordinates, getCoordsFromStartingCoord, validShipPlacement, state, hitAttacks, missedAttacks }
 }
