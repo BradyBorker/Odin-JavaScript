@@ -65,19 +65,9 @@ export function createRandomShipPlacementButton(player, players, renderGameBoard
     })
 }
 
-// TODO:
-// Add ships to ship-placement-container
-// Allow them to be draggable but not droppable
-// give class to ships: length-#
-// For Board:
-//  Make ships draggable and droppable
-
-// TODO: Two draggable functions
-// 1. From outside the board
-// 2. From inside the board
 export function draggedFromInsideBoard(e, player, players, renderGameBoards) {
     const coordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
-    const theShip = player.board.getShip(coordinate);
+    const theShip = player.board.getShipAt(coordinate);
 
     const ghostShip = document.createElement('div');
     ghostShip.id = 'drag-ghost';
@@ -92,11 +82,20 @@ export function draggedFromInsideBoard(e, player, players, renderGameBoards) {
     document.body.appendChild(ghostShip);
     e.dataTransfer.setDragImage(ghostShip, 0, 0);
 
+    const shipCoordinates = player.board.getShipCoordinates(theShip);
+    const preservedCoordinates = shipCoordinates.map((coord) => JSON.stringify(coord));
 
-    // renderGameBoards(players, { 'origin': 'insideBoard', 'shipLength': theShip.length, 'shipOrientation': theShip.orientation })
+    player.board.removePlacedShip(shipCoordinates);
+
+    renderGameBoards(players, { 'origin': 'insideBoard', 'ship': theShip }, preservedCoordinates)
 }
 
 export function droppedFromInsideBoard(dragData, player, e, players, renderGameBoards) {
+    const theShip = dragData.ship
+
+    const startingCoordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
+    player.board.placeShip(theShip, startingCoordinate)
+
     renderGameBoards(players);
 }
 
@@ -117,6 +116,10 @@ export function droppedFromOutsideBoard(dragData, player, e, players, renderGame
     const startingCoordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
     player.board.placeShip(ship(dragData.shipLength, dragData.shipOrientation), startingCoordinate)
 
+    if (player.board.allShipsPlaced()) {
+        displayReadyUpButton();
+    }
+
     renderGameBoards(players);
 }
 
@@ -135,9 +138,6 @@ export function createDraggableShipElements(player, players, renderGameBoards) {
             if (e.dataTransfer.dropEffect !== 'none') {
                 draggableShipsContainer.removeChild(e.target)
             }
-            if (player.board.allShipsPlaced()) {
-                displayReadyUpButton();
-            }
         })
 
         for (let index = 0; index < length; index += 1) {
@@ -149,18 +149,3 @@ export function createDraggableShipElements(player, players, renderGameBoards) {
         draggableShipsContainer.appendChild(shipContainerElement);
     })
 }
-
-/*
-TODO:
-Valid droppable target.
-Needs
-1. length of ship
-2. Orientation
-
-Idea:
-1. On dragstart
-2. create ship
-3. Iterate through board
-4. If valid ship placement
-5. add droppable event listeners
-*/

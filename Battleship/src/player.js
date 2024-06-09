@@ -34,7 +34,7 @@ export function computer(myTurn = false) {
     let attackStack = [];
     const attack = function (opponent) {
         if (initialHit) {
-            const attackedShip = opponent.board.getShip(initialHit);
+            const attackedShip = opponent.board.getShipAt(initialHit);
             if (attackedShip.isSunk()) {
                 const sunkShipCoordinates = attackedShip.hitCoordinates.map((hitCoordinate) => JSON.stringify(hitCoordinate));
                 const remainingCoordinates = [];

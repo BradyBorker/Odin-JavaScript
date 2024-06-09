@@ -23,6 +23,10 @@ body {
     pointer-events: none;
 }
 
+.moving {
+    background-color: rgba(35, 137, 218, 1)
+}
+
 /* Menu */
 .game-mode-container {
     display: flex;
@@ -33,6 +37,8 @@ body {
 /* Battleship Game */
 .battleship-container {
     max-width: 1200px;
+    position: relative;
+    z-index: 2;
 }
 
 .player-boards {
@@ -110,3 +116,5 @@ body {
     border: 1px solid white;
     background-color: black;
 }
+
+/* Cloned Boards */

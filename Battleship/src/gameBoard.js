@@ -1,10 +1,22 @@
 export default function gameBoard() {
     const state = [];
+    const shipCoordinates = [];
     for (let row = 0; row < 10; row += 1) {
         state.push([]);
         for (let col = 0; col < 10; col += 1) {
             state[row].push(false);
         }
+    }
+
+    const restoreState = () => {
+        shipCoordinates.forEach((shipObject) => {
+            for (let i = 0; i < shipObject.coordinates.length; i += 1) {
+                const [row, column] = shipObject.coordinates[i];
+                if (state[row][column] !== shipObject.ship) {
+                    state[row][column] = shipObject.ship
+                }
+            }
+        })
     }
 
     const validShipPlacement = (coordinates) => {
@@ -31,15 +43,13 @@ export default function gameBoard() {
         return coordinates
     }
 
-
-    const shipCoordinates = [];
     const placeShip = (ship, firstCoordinate) => {
         const coordinates = getCoordsFromStartingCoord(firstCoordinate, ship.orientation, ship.length);
 
         if (validShipPlacement(coordinates)) {
             const index = shipCoordinates.findIndex((shipObject) => shipObject.ship === ship);
             if (index > -1) {
-                shipCoordinates[index].coordinate = coordinates;
+                shipCoordinates[index].coordinates = coordinates;
             } else {
                 shipCoordinates.push({ 'ship': ship, 'coordinates': coordinates });
             }
@@ -75,6 +85,13 @@ export default function gameBoard() {
         shipCoordinates.splice(0, shipCoordinates.length)
     }
 
+    const removePlacedShip = (coordinates) => {
+        coordinates.forEach((coordinate) => {
+            const [row, column] = coordinate;
+            state[row][column] = false;
+        })
+    }
+
     const getPlacedShips = () => {
         const shipsArray = [];
         shipCoordinates.forEach((shipObject) => {
@@ -83,7 +100,7 @@ export default function gameBoard() {
         return shipsArray;
     }
 
-    const getShip = (coordinate) => {
+    const getShipAt = (coordinate) => {
         const [row, column] = coordinate;
         const theShip = state[row][column];
         return theShip
@@ -136,5 +153,5 @@ export default function gameBoard() {
         return ships.every((ship) => ship.isSunk())
     }
 
-    return { placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, getShip, getShipHeadCoordinate, getShipCoordinates, getCoordsFromStartingCoord, validShipPlacement, state, hitAttacks, missedAttacks }
+    return { restoreState, placeShip, receiveAttack, allSunk, isAttackable, allShipsPlaced, removePlacedShips, removePlacedShip, getShipAt, getShipHeadCoordinate, getShipCoordinates, getCoordsFromStartingCoord, validShipPlacement, state, hitAttacks, missedAttacks }
 }
