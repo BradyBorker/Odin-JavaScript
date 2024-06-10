@@ -47,14 +47,14 @@ export function draggableFromInside(tile, player, players, renderGameBoards) {
 function draggedFromOutsideBoard(e, players, renderGameBoards) {
     e.dataTransfer.dropEffect = 'move'
     const re = /length-(\d)/;
+    let shipLength;
     for (let i = 0; i < e.target.classList.length; i += 1) {
         if (re.test(e.target.classList[i])) {
-            e.dataTransfer.setData('text/plain', e.target.classList[i].split('-')[1]);
+            shipLength = Number(e.target.classList[i].split('-')[1])
             break
         }
     }
-    const newShip = ship(Number(e.dataTransfer.getData('text/plain')))
-    // 'shipLength': Number(e.dataTransfer.getData('text/plain')), 'shipOrientation': 'vertical' }
+    const newShip = ship(shipLength)
 
     renderGameBoards(players, { 'origin': 'outsideBoard', 'ship': newShip })
 }
@@ -76,6 +76,8 @@ function droppedFromInsideBoard(dragData, player, e, players, renderGameBoards) 
 
     const startingCoordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
     player.board.placeShip(theShip, startingCoordinate)
+
+    // previousCoordinatesQueue.splice(0, previousCoordinatesQueue.length);
 
     renderGameBoards(players);
 }
@@ -101,6 +103,9 @@ function droppedFromOutsideBoard(dragData, player, e, players, renderGameBoards)
         readyUpButton.classList.remove('removed');
     }
 
+    // previousCoordinatesQueue.splice(0, previousCoordinatesQueue.length);
+    // console.log(previousCoordinatesQueue.length)
+
     renderGameBoards(players);
 }
 
@@ -113,5 +118,56 @@ export function droppableFromOutside(tile, dragData, player, players, renderGame
     tile.addEventListener('drop', (e) => {
         e.preventDefault();
         droppedFromOutsideBoard(dragData, player, e, players, renderGameBoards);
+    })
+}
+
+const previousCoordinatesQueue = [];
+export function droppableHoverFeedback(tile, dragData, player, playerIndex) {
+    tile.addEventListener('dragenter', (e) => {
+        const startingCoordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
+        const theShip = dragData.ship;
+        const allCoordinates = player.board.getCoordsFromStartingCoord(startingCoordinate, theShip.orientation, theShip.length);
+
+        allCoordinates.forEach((coordinate) => {
+            const [row, column] = coordinate;
+            const hoveredTile = document.getElementById(`p${playerIndex}-${row}-${column}`);
+            hoveredTile.classList.add('valid-placement');
+        })
+
+        while (previousCoordinatesQueue.length >= 2) {
+            previousCoordinatesQueue.shift()
+        }
+        const stringifiedCoords = allCoordinates.map((coordinate) => JSON.stringify(coordinate))
+        previousCoordinatesQueue.push(stringifiedCoords)
+    })
+
+    tile.addEventListener('dragleave', () => {
+        let previousCoordinates;
+        let currentCoordinates;
+        if (previousCoordinatesQueue.length > 1) {
+            previousCoordinates = previousCoordinatesQueue.shift();
+            [currentCoordinates] = previousCoordinatesQueue;
+        } else if (previousCoordinatesQueue.length > 0) {
+            [previousCoordinates] = previousCoordinatesQueue;
+        }
+
+        if (!(previousCoordinates && currentCoordinates)) {
+            previousCoordinates.forEach((prevCoordinate) => {
+                const [row, column] = JSON.parse(prevCoordinate);
+                const hoveredTile = document.getElementById(`p${playerIndex}-${row}-${column}`);
+                hoveredTile.classList.remove('valid-placement');
+            })
+
+            return
+        }
+
+        previousCoordinates.forEach((prevCoordinate) => {
+            const [row, column] = JSON.parse(prevCoordinate);
+            const hoveredTile = document.getElementById(`p${playerIndex}-${row}-${column}`);
+
+            if (!currentCoordinates.includes(prevCoordinate)) {
+                hoveredTile.classList.remove('valid-placement');
+            }
+        })
     })
 }

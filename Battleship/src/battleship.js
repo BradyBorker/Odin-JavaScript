@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import finishedPlacingShips, { createRandomShipPlacementButton, randomShipPlacement, createDraggableShipElements } from "./placeShips";
-import { draggableFromInside, droppableFromInside, droppableFromOutside } from "./dragAndDrop";
+import { draggableFromInside, droppableFromInside, droppableFromOutside, droppableHoverFeedback } from "./dragAndDrop";
 
 function switchTurn(players) {
     players.forEach((player) => {
@@ -60,7 +60,9 @@ function renderGameBoards(players, dragData = {}, preservedCoords = [], gameOver
                     const tile = document.getElementById(`p${index + 1}-${rowIndex}-${columnIndex}`)
                     tile.classList.remove('ship');
 
+                    // Droppable tile
                     if (player === playerPlacingShips && player.isHuman && player.board.validShipPlacement(player.board.getCoordsFromStartingCoord([rowIndex, columnIndex], dragData.ship.orientation, dragData.ship.length))) {
+                        droppableHoverFeedback(tile, dragData, player, index + 1)
                         droppableFromInside(tile, dragData, player, players, renderGameBoards)
                     }
 
@@ -77,13 +79,14 @@ function renderGameBoards(players, dragData = {}, preservedCoords = [], gameOver
 
                     // Droppable tile
                     if (Object.keys(dragData).length > 0 && !column && player === playerPlacingShips && player.isHuman && player.board.validShipPlacement(player.board.getCoordsFromStartingCoord([rowIndex, columnIndex], dragData.ship.orientation, dragData.ship.length))) {
+                        droppableHoverFeedback(tile, dragData, player, index + 1);
+
                         if (dragData.origin === 'insideBoard') {
                             droppableFromInside(tile, dragData, player, players, renderGameBoards)
                         } else if (dragData.origin === 'outsideBoard') {
                             droppableFromOutside(tile, dragData, player, players, renderGameBoards)
                         }
                     }
-
 
                     // Conditions for displaying ships
                     if (column && player.isHuman && (playerVsComputer || !player.isReady)) {
