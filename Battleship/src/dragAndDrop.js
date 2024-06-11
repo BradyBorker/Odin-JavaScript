@@ -77,8 +77,6 @@ function droppedFromInsideBoard(dragData, player, e, players, renderGameBoards) 
     const startingCoordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
     player.board.placeShip(theShip, startingCoordinate)
 
-    // previousCoordinatesQueue.splice(0, previousCoordinatesQueue.length);
-
     renderGameBoards(players);
 }
 
@@ -102,9 +100,6 @@ function droppedFromOutsideBoard(dragData, player, e, players, renderGameBoards)
         const readyUpButton = document.querySelector('.ready-up');
         readyUpButton.classList.remove('removed');
     }
-
-    // previousCoordinatesQueue.splice(0, previousCoordinatesQueue.length);
-    // console.log(previousCoordinatesQueue.length)
 
     renderGameBoards(players);
 }
@@ -157,17 +152,15 @@ export function droppableHoverFeedback(tile, dragData, player, playerIndex) {
                 const hoveredTile = document.getElementById(`p${playerIndex}-${row}-${column}`);
                 hoveredTile.classList.remove('valid-placement');
             })
+        } else {
+            previousCoordinates.forEach((prevCoordinate) => {
+                const [row, column] = JSON.parse(prevCoordinate);
+                const hoveredTile = document.getElementById(`p${playerIndex}-${row}-${column}`);
 
-            return
+                if (!currentCoordinates.includes(prevCoordinate)) {
+                    hoveredTile.classList.remove('valid-placement');
+                }
+            })
         }
-
-        previousCoordinates.forEach((prevCoordinate) => {
-            const [row, column] = JSON.parse(prevCoordinate);
-            const hoveredTile = document.getElementById(`p${playerIndex}-${row}-${column}`);
-
-            if (!currentCoordinates.includes(prevCoordinate)) {
-                hoveredTile.classList.remove('valid-placement');
-            }
-        })
     })
 }

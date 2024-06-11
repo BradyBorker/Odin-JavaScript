@@ -140,5 +140,6 @@ export default async function startGame(players) {
         randomShipPlacement(player2, players, renderGameBoards)
         player2.readyUp();
     }
+
     renderGameBoards(players)
 }
