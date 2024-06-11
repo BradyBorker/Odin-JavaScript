@@ -102,9 +102,20 @@ body {
     background-color: black;
 }
 
-#drag-ghost {
+/* Ghost Ship */
+
+#ghost-ship {
     position: absolute;
     top: -1000px;
+}
+
+.horizontal {
+    height: 25px;
+
+    display: flex;
+}
+
+.vertical {
     width: 25px;
 
     display: flex;
@@ -113,8 +124,7 @@ body {
 
 .ghost-ship-body {
     height: 100%;
+    width: 100%;
     border: 1px solid white;
     background-color: black;
 }
-
-/* Cloned Boards */

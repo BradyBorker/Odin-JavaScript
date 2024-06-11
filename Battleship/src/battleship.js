@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import finishedPlacingShips, { createRandomShipPlacementButton, randomShipPlacement, createDraggableShipElements } from "./placeShips";
+import finishedPlacingShips, { createRandomShipPlacementButton, randomShipPlacement, createDraggableShipElements, switchShipOrientation } from "./placeShips";
 import { draggableFromInside, droppableFromInside, droppableFromOutside, droppableHoverFeedback } from "./dragAndDrop";
 
 function switchTurn(players) {
@@ -86,6 +86,11 @@ function renderGameBoards(players, dragData = {}, preservedCoords = [], gameOver
                         } else if (dragData.origin === 'outsideBoard') {
                             droppableFromOutside(tile, dragData, player, players, renderGameBoards)
                         }
+                    }
+
+                    // Add event listener to update ship's orientation
+                    if (column && player.isHuman && player === playerPlacingShips) {
+                        tile.addEventListener('click', (e) => switchShipOrientation(e, player, players, renderGameBoards));
                     }
 
                     // Conditions for displaying ships

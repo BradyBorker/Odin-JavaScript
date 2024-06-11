@@ -5,12 +5,21 @@ function draggedFromInsideBoard(e, player, players, renderGameBoards) {
     const theShip = player.board.getShipAt(coordinate);
 
     const ghostShip = document.createElement('div');
-    ghostShip.id = 'drag-ghost';
-    ghostShip.style.height = `${theShip.length * 25}px`;
+    ghostShip.id = 'ghost-ship'
+
+    if (theShip.orientation === 'vertical') {
+        ghostShip.classList.add('vertical');
+        ghostShip.style.height = `${theShip.length * 25}px`;
+    } else if (theShip.orientation === 'horizontal') {
+        ghostShip.classList.add('horizontal');
+        ghostShip.style.width = `${theShip.length * 25}px`;
+    }
+
 
     for (let i = 0; i < theShip.length; i += 1) {
         const ghostShipBody = document.createElement('div')
         ghostShipBody.classList.add('ghost-ship-body');
+
         ghostShip.appendChild(ghostShipBody);
     }
 
@@ -32,7 +41,7 @@ export function draggableFromInside(tile, player, players, renderGameBoards) {
     })
 
     tile.addEventListener('dragend', (e) => {
-        const ghostShip = document.querySelector('#drag-ghost')
+        const ghostShip = document.querySelector('#ghost-ship')
         if (ghostShip.parentElement) {
             ghostShip.parentElement.removeChild(ghostShip);
         }

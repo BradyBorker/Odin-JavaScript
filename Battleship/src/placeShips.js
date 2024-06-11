@@ -81,3 +81,19 @@ export function createDraggableShipElements(players, renderGameBoards) {
         draggableShipsContainer.appendChild(shipContainerElement);
     })
 }
+
+export function switchShipOrientation(e, player, players, renderGameBoards) {
+    const coordinate = e.target.id.split('-').slice(-2).map((number) => Number(number));
+    const theShip = player.board.getShipAt(coordinate);
+    const shipHeadCoordinate = player.board.getShipHeadCoordinate(theShip);
+    const switchedOrientation = theShip.orientation === 'vertical' ? 'horizontal' : 'vertical';
+
+    const switchedShipCoordinates = player.board.getCoordsFromStartingCoord(shipHeadCoordinate, switchedOrientation, theShip.length).slice(1);
+    if (player.board.validShipPlacement(switchedShipCoordinates)) {
+        theShip.orientation = switchedOrientation;
+        player.board.removePlacedShip(player.board.getShipCoordinates(theShip));
+        player.board.placeShip(theShip, shipHeadCoordinate);
+
+        renderGameBoards(players);
+    }
+}
