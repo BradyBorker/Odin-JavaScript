@@ -1,5 +1,8 @@
 # Odin-JavaScript
 
+Battleship:
+https://htmlpreview.github.io/?https://github.com/BradyBorker/Odin-JavaScript/blob/main/Battleship/dist/index.html
+
 Library:
 https://htmlpreview.github.io/?https://github.com/BradyBorker/Odin-JavaScript/blob/main/Library/library.html
 
