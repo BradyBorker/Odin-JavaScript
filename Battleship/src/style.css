@@ -265,5 +265,5 @@ body {
 }
 
 .gameover-modal button:hover {
-  box-shadow: 0px 0px 5px 4px rgba(194, 178, 128, 1);
+  box-shadow: 0px 0px 5px 4px #c0c0cc;
 }
