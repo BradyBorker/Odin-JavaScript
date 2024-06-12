@@ -66,36 +66,36 @@ export function computer(myTurn = false) {
                 }
             })
         } else if (initialHit && hitHistory.length >= 1 && previousAttackHit) {
-            const newHit = hitHistory[hitHistory.length - 1];
+            const lastHit = hitHistory[hitHistory.length - 1];
             const x1 = initialHit[1];
             const y1 = initialHit[0];
-            const x2 = newHit[1];
-            const y2 = newHit[0];
+            const x2 = lastHit[1];
+            const y2 = lastHit[0];
 
             const xDiff = x1 - x2;
             const yDiff = y1 - y2;
 
             if (xDiff < 0) {
                 // right
-                const rightOne = [newHit[0], newHit[1] + 1];
+                const rightOne = [lastHit[0], lastHit[1] + 1];
                 if (opponent.board.isAttackable(rightOne)) {
                     attackStack.push(rightOne);
                 }
             } else if (xDiff > 0) {
                 // left
-                const leftOne = [newHit[0], newHit[1] - 1];
+                const leftOne = [lastHit[0], lastHit[1] - 1];
                 if (opponent.board.isAttackable(leftOne)) {
                     attackStack.push(leftOne);
                 }
             } else if (yDiff < 0) {
                 // up
-                const upOne = [newHit[0] + 1, newHit[1]]
+                const upOne = [lastHit[0] + 1, lastHit[1]]
                 if (opponent.board.isAttackable(upOne)) {
                     attackStack.push(upOne);
                 }
             } else if (yDiff > 0) {
                 // down
-                const downOne = [newHit[0] - 1, newHit[1]];
+                const downOne = [lastHit[0] - 1, lastHit[1]];
                 if (opponent.board.isAttackable(downOne)) {
                     attackStack.push(downOne);
                 }

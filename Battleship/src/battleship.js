@@ -1,6 +1,8 @@
 /* eslint-disable no-use-before-define */
 import finishedPlacingShips, { createRandomShipPlacementButton, randomShipPlacement, createDraggableShipElements, switchShipOrientation } from "./placeShips";
 import { draggableFromInside, droppableFromInside, droppableFromOutside, droppableHoverFeedback } from "./dragAndDrop";
+import explosionSvg from '../icons/bomb-explosion-svg.svg'
+import smallDotSg from '../icons/small-dot.svg'
 
 function switchTurn(players) {
     players.forEach((player) => {
@@ -116,17 +118,31 @@ function renderGameBoards(players, dragData = {}, preservedCoords = [], gameOver
         hitCoordinates.forEach((coordinate) => {
             const [row, column] = coordinate;
             const tile = document.getElementById(`p${index + 1}-${row}-${column}`);
+
+            const imgElement = document.createElement('img');
+            imgElement.src = explosionSvg;
+            tile.appendChild(imgElement);
+
             tile.classList.add('hit');
+            if (player.board.getShipAt(coordinate).isSunk()) {
+                tile.classList.add('sunk');
+            }
         })
         missedCoordinates.forEach((coordinate) => {
             const [row, column] = coordinate;
             const tile = document.getElementById(`p${index + 1}-${row}-${column}`);
             tile.classList.add('missed');
+
+            const imgElement = document.createElement('img');
+            imgElement.src = smallDotSg;
+            tile.appendChild(imgElement);
         })
     })
 }
 
 export default async function startGame(players) {
+    document.body.classList.add('game-background');
+
     renderGameBoards(players)
     const battleShipContainer = document.querySelector('.battleship-container');
     battleShipContainer.classList.remove('removed');

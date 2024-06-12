@@ -139,7 +139,13 @@ export function droppableHoverFeedback(tile, dragData, player, playerIndex) {
         })
 
         while (previousCoordinatesQueue.length >= 2) {
-            previousCoordinatesQueue.shift()
+            const previousCoordinates = previousCoordinatesQueue.shift()
+            previousCoordinates.forEach((prevCoordinate) => {
+                const [row, column] = JSON.parse(prevCoordinate);
+                const hoveredTile = document.getElementById(`p${playerIndex}-${row}-${column}`);
+
+                hoveredTile.classList.remove('valid-placement');
+            })
         }
         const stringifiedCoords = allCoordinates.map((coordinate) => JSON.stringify(coordinate))
         previousCoordinatesQueue.push(stringifiedCoords)
@@ -170,6 +176,7 @@ export function droppableHoverFeedback(tile, dragData, player, playerIndex) {
                     hoveredTile.classList.remove('valid-placement');
                 }
             })
+
         }
     })
 }

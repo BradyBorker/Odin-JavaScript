@@ -1,5 +1,6 @@
 import { draggableFromOutside } from "./dragAndDrop";
 import ship from "./ship";
+import randomSvg from '../icons/random-svg.svg'
 
 
 export default function finishedPlacingShips(player) {
@@ -8,9 +9,10 @@ export default function finishedPlacingShips(player) {
         readyUpButton.addEventListener('click', () => {
             readyUpButton.classList.add('removed');
             player.readyUp();
-            const body = document.querySelector('body');
-            const randomShipPlacementButton = document.querySelector('.random-ship-placement');
-            body.removeChild(randomShipPlacementButton);
+            const randomShipPlacementSvg = document.querySelector('.random-ship-placement');
+
+            const battleShipContainer = document.querySelector('.battleship-container')
+            battleShipContainer.removeChild(randomShipPlacementSvg);
 
             const readyUpButtonClone = readyUpButton.cloneNode(true);
             readyUpButton.parentNode.replaceChild(readyUpButtonClone, readyUpButton);
@@ -48,14 +50,15 @@ export function randomShipPlacement(player, players, renderGameBoards) {
 }
 
 export function createRandomShipPlacementButton(player, players, renderGameBoards) {
-    const randomShipPlacementButton = document.createElement('button');
-    const body = document.querySelector('body')
-    randomShipPlacementButton.classList.add('random-ship-placement');
-    randomShipPlacementButton.textContent = 'Randomize Ships!'
-    body.appendChild(randomShipPlacementButton);
+    const randomShipPlacementSvg = document.createElement('img');
+    randomShipPlacementSvg.src = randomSvg;
+    randomShipPlacementSvg.classList.add('random-ship-placement');
 
-    randomShipPlacementButton.addEventListener('click', () => randomShipPlacement(player, players, renderGameBoards))
-    randomShipPlacementButton.addEventListener('click', () => {
+    const battleShipContainer = document.querySelector('.battleship-container')
+    battleShipContainer.prepend(randomShipPlacementSvg);
+
+    randomShipPlacementSvg.addEventListener('click', () => randomShipPlacement(player, players, renderGameBoards))
+    randomShipPlacementSvg.addEventListener('click', () => {
         const draggableShipsContainer = document.querySelector('.draggable-ships-container');
         while (draggableShipsContainer.firstChild) {
             draggableShipsContainer.removeChild(draggableShipsContainer.firstChild)
