@@ -14,7 +14,9 @@ function isGameOver(players) {
     const loser = players.filter((player) => player.board.allSunk());
     if (loser.length > 0) {
         const [winner] = players.filter((player) => !player.board.allSunk());
-        console.log(`Winner: ${winner.name}`)
+        document.querySelector('.gameover-modal').classList.remove('removed');
+        const modalWinnerName = document.querySelector('.winner-name');
+        modalWinnerName.textContent = `${winner.name} Won!`
         return true;
     }
     return false;
@@ -32,7 +34,6 @@ function makeAttack(players, coordinate) {
 
     if (isGameOver(players)) {
         renderGameBoards(players, {}, [], true);
-        return;
     }
     switchTurn(players);
     renderGameBoards(players);
