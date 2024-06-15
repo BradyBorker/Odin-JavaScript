@@ -47,6 +47,7 @@ export function computer(myTurn = false) {
         });
         hitHistory = remainingCoordinates;
         attackStack = [];
+        previousAttackHit = false;
 
         if (hitHistory.length >= 1) {
           initialHit = hitHistory.pop();
@@ -70,8 +71,19 @@ export function computer(myTurn = false) {
       })
 
       if (hitHistory.length > 0 && attackStack.length <= 0) {
+        // Maybe instead:
+        // If all sides surrounded + 1 until valid placements?
         console.log('Inside')
-        const relatedPieces = { column: [], row: [] }
+        let upOne = [initialHit[0] - 1, initialHit[1]];
+        while (opponent.board.isHitAt(upOne) && !opponent.board.getShipAt(upOne).isSunk()) {
+          upOne = [upOne[0] - 1, upOne[1]];
+        }
+        if (!opponent.board.isMissedAt(upOne)) {
+          attackStack.push(upOne);
+        }
+
+
+        /* const relatedPieces = { column: [], row: [] }
         hitHistory.forEach((previousHit) => {
           if (initialHit[0] === previousHit[0]) {
             relatedPieces.row.push(previousHit)
@@ -81,12 +93,12 @@ export function computer(myTurn = false) {
           }
         })
 
-        /*
+        
         Sort by row:
         const coords = [[7, 3], [6, 3], [5,3], [8,3]]
         coords.sort((a, b) => a[0] - b[0])
           [[5, 3], [6, 3], [7, 3], [8, 3]]
-        */
+        
 
         if (relatedPieces.column.length >= relatedPieces.row.length) {
           relatedPieces.column.sort((a, b) => a[0] - b[0]);
@@ -115,9 +127,13 @@ export function computer(myTurn = false) {
             }
           })
         }
+        */
       }
 
-    } else if (initialHit && previousAttackHit) {
+
+    }
+
+    if (initialHit && previousAttackHit) {
       const lastHit = hitHistory[hitHistory.length - 1];
       const x1 = initialHit[1];
       const y1 = initialHit[0];
