@@ -93,53 +93,36 @@ export function computer(myTurn = false) {
         }
       }
     } else if (initialHit && attackStack.length <= 0) {
-      /* const possibleAttacks = [];
-      possibleAttacks.push([initialHit[0], initialHit[1] + 1]);
-      possibleAttacks.push([initialHit[0], initialHit[1] - 1]);
-      possibleAttacks.push([initialHit[0] + 1, initialHit[1]]);
-      possibleAttacks.push([initialHit[0] - 1, initialHit[1]]);
+      let upOne = [initialHit[0] + 1, initialHit[1]];
+      while (opponent.board.isHitAt(upOne) && !opponent.board.getShipAt(upOne).isSunk()) {
+        upOne = [upOne[0] + 1, upOne[1]];
+      }
+      if (opponent.board.isAttackable(upOne)) {
+        attackStack.push(upOne);
+      }
 
-      possibleAttacks.forEach((possibleAttack) => {
-        if (opponent.board.isAttackable(possibleAttack)) {
-          attackStack.push(possibleAttack);
-        }
-      }) */
+      let downOne = [initialHit[0] - 1, initialHit[1]];
+      while (opponent.board.isHitAt(downOne) && !opponent.board.getShipAt(downOne).isSunk()) {
+        downOne = [downOne[0] + 1, downOne[1]];
+      }
+      if (opponent.board.isAttackable(downOne)) {
+        attackStack.push(downOne);
+      }
 
-      if (hitHistory.length > 0 && attackStack.length <= 0) {
-        // Maybe instead:
-        // If all sides surrounded + 1 until valid placements?
-        console.log('Inside')
-        let upOne = [initialHit[0] + 1, initialHit[1]];
-        while (opponent.board.isHitAt(upOne) && !opponent.board.getShipAt(upOne).isSunk()) {
-          upOne = [upOne[0] + 1, upOne[1]];
-        }
-        if (opponent.board.isAttackable(upOne)) {
-          attackStack.push(upOne);
-        }
+      let rightOne = [initialHit[0], initialHit[1] + 1];
+      while (opponent.board.isHitAt(rightOne) && !opponent.board.getShipAt(rightOne).isSunk()) {
+        rightOne = [rightOne[0], rightOne[1] + 1];
+      }
+      if (opponent.board.isAttackable(rightOne)) {
+        attackStack.push(rightOne);
+      }
 
-        let downOne = [initialHit[0] - 1, initialHit[1]];
-        while (opponent.board.isHitAt(downOne) && !opponent.board.getShipAt(downOne).isSunk()) {
-          downOne = [downOne[0] + 1, downOne[1]];
-        }
-        if (opponent.board.isAttackable(downOne)) {
-          attackStack.push(downOne);
-        }
-
-        let rightOne = [initialHit[0], initialHit[1] + 1];
-        while (opponent.board.isHitAt(rightOne) && !opponent.board.getShipAt(rightOne).isSunk()) {
-          rightOne = [rightOne[0], rightOne[1] + 1];
-        }
-        if (opponent.board.isAttackable(rightOne)) {
-          attackStack.push(rightOne);
-        }
-
-        let leftOne = [initialHit[0], initialHit[1] - 1];
-        while (opponent.board.isHitAt(leftOne) && !opponent.board.getShipAt(leftOne).isSunk()) {
-          leftOne = [leftOne[0] + 1, leftOne[1]];
-        }
-        if (opponent.board.isAttackable(leftOne)) {
-          attackStack.push(leftOne);
-        }
+      let leftOne = [initialHit[0], initialHit[1] - 1];
+      while (opponent.board.isHitAt(leftOne) && !opponent.board.getShipAt(leftOne).isSunk()) {
+        leftOne = [leftOne[0] + 1, leftOne[1]];
+      }
+      if (opponent.board.isAttackable(leftOne)) {
+        attackStack.push(leftOne);
       }
     }
 
@@ -169,7 +152,6 @@ export function computer(myTurn = false) {
   const logAttack = (isHit, coordinate) => {
     if (isHit && !initialHit) {
       initialHit = coordinate;
-      // previousAttackHit = true;
     } else if (isHit) {
       hitHistory.push(coordinate);
       previousAttackHit = true;
