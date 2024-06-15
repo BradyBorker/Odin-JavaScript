@@ -173,9 +173,15 @@ export default function gameBoard() {
     );
   };
 
-  const isHitAt = (coordinate) => hitAttacks.map((attack) => JSON.stringify(attack)).includes(JSON.stringify(coordinate))
+  const isHitAt = (coordinate) =>
+    hitAttacks
+      .map((attack) => JSON.stringify(attack))
+      .includes(JSON.stringify(coordinate));
 
-  const isMissedAt = (coordinate) => missedAttacks.map((attack) => JSON.stringify(attack)).includes(JSON.stringify(coordinate))
+  const isMissedAt = (coordinate) =>
+    missedAttacks
+      .map((attack) => JSON.stringify(attack))
+      .includes(JSON.stringify(coordinate));
 
   const allSunk = () => {
     const ships = getPlacedShips();

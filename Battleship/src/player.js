@@ -94,7 +94,10 @@ export function computer(myTurn = false) {
       }
     } else if (initialHit && attackStack.length <= 0) {
       let upOne = [initialHit[0] + 1, initialHit[1]];
-      while (opponent.board.isHitAt(upOne) && !opponent.board.getShipAt(upOne).isSunk()) {
+      while (
+        opponent.board.isHitAt(upOne) &&
+        !opponent.board.getShipAt(upOne).isSunk()
+      ) {
         upOne = [upOne[0] + 1, upOne[1]];
       }
       if (opponent.board.isAttackable(upOne)) {
@@ -102,7 +105,10 @@ export function computer(myTurn = false) {
       }
 
       let downOne = [initialHit[0] - 1, initialHit[1]];
-      while (opponent.board.isHitAt(downOne) && !opponent.board.getShipAt(downOne).isSunk()) {
+      while (
+        opponent.board.isHitAt(downOne) &&
+        !opponent.board.getShipAt(downOne).isSunk()
+      ) {
         downOne = [downOne[0] + 1, downOne[1]];
       }
       if (opponent.board.isAttackable(downOne)) {
@@ -110,7 +116,10 @@ export function computer(myTurn = false) {
       }
 
       let rightOne = [initialHit[0], initialHit[1] + 1];
-      while (opponent.board.isHitAt(rightOne) && !opponent.board.getShipAt(rightOne).isSunk()) {
+      while (
+        opponent.board.isHitAt(rightOne) &&
+        !opponent.board.getShipAt(rightOne).isSunk()
+      ) {
         rightOne = [rightOne[0], rightOne[1] + 1];
       }
       if (opponent.board.isAttackable(rightOne)) {
@@ -118,7 +127,10 @@ export function computer(myTurn = false) {
       }
 
       let leftOne = [initialHit[0], initialHit[1] - 1];
-      while (opponent.board.isHitAt(leftOne) && !opponent.board.getShipAt(leftOne).isSunk()) {
+      while (
+        opponent.board.isHitAt(leftOne) &&
+        !opponent.board.getShipAt(leftOne).isSunk()
+      ) {
         leftOne = [leftOne[0] + 1, leftOne[1]];
       }
       if (opponent.board.isAttackable(leftOne)) {
@@ -127,7 +139,7 @@ export function computer(myTurn = false) {
     }
 
     if (attackStack.length > 0) {
-      const attackCoord = attackStack.pop()
+      const attackCoord = attackStack.pop();
 
       return attackCoord;
     }
