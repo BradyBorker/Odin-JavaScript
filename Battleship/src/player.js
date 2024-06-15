@@ -56,7 +56,7 @@ export function computer(myTurn = false) {
       }
     }
 
-    if (initialHit && attackStack.length === 0 && hitHistory.length === 0) {
+    if (initialHit && attackStack.length === 0) {
       const possibleAttacks = [];
       possibleAttacks.push([initialHit[0], initialHit[1] + 1]);
       possibleAttacks.push([initialHit[0], initialHit[1] - 1]);
@@ -67,7 +67,7 @@ export function computer(myTurn = false) {
           attackStack.push(possibleAttack);
         }
       });
-    } else if (initialHit && hitHistory.length >= 1 && previousAttackHit) {
+    } else if (initialHit && previousAttackHit) {
       const lastHit = hitHistory[hitHistory.length - 1];
       const x1 = initialHit[1];
       const y1 = initialHit[0];
@@ -104,9 +104,13 @@ export function computer(myTurn = false) {
       }
     }
 
+    console.log(initialHit)
     if (attackStack.length > 0) {
-      return attackStack.pop();
+      const attackCoord = attackStack.pop()
+
+      return attackCoord;
     }
+
     if (attackStack.length <= 0) {
       const attackPool = [];
       for (let row = 0; row < 10; row += 1) {
