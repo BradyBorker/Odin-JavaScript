@@ -56,17 +56,67 @@ export function computer(myTurn = false) {
       }
     }
 
-    if (initialHit && attackStack.length === 0) {
+    if (initialHit && attackStack.length <= 0) {
       const possibleAttacks = [];
       possibleAttacks.push([initialHit[0], initialHit[1] + 1]);
       possibleAttacks.push([initialHit[0], initialHit[1] - 1]);
       possibleAttacks.push([initialHit[0] + 1, initialHit[1]]);
       possibleAttacks.push([initialHit[0] - 1, initialHit[1]]);
+
       possibleAttacks.forEach((possibleAttack) => {
         if (opponent.board.isAttackable(possibleAttack)) {
           attackStack.push(possibleAttack);
         }
-      });
+      })
+
+      if (hitHistory.length > 0 && attackStack.length <= 0) {
+        console.log('Inside')
+        const relatedPieces = { column: [], row: [] }
+        hitHistory.forEach((previousHit) => {
+          if (initialHit[0] === previousHit[0]) {
+            relatedPieces.row.push(previousHit)
+          }
+          if (initialHit[1] === previousHit[1]) {
+            relatedPieces.column.push(previousHit)
+          }
+        })
+
+        /*
+        Sort by row:
+        const coords = [[7, 3], [6, 3], [5,3], [8,3]]
+        coords.sort((a, b) => a[0] - b[0])
+          [[5, 3], [6, 3], [7, 3], [8, 3]]
+        */
+
+        if (relatedPieces.column.length >= relatedPieces.row.length) {
+          relatedPieces.column.sort((a, b) => a[0] - b[0]);
+          console.log(relatedPieces.column)
+          const beginningCoord = relatedPieces.column[0];
+          const endCoord = relatedPieces.column[relatedPieces.column.length - 1];
+
+          possibleAttacks.push([beginningCoord[0] - 1, beginningCoord[1]]);
+          possibleAttacks.push([endCoord[0] + 1, endCoord[1]]);
+          possibleAttacks.forEach((possibleAttack) => {
+            if (opponent.board.isAttackable(possibleAttack)) {
+              attackStack.push(possibleAttack);
+            }
+          })
+        } else if (relatedPieces.row.length > relatedPieces.column.length) {
+          relatedPieces.row.sort((a, b) => a[1] - b[1]);
+          console.log(relatedPieces.row)
+          const beginningCoord = relatedPieces.row[0];
+          const endCoord = relatedPieces.row[relatedPieces.row.length - 1];
+
+          possibleAttacks.push([beginningCoord[0], beginningCoord[1] - 1]);
+          possibleAttacks.push([endCoord[0], endCoord[1] + 1]);
+          possibleAttacks.forEach((possibleAttack) => {
+            if (opponent.board.isAttackable(possibleAttack)) {
+              attackStack.push(possibleAttack);
+            }
+          })
+        }
+      }
+
     } else if (initialHit && previousAttackHit) {
       const lastHit = hitHistory[hitHistory.length - 1];
       const x1 = initialHit[1];
@@ -104,7 +154,6 @@ export function computer(myTurn = false) {
       }
     }
 
-    console.log(initialHit)
     if (attackStack.length > 0) {
       const attackCoord = attackStack.pop()
 
