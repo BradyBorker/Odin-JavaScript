@@ -178,11 +178,6 @@ export default function gameBoard() {
       .map((attack) => JSON.stringify(attack))
       .includes(JSON.stringify(coordinate));
 
-  const isMissedAt = (coordinate) =>
-    missedAttacks
-      .map((attack) => JSON.stringify(attack))
-      .includes(JSON.stringify(coordinate));
-
   const allSunk = () => {
     const ships = getPlacedShips();
     return ships.every((ship) => ship.isSunk());
@@ -203,7 +198,6 @@ export default function gameBoard() {
     getCoordsFromStartingCoord,
     validShipPlacement,
     isHitAt,
-    isMissedAt,
     state,
     hitAttacks,
     missedAttacks,
